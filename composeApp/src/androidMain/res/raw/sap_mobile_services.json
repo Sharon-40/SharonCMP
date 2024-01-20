@@ -1,0 +1,26 @@
+{
+  "auth": [
+    {
+      "type": "oauth2",
+      "config": {
+        "oauth2.clients": [
+          {
+            "clientID": "52d30282-8b96-43ea-b603-c3393ff9ee8d",
+            "redirectURL": "https://incture-cherrywork-dev-cw-srm-dev-com-cherrywork-smartwarehouse.cfapps.eu10-004.hana.ondemand.com",
+            "grantType": "authorization_code"
+          }
+        ],
+        "oauth2.tokenEndpoint": "https://incture-cherrywork-dev-cw-srm-dev-com-cherrywork-smartwarehouse.cfapps.eu10-004.hana.ondemand.com/oauth2/api/v1/token",
+        "oauth2.authorizationEndpoint": "https://incture-cherrywork-dev-cw-srm-dev-com-cherrywork-smartwarehouse.cfapps.eu10-004.hana.ondemand.com/oauth2/api/v1/authorize",
+        "oauth2.endUserUI": "https://incture-cherrywork-dev-cw-srm-dev-com-cherrywork-smartwarehouse.cfapps.eu10-004.hana.ondemand.com",
+        "oauth2.xsuaaAuthorizationURL": "https://incture-cherrywork-dev.authentication.eu10.hana.ondemand.com/oauth/authorize?response_type=code&client_id=sb-com-cherrywork-smartwarehouse-CW-SRM-DEV!t197806&redirect_uri=https%3A%2F%2Fincture-cherrywork-dev-cw-srm-dev-com-cherrywork-smartwarehouse.cfapps.eu10-004.hana.ondemand.com%2Flogin%2Fcallback"
+      },
+      "requireOtp": false
+    }
+  ],
+  "protocol": "https",
+  "host": "incture-cherrywork-dev-cw-srm-dev-com-cherrywork-smartwarehouse.cfapps.eu10-004.hana.ondemand.com",
+  "port": 443,
+  "appID": "com.cherrywork.smartwarehouse",
+  "multiUser": false
+}
