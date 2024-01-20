@@ -2,13 +2,16 @@ import org.jetbrains.compose.ExperimentalComposeLibrary
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
-    kotlin("plugin.serialization") version "1.9.21"
+    alias(libs.plugins.androidLibrary)
 
+    kotlin("plugin.serialization") version "1.8.21"
     id("app.cash.sqldelight") version "2.0.1"
 
 }
+
+group = "com.incture.kmp"
+version = "1.0"
 
 kotlin {
     androidTarget {
@@ -95,19 +98,14 @@ kotlin {
 }
 
 android {
-    namespace = "com.gaur.himanshu"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
+    compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "com.gaur.himanshu"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = 21
     }
     packaging {
         resources {
@@ -126,5 +124,7 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+
+    namespace = "com.incture.kmp"
 }
 

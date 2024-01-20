@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="application_name">KMP</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="sap_launch_screen_content_title">Welcome to KMP</string>
+</resources>
