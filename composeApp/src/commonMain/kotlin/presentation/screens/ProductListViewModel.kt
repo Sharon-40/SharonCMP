@@ -2,7 +2,7 @@ package presentation.screens
 
 import data.utils.NetworkResult
 import domain.model.Product
-import domain.use_cases.GetProductListUseCase
+import domain.use_cases.MainUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +18,7 @@ data class ProductListStateHolder(
     val error: String = ""
 )
 
-class ProductListViewModel(private val getProductListUseCase: GetProductListUseCase) : ViewModel() {
+class ProductListViewModel(private val mainUseCase: MainUseCase) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProductListStateHolder())
     val uiState: StateFlow<ProductListStateHolder> = _uiState.asStateFlow()
@@ -27,7 +27,7 @@ class ProductListViewModel(private val getProductListUseCase: GetProductListUseC
         getProductList()
     }
 
-    fun getProductList() = getProductListUseCase().onEach { res ->
+    private fun getProductList() = mainUseCase.getProducts().onEach { res ->
         when (res) {
             is NetworkResult.Loading -> {
                 _uiState.update { ProductListStateHolder(isLoading = true) }
@@ -42,7 +42,6 @@ class ProductListViewModel(private val getProductListUseCase: GetProductListUseC
                 _uiState.update { ProductListStateHolder(error = res.message) }
             }
         }
-
     }.launchIn(viewModelScope)
 
 }

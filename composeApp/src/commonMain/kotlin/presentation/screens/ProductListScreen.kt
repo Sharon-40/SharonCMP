@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import data.utils.NetworkResult
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import moe.tlaster.precompose.navigation.Navigator
@@ -45,7 +46,7 @@ fun ProductListScreen(
 
     Scaffold(topBar = {
         TopAppBar(
-            contentColor = Color.Black,
+            contentColor = Black,
             backgroundColor = Color.White
         ) {
             Row(
@@ -56,7 +57,7 @@ fun ProductListScreen(
                 Text(text = "Product Lists", style = MaterialTheme.typography.h6, color = Black)
                 Image(imageVector = Icons.Default.ShoppingCart, contentDescription = null,
                     modifier = Modifier.clickable {
-                        navigator.navigate(NavigationRoute.CartScreen.route)
+
                     })
             }
 
