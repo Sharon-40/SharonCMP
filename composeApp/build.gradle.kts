@@ -97,7 +97,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.gaur.himanshu"
+    namespace = "com.incture.cmp"
     compileSdk = 34
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -105,7 +105,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "com.gaur.himanshu"
+        applicationId = "com.incture.cmp"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
