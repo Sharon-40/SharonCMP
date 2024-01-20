@@ -1,9 +1,9 @@
 package data.network
 
-import domain.model.Product
+import data.model.ProductModel
 
 interface ApiInterface {
 
-    suspend fun getProducts(): List<Product>
+    suspend fun getProducts(): List<ProductModel>
 
 }

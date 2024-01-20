@@ -10,6 +10,7 @@ import presentation.screens.ProductListViewModel
 @Composable
 fun AppNavigation() {
     val navigator = rememberNavigator()
+
     NavHost(navigator = navigator, initialRoute = NavigationRoute.ProductList.route) {
         scene(route = NavigationRoute.ProductList.route) {
             val viewModel: ProductListViewModel = koinViewModel(ProductListViewModel::class)

@@ -1,7 +1,7 @@
 package presentation.screens
 
+import data.model.ProductModel
 import data.utils.NetworkResult
-import domain.model.Product
 import domain.use_cases.MainUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import moe.tlaster.precompose.viewmodel.viewModelScope
 
 data class ProductListStateHolder(
     val isLoading: Boolean = false,
-    val data: List<Product>? = null,
+    val data: List<ProductModel>? = null,
     val error: String = ""
 )
 

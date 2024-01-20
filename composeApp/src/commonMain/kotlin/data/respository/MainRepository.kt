@@ -1,12 +1,12 @@
 package data.respository
 
 import data.local_db.LocalDbDao
+import data.model.ProductModel
 import data.network.ApiInterfaceImpl
-import domain.model.Product
 
 class MainRepository(private val apiInterfaceImpl: ApiInterfaceImpl,private val localDbDao: LocalDbDao) {
 
-    suspend fun getProducts(): List<Product> {
+    suspend fun getProducts(): List<ProductModel> {
         return apiInterfaceImpl.getProducts()
     }
     suspend fun insert(id: Int, title: String, desc: String, image: String) {
