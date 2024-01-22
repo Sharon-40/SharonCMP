@@ -36,11 +36,18 @@ import androidx.compose.ui.unit.sp
 import domain.models.AppModel
 import ColorResources
 import Strings
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Card
+import androidx.compose.ui.graphics.Color
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
+import presentation.ImageResources
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun DashBoardScreen(onClick: (AppModel) -> Unit) {
 
-    val apps= arrayListOf(AppModel(Strings.Apps.PutAway.name),AppModel(Strings.Apps.BinToBin.name))
+    val apps= arrayListOf(AppModel(Strings.Apps.GoodsRecieving.name,ImageResources.goods_recieveing),AppModel(Strings.Apps.PutAway.name,ImageResources.icon_putaway),AppModel(Strings.Apps.BinToBin.name,ImageResources.icon_bin_to_bin))
 
     Scaffold(topBar = {
         TopAppBar(
@@ -68,6 +75,8 @@ fun DashBoardScreen(onClick: (AppModel) -> Unit) {
             LazyVerticalGrid(columns = GridCells.Fixed(3)) {
                 items(apps) {
                     Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.fillMaxWidth().wrapContentHeight()
                             .clickable {
                                 onClick(it)
@@ -75,7 +84,12 @@ fun DashBoardScreen(onClick: (AppModel) -> Unit) {
                             .padding(2.dp).border(1.dp, ColorResources.ColorAccent, RoundedCornerShape(5.dp)).background(White).padding(10.dp)
                     ) {
 
-                        Spacer(modifier = Modifier.height(2.dp))
+                        Image(
+                            painter = painterResource(it.icon),
+                            null, modifier = Modifier.height(60.dp).width(60.dp)
+                        )
+
+                        Spacer(modifier = Modifier.height(5.dp))
 
                         Text(
                             text = it.appName,
