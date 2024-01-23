@@ -33,10 +33,16 @@ import com.sap.cloud.mobile.onboarding.compose.settings.CustomScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenContentSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.QRCodeReaderScreenSettings
+import data.prefrences.LocalSharedStorage
+import org.koin.android.ext.android.inject
+import org.koin.compose.koinInject
+import javax.inject.Inject
 
 class WelcomeActivity : ComponentActivity() {
 
     private lateinit var providerConfiguration: ProviderConfiguration
+
+    private val localSharedStorage: LocalSharedStorage by inject<LocalSharedStorage>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +106,10 @@ class WelcomeActivity : ComponentActivity() {
             flowContext = getOnboardingFlowContext(context, appConfig)
         ) { resultCode, _ ->
             if (resultCode == Activity.RESULT_OK) {
+                localSharedStorage.saveUserId("Jagadish")
+                localSharedStorage.saveUserName("Jagadish Lakkur")
+                localSharedStorage.savePlant("Aw02")
+                localSharedStorage.saveWareHouse("OS00")
                 launchDashBoardActivity(context)
             } else {
                 startOnboarding(context, appConfig)

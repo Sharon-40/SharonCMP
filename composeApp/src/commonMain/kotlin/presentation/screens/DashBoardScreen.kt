@@ -39,13 +39,16 @@ import Strings
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.ImageResources
+import presentation.navigation.NavigationRoute
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun DashBoardScreen(onClick: (AppModel) -> Unit) {
+fun DashBoardScreen(navigator: Navigator) {
 
     val apps= arrayListOf(AppModel(Strings.Apps.GoodsRecieving.name,ImageResources.goods_recieveing),AppModel(Strings.Apps.PutAway.name,ImageResources.icon_putaway),AppModel(Strings.Apps.BinToBin.name,ImageResources.icon_bin_to_bin))
 
@@ -60,7 +63,9 @@ fun DashBoardScreen(onClick: (AppModel) -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = Strings.AppName, style = MaterialTheme.typography.h6, color = White)
-                Image(imageVector = Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier.clickable {})
+                Image(imageVector = Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier.clickable {
+                    navigator.navigate(NavigationRoute.Profile.route)
+                }, colorFilter = ColorFilter.tint(color = White))
             }
 
         }
@@ -79,7 +84,7 @@ fun DashBoardScreen(onClick: (AppModel) -> Unit) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.fillMaxWidth().wrapContentHeight()
                             .clickable {
-                                onClick(it)
+                                navigator.navigate(NavigationRoute.ProductList.route)
                             }
                             .padding(2.dp).border(1.dp, ColorResources.ColorAccent, RoundedCornerShape(5.dp)).background(White).padding(10.dp)
                     ) {

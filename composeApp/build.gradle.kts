@@ -75,6 +75,9 @@ kotlin {
             // sqldelight ext
             implementation("app.cash.sqldelight:coroutines-extensions:2.0.1")
 
+            //Kvault
+            implementation("com.liftric:kvault:1.12.0")
+
         }
         iosMain.dependencies {
             // darwin ktor client for ios
