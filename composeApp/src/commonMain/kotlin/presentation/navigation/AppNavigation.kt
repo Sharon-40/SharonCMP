@@ -8,7 +8,7 @@ import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.screens.DashBoardScreen
 import presentation.screens.ProductListScreen
-import presentation.screens.ProductListViewModel
+import presentation.viewmodels.ProductListViewModel
 import presentation.screens.ProfileScreen
 
 @Composable
@@ -24,7 +24,7 @@ fun AppNavigation() {
 
         scene(route = NavigationRoute.Profile.route) {
             val localSharedStorage: LocalSharedStorage = koinInject()
-            ProfileScreen(localSharedStorage)
+            ProfileScreen(navigator,localSharedStorage)
         }
 
         scene(route = NavigationRoute.ProductList.route) {

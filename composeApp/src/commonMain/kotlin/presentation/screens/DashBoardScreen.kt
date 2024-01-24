@@ -35,10 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.models.AppModel
 import ColorResources
-import Strings
+import StringResources
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Card
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -50,7 +48,7 @@ import presentation.navigation.NavigationRoute
 @Composable
 fun DashBoardScreen(navigator: Navigator) {
 
-    val apps= arrayListOf(AppModel(Strings.Apps.GoodsRecieving.name,ImageResources.goods_recieveing),AppModel(Strings.Apps.PutAway.name,ImageResources.icon_putaway),AppModel(Strings.Apps.BinToBin.name,ImageResources.icon_bin_to_bin))
+    val apps= arrayListOf(AppModel(StringResources.Apps.GoodsRecieving.name,ImageResources.goods_recieveing),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin))
 
     Scaffold(topBar = {
         TopAppBar(
@@ -62,7 +60,7 @@ fun DashBoardScreen(navigator: Navigator) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = Strings.AppName, style = MaterialTheme.typography.h6, color = White)
+                Text(text = StringResources.AppName, style = MaterialTheme.typography.h6, color = White)
                 Image(imageVector = Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier.clickable {
                     navigator.navigate(NavigationRoute.Profile.route)
                 }, colorFilter = ColorFilter.tint(color = White))
@@ -73,7 +71,7 @@ fun DashBoardScreen(navigator: Navigator) {
 
         Column (modifier = Modifier.fillMaxHeight().background(ColorResources.Background).padding(10.dp)) {
 
-            Text(text = Strings.WareHouseTransactions, style = TextStyle(color = Black, fontSize = 16.sp, fontWeight = FontWeight.Bold))
+            Text(text = StringResources.WareHouseTransactions, style = TextStyle(color = Black, fontSize = 16.sp, fontWeight = FontWeight.Bold))
 
             Spacer(modifier = Modifier.height(5.dp))
 

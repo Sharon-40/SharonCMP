@@ -18,4 +18,17 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
         emit(NetworkResult.Error(it.message.toString()))
     }.flowOn(Dispatchers.IO)
 
+    fun getProfile(userId:String) = flow {
+        emit(NetworkResult.Loading())
+        val result=mainRepository.getProfile(userId)
+        if (result.status)
+        {
+            emit(NetworkResult.Success(data = result.data?.first() ))
+        }else{
+            emit(NetworkResult.Error(result.message))
+        }
+    }.catch {
+        emit(NetworkResult.Error(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
 }

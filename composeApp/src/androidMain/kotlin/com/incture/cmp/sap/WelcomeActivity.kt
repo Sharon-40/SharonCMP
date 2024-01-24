@@ -2,7 +2,6 @@ package com.incture.cmp.sap
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,8 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.incture.cmp.MainActivity
 import com.incture.cmp.R
+import com.incture.cmp.launchDashBoardActivity
+import com.incture.cmp.launchRulesScreenActivity
 import com.sap.cloud.mobile.flows.compose.core.FlowContext
 import com.sap.cloud.mobile.flows.compose.ext.FlowOptions
 import com.sap.cloud.mobile.flows.compose.flows.FlowUtil
@@ -35,8 +35,6 @@ import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.QRCodeReaderScreenSettings
 import data.prefrences.LocalSharedStorage
 import org.koin.android.ext.android.inject
-import org.koin.compose.koinInject
-import javax.inject.Inject
 
 class WelcomeActivity : ComponentActivity() {
 
@@ -106,11 +104,14 @@ class WelcomeActivity : ComponentActivity() {
             flowContext = getOnboardingFlowContext(context, appConfig)
         ) { resultCode, _ ->
             if (resultCode == Activity.RESULT_OK) {
-                localSharedStorage.saveUserId("Jagadish")
-                localSharedStorage.saveUserName("Jagadish Lakkur")
-                localSharedStorage.savePlant("Aw02")
-                localSharedStorage.saveWareHouse("OS00")
-                launchDashBoardActivity(context)
+
+                if (localSharedStorage.getUserId().isEmpty())
+                {
+                    launchRulesScreenActivity(context)
+                }else{
+                    launchDashBoardActivity(context)
+                }
+
             } else {
                 startOnboarding(context, appConfig)
             }
@@ -145,12 +146,6 @@ class WelcomeActivity : ComponentActivity() {
         )
     )
 
-    private fun launchDashBoardActivity(context: Context) {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        }
-        context.startActivity(intent)
-    }
 
 }
 

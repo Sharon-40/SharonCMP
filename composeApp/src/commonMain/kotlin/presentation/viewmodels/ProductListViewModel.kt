@@ -1,4 +1,4 @@
-package presentation.screens
+package presentation.viewmodels
 
 import data.model.ProductModel
 import data.utils.NetworkResult
