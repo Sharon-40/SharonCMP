@@ -1,9 +1,9 @@
 package presentation.screens
 
 import ColorResources
-import ProfileListTile
+import presentation.components.ProfileListTile
 import StringResources
-import ToolBarWithBack
+import presentation.components.ToolBarWithBack
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

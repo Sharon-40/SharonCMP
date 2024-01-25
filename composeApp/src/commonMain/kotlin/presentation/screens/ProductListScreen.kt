@@ -72,7 +72,7 @@ fun ProductListScreen(
 
             uiState.value.error.isNotEmpty() -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = uiState.value.error.toString())
+                    Text(text = uiState.value.error)
                 }
             }
 

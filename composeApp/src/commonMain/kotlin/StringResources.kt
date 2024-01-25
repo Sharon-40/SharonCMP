@@ -10,7 +10,12 @@ object StringResources {
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
-    const val JAVA_DESTINATION="DEMO_JAVA"
+    enum class Apps{ PutAway,BinToBin,GoodsReceiving }
 
-    enum class Apps{ PutAway,BinToBin,GoodsRecieving }
+
+    object WareHouseTechTerms{
+        const val Plant="WRK"
+        const val WareHouse="LGN"
+    }
+
 }

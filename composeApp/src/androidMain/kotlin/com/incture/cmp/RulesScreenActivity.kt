@@ -44,11 +44,9 @@ class RulesScreenActivity : ComponentActivity() {
                 RulesScreen(viewModel,localSharedStorage.getUserId()) { userDetails->
 
                     userDetails.userParameters?.forEach {
-                        if (it.parameterID == "WRK")//plant
-                        {
+                        if (it.parameterID == StringResources.WareHouseTechTerms.Plant) {
                             localSharedStorage.savePlant(it.parameterValue)
-                        } else if (it.parameterID == "LGN")//warehouse
-                        {
+                        } else if (it.parameterID == StringResources.WareHouseTechTerms.WareHouse) {
                             localSharedStorage.saveWareHouse(it.parameterValue)
                         }
                     }

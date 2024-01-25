@@ -39,7 +39,7 @@ fun AppNavigation() {
 }
 
 sealed class NavigationRoute(val route: String) {
-    object DashBoard : NavigationRoute("dashboard")
-    object ProductList : NavigationRoute("product_list")
-    object Profile : NavigationRoute("profile")
+    data object DashBoard : NavigationRoute("dashboard")
+    data object ProductList : NavigationRoute("product_list")
+    data object Profile : NavigationRoute("profile")
 }

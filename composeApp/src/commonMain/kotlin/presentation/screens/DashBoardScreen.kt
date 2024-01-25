@@ -48,7 +48,7 @@ import presentation.navigation.NavigationRoute
 @Composable
 fun DashBoardScreen(navigator: Navigator) {
 
-    val apps= arrayListOf(AppModel(StringResources.Apps.GoodsRecieving.name,ImageResources.goods_recieveing),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin))
+    val apps= arrayListOf(AppModel(StringResources.Apps.GoodsReceiving.name,ImageResources.goods_recieveing),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin))
 
     Scaffold(topBar = {
         TopAppBar(

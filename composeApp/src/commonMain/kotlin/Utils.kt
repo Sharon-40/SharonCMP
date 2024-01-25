@@ -5,8 +5,6 @@ import androidx.compose.ui.unit.sp
 
 object Utils {
 
-
-
     fun headerFontStyle():TextStyle
     {
         return TextStyle(color = Color.Black, fontSize = 14.sp, fontWeight = FontWeight.Normal)
