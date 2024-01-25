@@ -37,7 +37,7 @@ import com.sap.cloud.mobile.onboarding.compose.settings.CustomScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenContentSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.QRCodeReaderScreenSettings
-import data.prefrences.LocalSharedStorage
+import data.preferences.LocalSharedStorage
 import org.koin.android.ext.android.inject
 
 class WelcomeActivity : ComponentActivity() {

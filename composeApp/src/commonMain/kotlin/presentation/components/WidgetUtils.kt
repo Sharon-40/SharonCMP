@@ -2,6 +2,7 @@ package presentation.components
 
 import ColorResources
 import Utils
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -24,6 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import moe.tlaster.precompose.navigation.Navigator
 
@@ -63,5 +69,29 @@ fun ToolBarWithBack(navigator: Navigator,title: String)
             Spacer(modifier = Modifier.width(10.dp))
             Text(text = title, style = Utils.valueFontStyle(), color = Color.White)
         }
+    }
+}
+
+@Composable
+fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
+    Button(
+        modifier = Modifier.width(150.dp).padding(5.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = ColorResources.ColorPrimary),
+        border = BorderStroke(1.dp, Color.White),
+        shape = RoundedCornerShape(50),
+        onClick = { onClick() }) {
+        Text(text = text, style = TextStyle(color = Color.White, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold))
+    }
+}
+
+@Composable
+fun SecondaryButton(text: String, onClick: () -> Unit = {}) {
+    Button(
+        modifier = Modifier.width(150.dp).padding(5.dp),
+        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.White),
+        border = BorderStroke(1.dp, ColorResources.ColorPrimary),
+        shape = RoundedCornerShape(50),
+        onClick = { onClick() }) {
+        Text(text = text, style = TextStyle(color = Color.Blue, fontFamily = FontFamily.Serif,fontWeight = FontWeight.Bold))
     }
 }

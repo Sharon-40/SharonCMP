@@ -1,4 +1,4 @@
-package data.prefrences
+package data.preferences
 
 import com.liftric.kvault.KVault
 
@@ -49,22 +49,13 @@ class LocalSharedStorage(private val store: KVault) {
         return store.string(PREF_PRINTER) ?: ""
     }
 
-    fun setIsLogin(name: Boolean) {
-        store.set(IS_LOGIN, name)
-    }
-
-    fun getIsLogin(): Boolean {
-        return store.bool(IS_LOGIN) ?: false
-    }
-
-    fun clearALl() {
+    fun clearAll() {
         store.clear()
     }
 
     companion object {
         private const val USER_ID = "USER_ID"
         private const val USER_NAME = "USER_NAME"
-        private const val IS_LOGIN = "IS_LOGIN"
         private const val PREF_PLANT = "PREF_PLANT"
         private const val PREF_WAREHOUSE = "PREF_WAREHOUSE"
         private const val PREF_PRINTER = "PREF_PRINTER"

@@ -1,7 +1,7 @@
 package presentation.navigation
 
 import androidx.compose.runtime.Composable
-import data.prefrences.LocalSharedStorage
+import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator

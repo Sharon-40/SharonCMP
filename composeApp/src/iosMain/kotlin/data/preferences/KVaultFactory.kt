@@ -1,8 +1,8 @@
-package data.prefrences
+package data.preferences
 
 import com.liftric.kvault.KVault
 
-actual class LocalSharedStorageFactory actual constructor(context: Any?) {
+actual class KVaultFactory actual constructor(context: Any?) {
 
     actual fun createStoreInstance(): KVault {
         return KVault()

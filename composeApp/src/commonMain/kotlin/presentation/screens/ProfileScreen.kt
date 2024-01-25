@@ -5,21 +5,27 @@ import presentation.components.ProfileListTile
 import StringResources
 import presentation.components.ToolBarWithBack
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import data.prefrences.LocalSharedStorage
+import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.navigation.Navigator
+import presentation.components.PrimaryButton
 
 @Composable
 fun ProfileScreen(navigator: Navigator,localSharedStorage: LocalSharedStorage) {
@@ -38,8 +44,17 @@ fun ProfileScreen(navigator: Navigator,localSharedStorage: LocalSharedStorage) {
 
             ProfileListTile(Icons.Default.Home,StringResources.Warehouse,localSharedStorage.getWareHouse())
 
+            Spacer(modifier = Modifier.height(5.dp))
+
+            ProfileListTile(Icons.Default.Info,StringResources.Printer,localSharedStorage.getPrinter())
+
+            Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
+
+                PrimaryButton(StringResources.LogOut) {
+
+                }
+            }
+
         }
     }
-
-
 }

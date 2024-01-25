@@ -1,9 +1,9 @@
-package data.prefrences
+package data.preferences
 
 import android.content.Context
 import com.liftric.kvault.KVault
 
-actual class LocalSharedStorageFactory actual constructor(context: Any?) {
+actual class KVaultFactory actual constructor(context: Any?) {
 
     private var context: Context
 
