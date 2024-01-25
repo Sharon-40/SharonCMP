@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import moe.tlaster.precompose.navigation.Navigator
-import presentation.navigation.NavigationRoute
+import presentation.viewmodels.ProductListViewModel
 
 @Composable
 fun ProductListScreen(
@@ -45,7 +45,7 @@ fun ProductListScreen(
 
     Scaffold(topBar = {
         TopAppBar(
-            contentColor = Color.Black,
+            contentColor = Black,
             backgroundColor = Color.White
         ) {
             Row(
@@ -56,7 +56,7 @@ fun ProductListScreen(
                 Text(text = "Product Lists", style = MaterialTheme.typography.h6, color = Black)
                 Image(imageVector = Icons.Default.ShoppingCart, contentDescription = null,
                     modifier = Modifier.clickable {
-                        navigator.navigate(NavigationRoute.CartScreen.route)
+
                     })
             }
 
@@ -72,7 +72,7 @@ fun ProductListScreen(
 
             uiState.value.error.isNotEmpty() -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = uiState.value.error.toString())
+                    Text(text = uiState.value.error)
                 }
             }
 

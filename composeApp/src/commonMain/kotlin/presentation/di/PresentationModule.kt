@@ -1,14 +1,13 @@
 package presentation.di
 
+import domain.use_cases.MainUseCase
 import org.koin.dsl.module
-import presentation.screens.ProductListViewModel
-import presentation.screens.cart.CartViewModel
-import presentation.screens.product_details.ProductDetailsViewModel
+import presentation.viewmodels.LoginViewModel
+import presentation.viewmodels.ProductListViewModel
 
 val presentationModule = module {
 
-    factory { ProductListViewModel(get()) }
-    factory { ProductDetailsViewModel(get(), get()) }
-    factory { CartViewModel(get(), get(), get()) }
+    factory { ProductListViewModel(get<MainUseCase>()) }
 
+    factory { LoginViewModel(get<MainUseCase>()) }
 }

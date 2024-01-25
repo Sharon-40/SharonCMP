@@ -1,0 +1,25 @@
+{
+  "auth": [
+    {
+      "type": "oauth2",
+      "config": {
+        "oauth2.clients": [
+          {
+            "clientID": "1b6f98a7-5845-40c5-88a7-a85bfee2a278",
+            "redirectURL": "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com",
+            "grantType": "authorization_code"
+          }
+        ],
+        "oauth2.tokenEndpoint": "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/oauth2/api/v1/token",
+        "oauth2.authorizationEndpoint": "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/oauth2/api/v1/authorize",
+        "oauth2.endUserUI": "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com"
+      },
+      "requireOtp": false
+    }
+  ],
+  "protocol": "https",
+  "host": "clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com",
+  "port": 443,
+  "appID": "Suncor-Mob-Dev",
+  "multiUser": false
+}
