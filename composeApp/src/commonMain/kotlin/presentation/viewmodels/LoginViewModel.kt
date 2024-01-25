@@ -15,7 +15,7 @@ import moe.tlaster.precompose.viewmodel.viewModelScope
 data class LoginStateHolder(
     val isLoading: Boolean = false,
     val data: UserModel? = null,
-    val error: String = ""
+    val error: String? = null
 )
 
 class LoginViewModel(private val mainUseCase: MainUseCase) : ViewModel() {

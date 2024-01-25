@@ -27,8 +27,12 @@ import com.sap.cloud.mobile.flows.compose.flows.FlowUtil
 import com.sap.cloud.mobile.foundation.configurationprovider.FileConfigurationProvider
 import com.sap.cloud.mobile.foundation.configurationprovider.ProviderConfiguration
 import com.sap.cloud.mobile.foundation.configurationprovider.ProviderInputs
+import com.sap.cloud.mobile.foundation.mobileservices.ServiceListener
+import com.sap.cloud.mobile.foundation.mobileservices.ServiceResult
 import com.sap.cloud.mobile.foundation.mobileservices.TimeoutLockService
 import com.sap.cloud.mobile.foundation.model.AppConfig
+import com.sap.cloud.mobile.foundation.user.User
+import com.sap.cloud.mobile.foundation.user.UserService
 import com.sap.cloud.mobile.onboarding.compose.settings.CustomScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenContentSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenSettings
@@ -107,7 +111,7 @@ class WelcomeActivity : ComponentActivity() {
 
                 if (localSharedStorage.getUserId().isEmpty())
                 {
-                    launchRulesScreenActivity(context)
+                    getUserId()
                 }else{
                     launchDashBoardActivity(context)
                 }
@@ -116,6 +120,21 @@ class WelcomeActivity : ComponentActivity() {
                 startOnboarding(context, appConfig)
             }
         }
+    }
+
+    private fun getUserId()
+    {
+        UserService().retrieveUser(object : ServiceListener<User> {
+            override fun onServiceDone(result: ServiceResult<User>) {
+                if (result is ServiceResult.SUCCESS) {
+                    localSharedStorage.saveUserId(result.data?.id?:"")
+                    localSharedStorage.saveUserName(result.data?.userName?:"")
+                    launchRulesScreenActivity(applicationContext)
+                } else if (result is ServiceResult.FAILURE) {
+                    launchRulesScreenActivity(applicationContext)
+                }
+            }
+        })
     }
 
     private fun prepareScreenSettings() =

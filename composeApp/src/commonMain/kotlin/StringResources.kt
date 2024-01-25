@@ -8,7 +8,7 @@ object StringResources {
     const val Warehouse="Warehouse"
     const val LogOut="Logout"
 
-    const val BASEURL = "https://incture-cherrywork-dev-cw-ewm-dev-ewm-mobile-services.cfapps.eu10-004.hana.ondemand.com/DEMO_JAVA"
+    const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
     const val JAVA_DESTINATION="DEMO_JAVA"
 
