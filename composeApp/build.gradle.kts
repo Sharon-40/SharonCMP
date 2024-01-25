@@ -81,6 +81,8 @@ kotlin {
             //Kvault
             implementation("com.liftric:kvault:1.12.0")
 
+            implementation("io.github.aakira:napier:2.7.1")
+
         }
         iosMain.dependencies {
             // darwin ktor client for ios

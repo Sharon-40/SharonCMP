@@ -28,6 +28,8 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
 
         val response=mainRepository.getProfile(userId)
 
+        LogUtils.logDebug(LogUtils.RESPONSE_CODE,response.status.value.toString())
+
         if (response.status== HttpStatusCode.OK)
         {
             val result=response.body<StandardResponse<ArrayList<UserModel>>>()

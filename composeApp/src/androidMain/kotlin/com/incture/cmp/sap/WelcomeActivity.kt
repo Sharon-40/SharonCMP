@@ -1,5 +1,6 @@
 package com.incture.cmp.sap
 
+import LogUtils
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -129,6 +130,7 @@ class WelcomeActivity : ComponentActivity() {
                 if (result is ServiceResult.SUCCESS) {
                     localSharedStorage.saveUserId(result.data?.id?:"")
                     localSharedStorage.saveUserName(result.data?.userName?:"")
+                    LogUtils.logDebug(LogUtils.RESPONSE,localSharedStorage.getUserId())
                     launchRulesScreenActivity(applicationContext)
                 } else if (result is ServiceResult.FAILURE) {
                     launchRulesScreenActivity(applicationContext)

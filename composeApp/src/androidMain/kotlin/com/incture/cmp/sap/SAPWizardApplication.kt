@@ -6,6 +6,8 @@ import com.sap.cloud.mobile.foundation.mobileservices.SDKInitializer
 import com.sap.cloud.mobile.foundation.settings.SharedDeviceService
 import com.sap.cloud.mobile.foundation.theme.ThemeDownloadService
 import initKoin
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import org.koin.dsl.module
 
 class SAPWizardApplication: Application() {
@@ -14,6 +16,7 @@ class SAPWizardApplication: Application() {
         super.onCreate()
         initServices()
         koinSetup()
+        Napier.base(DebugAntilog())
     }
 
     private fun koinSetup()
