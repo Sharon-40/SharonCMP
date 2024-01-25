@@ -36,8 +36,11 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
 
-            // koin di
+            // ktor client
             implementation("io.ktor:ktor-client-android:2.3.7")
+            implementation("io.ktor:ktor-client-okhttp:2.3.7")
+
+            // koin di
             implementation("io.insert-koin:koin-core:3.5.0")
             implementation("io.insert-koin:koin-android:3.4.3")
 
@@ -74,6 +77,9 @@ kotlin {
 
             // sqldelight ext
             implementation("app.cash.sqldelight:coroutines-extensions:2.0.1")
+
+            //Kvault
+            implementation("com.liftric:kvault:1.12.0")
 
         }
         iosMain.dependencies {

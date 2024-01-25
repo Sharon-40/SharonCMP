@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.incture.cmp.sap.WelcomeActivity
 import kotlinx.coroutines.delay
 import ColorResources
-import Strings
+import StringResources
 
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class SplashActivity : ComponentActivity() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = Strings.AppName, style = TextStyle(color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold))
+            Text(text = StringResources.AppName, style = TextStyle(color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold))
         }
     }
 

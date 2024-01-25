@@ -7,7 +7,7 @@ import app_db.AppDatabase
 
 actual class SqlDriverFactory actual constructor(context: Any?) {
 
-    lateinit var context: Context
+    private var context: Context
 
     init {
         this.context = context as Context

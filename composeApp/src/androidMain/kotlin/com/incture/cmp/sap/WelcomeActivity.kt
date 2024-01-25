@@ -2,7 +2,6 @@ package com.incture.cmp.sap
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,24 +18,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.incture.cmp.MainActivity
 import com.incture.cmp.R
+import com.incture.cmp.launchDashBoardActivity
+import com.incture.cmp.launchRulesScreenActivity
 import com.sap.cloud.mobile.flows.compose.core.FlowContext
 import com.sap.cloud.mobile.flows.compose.ext.FlowOptions
 import com.sap.cloud.mobile.flows.compose.flows.FlowUtil
 import com.sap.cloud.mobile.foundation.configurationprovider.FileConfigurationProvider
 import com.sap.cloud.mobile.foundation.configurationprovider.ProviderConfiguration
 import com.sap.cloud.mobile.foundation.configurationprovider.ProviderInputs
+import com.sap.cloud.mobile.foundation.mobileservices.ServiceListener
+import com.sap.cloud.mobile.foundation.mobileservices.ServiceResult
 import com.sap.cloud.mobile.foundation.mobileservices.TimeoutLockService
 import com.sap.cloud.mobile.foundation.model.AppConfig
+import com.sap.cloud.mobile.foundation.user.User
+import com.sap.cloud.mobile.foundation.user.UserService
 import com.sap.cloud.mobile.onboarding.compose.settings.CustomScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenContentSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.QRCodeReaderScreenSettings
+import data.preferences.LocalSharedStorage
+import org.koin.android.ext.android.inject
 
 class WelcomeActivity : ComponentActivity() {
 
     private lateinit var providerConfiguration: ProviderConfiguration
+
+    private val localSharedStorage: LocalSharedStorage by inject<LocalSharedStorage>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,11 +108,33 @@ class WelcomeActivity : ComponentActivity() {
             flowContext = getOnboardingFlowContext(context, appConfig)
         ) { resultCode, _ ->
             if (resultCode == Activity.RESULT_OK) {
-                launchDashBoardActivity(context)
+
+                if (localSharedStorage.getUserId().isEmpty())
+                {
+                    getUserId()
+                }else{
+                    launchDashBoardActivity(context)
+                }
+
             } else {
                 startOnboarding(context, appConfig)
             }
         }
+    }
+
+    private fun getUserId()
+    {
+        UserService().retrieveUser(object : ServiceListener<User> {
+            override fun onServiceDone(result: ServiceResult<User>) {
+                if (result is ServiceResult.SUCCESS) {
+                    localSharedStorage.saveUserId(result.data?.id?:"")
+                    localSharedStorage.saveUserName(result.data?.userName?:"")
+                    launchRulesScreenActivity(applicationContext)
+                } else if (result is ServiceResult.FAILURE) {
+                    launchRulesScreenActivity(applicationContext)
+                }
+            }
+        })
     }
 
     private fun prepareScreenSettings() =
@@ -135,12 +165,6 @@ class WelcomeActivity : ComponentActivity() {
         )
     )
 
-    private fun launchDashBoardActivity(context: Context) {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        }
-        context.startActivity(intent)
-    }
 
 }
 
