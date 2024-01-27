@@ -81,6 +81,10 @@ kotlin {
             //Kvault
             implementation("com.liftric:kvault:1.12.0")
 
+            //ChipView
+            implementation("com.robertlevonyan.compose:materialchip:3.0.8")
+
+
         }
         iosMain.dependencies {
             // darwin ktor client for ios
