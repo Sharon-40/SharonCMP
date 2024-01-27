@@ -114,8 +114,7 @@ class WelcomeActivity : ComponentActivity() {
                 {
                     getUserId()
                 }else{
-                    getUserId()
-                    //launchDashBoardActivity(context)
+                    launchDashBoardActivity(context)
                 }
 
             } else {
