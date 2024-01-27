@@ -8,6 +8,7 @@ object StringResources {
     const val Warehouse="Warehouse"
     const val Printer="Printer"
     const val LogOut="Logout"
+    const val Execute="Execute"
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
@@ -24,6 +25,13 @@ object StringResources {
     object WareHouseTechTerms{
         const val Plant="WRK"
         const val WareHouse="LGN"
+
+        const val WarehouseOrder="WareHouseOrder"
+        const val WarehouseTask="WareHouseTask"
+        const val PurchaseOrder="PurchaseOrder"
+        const val Inbound="Inbound"
+        const val Product="Product"
+        const val ProductId="Product Id"
     }
 
 }

@@ -10,6 +10,7 @@ import presentation.screens.DashBoardScreen
 import presentation.screens.ProductListScreen
 import presentation.viewmodels.ProductListViewModel
 import presentation.screens.ProfileScreen
+import presentation.screens.putaway.PutawayScreen
 
 @Composable
 fun AppNavigation() {
@@ -33,6 +34,12 @@ fun AppNavigation() {
 
             }
         }
+
+        scene(route = NavigationRoute.Putaway.route) {
+            val localSharedStorage: LocalSharedStorage = koinInject()
+            PutawayScreen(navigator,localSharedStorage)
+        }
+
     }
 
 
@@ -42,4 +49,6 @@ sealed class NavigationRoute(val route: String) {
     data object DashBoard : NavigationRoute("dashboard")
     data object ProductList : NavigationRoute("product_list")
     data object Profile : NavigationRoute("profile")
+
+    data object Putaway : NavigationRoute("putaway")
 }

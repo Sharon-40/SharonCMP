@@ -1,19 +1,25 @@
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import data.font
 
 object Utils {
 
     @Composable
-    fun headerFontStyle(): TextStyle {
+    fun headerFontStyle(color:Color=Color.Black): TextStyle {
         return TextStyle(
-            color = Color.Black,
+            color = color,
             fontSize = 14.sp,
             fontFamily = getSemiBoldFont(),
             fontWeight = FontWeight.SemiBold
@@ -21,9 +27,9 @@ object Utils {
     }
 
     @Composable
-    fun valueFontStyle(): TextStyle {
+    fun valueFontStyle(color:Color=Color.Black): TextStyle {
         return TextStyle(
-            color = Color.Black,
+            color = color,
             fontSize = 16.sp,
             fontFamily = getBoldFont(),
             fontWeight = FontWeight.Bold
@@ -43,6 +49,11 @@ object Utils {
     @Composable
     fun getBoldFont(): FontFamily {
         return FontFamily(font("OpenSans Bold", "opensans_bold", FontWeight.Bold, FontStyle.Normal))
+    }
+
+    fun getStandardModifier():Modifier
+    {
+        return Modifier.fillMaxSize().background(ColorResources.Background).padding(10.dp)
     }
 
     @Composable

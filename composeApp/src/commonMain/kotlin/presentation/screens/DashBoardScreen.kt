@@ -47,7 +47,7 @@ import presentation.navigation.NavigationRoute
 @Composable
 fun DashBoardScreen(navigator: Navigator) {
 
-    val apps= arrayListOf(AppModel(StringResources.Apps.GoodsReceiving.name,ImageResources.goods_recieveing),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin))
+    val apps= arrayListOf(AppModel(StringResources.Apps.GoodsReceiving.name,ImageResources.goods_recieveing,NavigationRoute.ProductList.route),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway,NavigationRoute.Putaway.route),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin,NavigationRoute.ProductList.route))
 
     Scaffold(topBar = {
         TopAppBar(
@@ -81,7 +81,7 @@ fun DashBoardScreen(navigator: Navigator) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.fillMaxWidth().wrapContentHeight()
                             .clickable {
-                                navigator.navigate(NavigationRoute.ProductList.route)
+                                navigator.navigate(it.navigatorSceneName)
                             }
                             .padding(2.dp).border(1.dp, ColorResources.ColorAccent, RoundedCornerShape(5.dp)).background(White).padding(10.dp)
                     ) {

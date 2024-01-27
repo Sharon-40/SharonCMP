@@ -6,7 +6,7 @@ object ColorResources{
     val ColorSecondary = Color(0xFF353D66)
     val ColorAccent = Color(0xFF111529)
 
-    val Background = Color(0xFFE7E6EC)
+    val Background = Color(0xFFFCF9F9)
 
 
     val Purple40 = Color(0xFF6650a4)
