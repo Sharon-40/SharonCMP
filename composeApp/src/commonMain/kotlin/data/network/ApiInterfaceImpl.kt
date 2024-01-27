@@ -21,4 +21,18 @@ class ApiInterfaceImpl(private val httpClient: HttpClient) : ApiInterface {
         return httpClient.get("https://fakestoreapi.com/products/").body<List<ProductModel>>()
     }
 
+    override suspend fun getPutAwayWarehouseTasks(warehouse:String,processCategory:String, warehouseOrder:String?, warehouseTask:String?, purchaseOrder:String?, inboundDelivery:String?, product:String?, status:String?): HttpResponse {
+        return httpClient.get {
+            url("${StringResources.BASEURL}/allWarehouseTasksPutaway")
+            parameter("EWMWarehouse", warehouse)
+            parameter("WarehouseProcessCategory", processCategory)
+            parameter("WarehouseOrder", warehouseOrder)
+            parameter("WarehouseTask", warehouseTask)
+            parameter("PurchasingDocument", purchaseOrder)
+            parameter("EWMDelivery", inboundDelivery)
+            parameter("Product", product)
+            parameter("WarehouseTaskStatus", status)
+        }
+    }
+
 }

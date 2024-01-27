@@ -4,6 +4,7 @@ import StringResources
 import data.logs.LogUtils
 import data.model.StandardResponse
 import data.model.UserModel
+import data.model.WarehouseTaskModel
 import data.utils.NetworkResult
 import data.respository.MainRepository
 import io.ktor.client.call.body
@@ -41,6 +42,34 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
             if (result.status)
             {
                 emit(NetworkResult.Success(data = result.data?.first() ))
+            }else{
+                emit(NetworkResult.Error(result.message))
+            }
+        }else{
+            emit(NetworkResult.Error(response.status.toString()))
+        }
+
+    }.catch {
+        emit(NetworkResult.Error(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun getPutAwayWarehouseTasks(warehouse:String, warehouseOrder:String?, warehouseTask:String?, purchaseOrder:String?, inboundDelivery:String?, product:String?, status:String?) = flow {
+
+        emit(NetworkResult.Loading())
+
+        val response=mainRepository.getPutAwayWarehouseTasks(warehouse,warehouseOrder,warehouseTask,purchaseOrder,inboundDelivery,product,status)
+
+        if (response.status== HttpStatusCode.OK)
+        {
+            LogUtils.logDebug(StringResources.RESPONSE_CODE,response.status.toString())
+
+            val result=response.body<StandardResponse<ArrayList<WarehouseTaskModel>>>()
+
+            LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
+
+            if (result.status)
+            {
+                emit(NetworkResult.Success(data = result.data))
             }else{
                 emit(NetworkResult.Error(result.message))
             }

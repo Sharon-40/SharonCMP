@@ -10,6 +10,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import data.font
@@ -17,20 +18,20 @@ import data.font
 object Utils {
 
     @Composable
-    fun headerFontStyle(color:Color=Color.Black): TextStyle {
+    fun headerFontStyle(color:Color=Color.Black,size:TextUnit=14.sp): TextStyle {
         return TextStyle(
             color = color,
-            fontSize = 14.sp,
+            fontSize = size,
             fontFamily = getSemiBoldFont(),
             fontWeight = FontWeight.SemiBold
         )
     }
 
     @Composable
-    fun valueFontStyle(color:Color=Color.Black): TextStyle {
+    fun valueFontStyle(color:Color=Color.Black,size:TextUnit=16.sp): TextStyle {
         return TextStyle(
             color = color,
-            fontSize = 16.sp,
+            fontSize = size,
             fontFamily = getBoldFont(),
             fontWeight = FontWeight.Bold
         )

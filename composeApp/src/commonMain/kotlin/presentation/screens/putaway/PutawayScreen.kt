@@ -38,11 +38,23 @@ fun PutawayScreen(navigator: Navigator,localSharedStorage: LocalSharedStorage) {
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            QRPickerTextFiled(headerText = StringResources.WareHouseTechTerms.WarehouseOrder)
+            QRPickerTextFiled(headerText = StringResources.WareHouseTechTerms.WarehouseOrder, validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_WarehouseOrder)
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            QRPickerTextFiled(headerText = StringResources.WareHouseTechTerms.WarehouseTask)
+            QRPickerTextFiled(headerText = StringResources.WareHouseTechTerms.WarehouseTask,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_WarehouseTask)
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            QRPickerTextFiled(headerText = StringResources.WareHouseTechTerms.PurchaseOrder,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_PurchaseOrder)
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            QRPickerTextFiled(headerText = StringResources.WareHouseTechTerms.InboundDelivery,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Inbound)
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            QRPickerTextFiled(headerText = StringResources.WareHouseTechTerms.ProductId,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Product)
 
             Spacer(modifier = Modifier.height(5.dp))
 

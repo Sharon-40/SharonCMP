@@ -29,9 +29,19 @@ object StringResources {
         const val WarehouseOrder="WareHouseOrder"
         const val WarehouseTask="WareHouseTask"
         const val PurchaseOrder="PurchaseOrder"
-        const val Inbound="Inbound"
+        const val InboundDelivery="Inbound Delivery"
         const val Product="Product"
         const val ProductId="Product Id"
     }
+
+    object ValidationTypes{
+        const val ValidationType_PutAway_WarehouseOrder="PutAway_WarehouseOrder"
+        const val ValidationType_PutAway_WarehouseTask="PutAway_WarehouseTask"
+        const val ValidationType_PutAway_PurchaseOrder="PutAway_PurchaseOrder"
+        const val ValidationType_PutAway_Inbound="PutAway_Inbound"
+        const val ValidationType_PutAway_Product="PutAway_Product"
+    }
+
+    enum class ValidationStatus{ VALIDATED,INVALID,CLEAR }
 
 }
