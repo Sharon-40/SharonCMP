@@ -37,6 +37,7 @@ import com.sap.cloud.mobile.onboarding.compose.settings.CustomScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenContentSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.LaunchScreenSettings
 import com.sap.cloud.mobile.onboarding.compose.settings.QRCodeReaderScreenSettings
+import data.logs.LogUtils
 import data.preferences.LocalSharedStorage
 import org.koin.android.ext.android.inject
 
@@ -129,6 +130,7 @@ class WelcomeActivity : ComponentActivity() {
                 if (result is ServiceResult.SUCCESS) {
                     localSharedStorage.saveUserId(result.data?.id?:"")
                     localSharedStorage.saveUserName(result.data?.userName?:"")
+                    LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
                     launchRulesScreenActivity(applicationContext)
                 } else if (result is ServiceResult.FAILURE) {
                     launchRulesScreenActivity(applicationContext)

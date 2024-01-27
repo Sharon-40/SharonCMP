@@ -1,5 +1,7 @@
 package domain.use_cases
 
+import StringResources
+import data.logs.LogUtils
 import data.model.StandardResponse
 import data.model.UserModel
 import data.utils.NetworkResult
@@ -30,7 +32,11 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
 
         if (response.status== HttpStatusCode.OK)
         {
+            LogUtils.logDebug(StringResources.RESPONSE_CODE,response.status.toString())
+
             val result=response.body<StandardResponse<ArrayList<UserModel>>>()
+
+            LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
 
             if (result.status)
             {

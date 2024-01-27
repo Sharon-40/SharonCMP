@@ -11,6 +11,13 @@ object StringResources {
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
+
+    const val  RESPONSE_SUCCESS = "ResponseS"
+    const val  RESPONSE_ERROR = "ResponseE"
+    const val  RESPONSE = "Response"
+    const val  RESPONDED = "Responded"
+    const val  RESPONSE_CODE = "Response_code"
+
     enum class Apps{ PutAway,BinToBin,GoodsReceiving }
 
 
