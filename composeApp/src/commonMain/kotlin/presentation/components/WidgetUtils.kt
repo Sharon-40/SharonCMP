@@ -80,7 +80,7 @@ fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
         border = BorderStroke(1.dp, Color.White),
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = Color.White, fontFamily = FontFamily.Serif, fontWeight = FontWeight.Bold))
+        Text(text = text, style = TextStyle(color = Color.White, fontFamily = Utils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
     }
 }
 
@@ -92,6 +92,6 @@ fun SecondaryButton(text: String, onClick: () -> Unit = {}) {
         border = BorderStroke(1.dp, ColorResources.ColorPrimary),
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = Color.Blue, fontFamily = FontFamily.Serif,fontWeight = FontWeight.Bold))
+        Text(text = text, style = TextStyle(color = Color.Blue, fontFamily = Utils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
     }
 }
