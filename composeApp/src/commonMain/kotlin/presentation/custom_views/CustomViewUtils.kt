@@ -38,6 +38,7 @@ import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -233,13 +234,12 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
 fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, valueText:String="", isMandatory:Boolean=false, validation:Boolean=false, validationType:String?=null, onChipSelected: (List<String>) -> Unit = { _ -> })
 {
 
-
     var enteredValue by remember { mutableStateOf(valueText) }
     var isLoading by remember { mutableStateOf(false) }
     var validationStatus by remember { mutableStateOf(StringResources.ValidationStatus.CLEAR) }
     var validationMessage by remember { mutableStateOf("") }
 
-    var chips:List<String> by remember { mutableStateOf(arrayListOf()) }
+    val chips = remember { mutableStateListOf<String>() }
 
 
     val viewModel: CustomComponentsViewModel = koinViewModel(CustomComponentsViewModel::class)
@@ -339,15 +339,12 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 )
             }
 
-            if (chips.isNotEmpty())
-            {
-                MaterialChipGroup(
-                    items = chips,
-                    onChipSelected = {
-                        onChipSelected(it)
-                    }
-                )
-            }
+            MaterialChipGroup(
+                items = chips,
+                onChipSelected = {
+                    onChipSelected(it)
+                }
+            )
 
 
         }
@@ -355,19 +352,19 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
     }
 
     when {
-        uiState.value.isLoading && enteredValue.isNotEmpty()-> {
+        uiState.value.isLoading-> {
             isLoading=true
         }
 
-        !uiState.value.error.isNullOrEmpty() && enteredValue.isNotEmpty()-> {
+        !uiState.value.error.isNullOrEmpty()-> {
             validationMessage= StringResources.ValidationStatus.INVALID.name
             validationStatus=StringResources.ValidationStatus.INVALID
             isLoading=false
         }
 
-        uiState.value.data!=null && enteredValue.isNotEmpty()->{
+        uiState.value.data!=null ->{
             isLoading=false
-            chips = chips.toMutableList().apply { add(enteredValue) }
+            chips.add(enteredValue)
             //chips= arrayListOf(enteredValue)
         }
 
