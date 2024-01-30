@@ -19,10 +19,9 @@ import presentation.components.PrimaryButton
 import presentation.components.ToolBarWithBack
 import presentation.custom_views.ChipQRPickerTextField
 import presentation.custom_views.HorizontalCustomText
-import presentation.custom_views.QRPickerTextField
 
 @Composable
-fun PutawayScreen(navigator: Navigator,localSharedStorage: LocalSharedStorage) {
+fun PutAwayScreen(navigator: Navigator, localSharedStorage: LocalSharedStorage) {
 
     Scaffold(topBar = {
         ToolBarWithBack(navigator, StringResources.Apps.PutAway.name)
@@ -43,19 +42,19 @@ fun PutawayScreen(navigator: Navigator,localSharedStorage: LocalSharedStorage) {
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            QRPickerTextField(headerText = StringResources.WareHouseTechTerms.WarehouseTask,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_WarehouseTask)
+            ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.WarehouseTask,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_WarehouseTask)
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            QRPickerTextField(headerText = StringResources.WareHouseTechTerms.PurchaseOrder,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_PurchaseOrder)
+            ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.PurchaseOrder,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_PurchaseOrder)
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            QRPickerTextField(headerText = StringResources.WareHouseTechTerms.InboundDelivery,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Inbound)
+            ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.InboundDelivery,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Inbound)
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            QRPickerTextField(headerText = StringResources.WareHouseTechTerms.ProductId,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Product)
+            ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.ProductId,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Product)
 
             Spacer(modifier = Modifier.height(5.dp))
 

@@ -5,7 +5,6 @@ import StringResources
 import Utils
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -46,7 +45,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -149,7 +147,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
                     unfocusedIndicatorColor = Color.Transparent
                 ),
                 textStyle = Utils.valueFontStyle(),
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
                 keyboardActions = KeyboardActions(onDone = {
                     if (validation && !validationType.isNullOrEmpty() && enteredValue.isNotEmpty())
                     {
@@ -235,9 +233,9 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
 {
 
     var enteredValue by remember { mutableStateOf(valueText) }
-    var isLoading by remember { mutableStateOf(false) }
-    var validationStatus by remember { mutableStateOf(StringResources.ValidationStatus.CLEAR) }
-    var validationMessage by remember { mutableStateOf("") }
+    val isLoading by remember { mutableStateOf(false) }
+    val validationStatus by remember { mutableStateOf(StringResources.ValidationStatus.CLEAR) }
+    val validationMessage by remember { mutableStateOf("") }
 
     val chips = remember { mutableStateListOf<String>() }
 
@@ -245,7 +243,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
     val viewModel: CustomComponentsViewModel = koinViewModel(CustomComponentsViewModel::class)
     val localSharedStorage: LocalSharedStorage = koinInject()
 
-    val uiState = viewModel.uiState.collectAsState()
+    //val uiState = viewModel.uiState.collectAsState()
 
     Column(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
 
@@ -305,7 +303,9 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 keyboardActions = KeyboardActions(onDone = {
                     if (validation && !validationType.isNullOrEmpty() && enteredValue.isNotEmpty())
                     {
-                        when (validationType) {
+                        chips.add(enteredValue)
+                        enteredValue = ""
+                        /*when (validationType) {
                             StringResources.ValidationTypes.ValidationType_PutAway_WarehouseOrder -> {
                                 viewModel.getPutAwayWarehouseTasks(localSharedStorage.getWareHouse(),enteredValue,null,null,null,null,null)
                             }
@@ -321,7 +321,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                             StringResources.ValidationTypes.ValidationType_PutAway_Product -> {
                                 viewModel.getPutAwayWarehouseTasks(localSharedStorage.getWareHouse(),null,null,null,null,enteredValue,null)
                             }
-                        }
+                        }*/
                     }
                 })
             )
@@ -351,7 +351,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
 
     }
 
-    when {
+   /* when {
         uiState.value.isLoading-> {
             isLoading=true
         }
@@ -368,7 +368,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
             //chips= arrayListOf(enteredValue)
         }
 
-    }
+    }*/
 
 }
 
