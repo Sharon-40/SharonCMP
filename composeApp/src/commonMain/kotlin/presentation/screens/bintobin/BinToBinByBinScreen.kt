@@ -39,7 +39,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
     var isLoading by remember { mutableStateOf(false) }
     var validationMessage by remember { mutableStateOf("") }
 
-    var bin= remember { "" }
+    var enteredBin by remember { mutableStateOf("") }
     val stockData = remember { mutableStateListOf<StockModel>() }
 
     val uiState = viewModel.uiState.collectAsState()
@@ -50,14 +50,14 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 
         Column(modifier = Modifier.fillMaxWidth().padding(top = 5.dp) , horizontalAlignment = Alignment.CenterHorizontally) {
 
-            QRPickerTextField (headerText = StringResources.WareHouseTechTerms.Bin, onValueChange = {
-                bin=it
+            QRPickerTextField (headerText = StringResources.WareHouseTechTerms.Bin, valueText = enteredBin, onValueChange = {
+                enteredBin=it
             })
 
             PrimaryButton(StringResources.Execute) {
-                if (bin.isNotEmpty())
+                if (enteredBin.isNotEmpty())
                 {
-                    viewModel.getStockByBin(bin)
+                    viewModel.getStockByBin(enteredBin)
                 }else{
                     utils.makeToast(StringResources.InvalidBin)
                 }
@@ -169,7 +169,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
             {
                 utils.makeToast(uiBinTransferState.value.errorBuilder)
             }
-            viewModel.getStockByBin(bin)
+            viewModel.getStockByBin(enteredBin)
         }
 
     }
