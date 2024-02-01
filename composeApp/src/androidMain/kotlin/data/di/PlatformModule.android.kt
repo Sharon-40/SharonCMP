@@ -4,6 +4,7 @@ import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
 import app_db.AppDatabase
 import com.sap.cloud.mobile.foundation.common.ClientProvider
+import data.Utils
 import data.local_db.SqlDriverFactory
 import data.preferences.KVaultFactory
 import io.ktor.client.HttpClient
@@ -40,4 +41,6 @@ actual val platformModule: Module
         single { SqlDriverFactory(get<Context>()).createSqlDriver() }
         single { AppDatabase.invoke(get<SqlDriver>()) }
         single { KVaultFactory(get<Context>()).createStoreInstance()}
+
+        single { Utils(get<Context>())}
     }

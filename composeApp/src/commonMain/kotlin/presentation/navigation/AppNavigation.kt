@@ -1,6 +1,7 @@
 package presentation.navigation
 
 import androidx.compose.runtime.Composable
+import data.Utils
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
@@ -44,7 +45,8 @@ fun AppNavigation() {
 
         scene(route = NavigationRoute.BinToBin.route) {
             val viewModel: BinToBinViewModel = koinViewModel(BinToBinViewModel::class)
-            BinToBinScreen(navigator,viewModel)
+            val utils: Utils = koinInject()
+            BinToBinScreen(navigator,viewModel,utils)
         }
 
     }

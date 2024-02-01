@@ -24,6 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import data.Utils
 import data.model.StockModel
 import presentation.components.CustomCircleProgressbar
 import presentation.components.PrimaryButton
@@ -32,13 +33,13 @@ import presentation.custom_views.VerticalCustomText
 import presentation.viewmodels.BinToBinViewModel
 
 @Composable
-fun BinToBinByBinScreen(viewModel: BinToBinViewModel)
+fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 {
 
     var isLoading by remember { mutableStateOf(false) }
     var validationMessage by remember { mutableStateOf("") }
 
-    var bin=""
+    var bin= remember { "" }
     val stockData = remember { mutableStateListOf<StockModel>() }
 
     val uiState = viewModel.uiState.collectAsState()
@@ -57,6 +58,8 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel)
                 if (bin.isNotEmpty())
                 {
                     viewModel.getStockByBin(bin)
+                }else{
+                    utils.makeToast(StringResources.InvalidBin)
                 }
             }
 
@@ -117,6 +120,8 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel)
                     if (viewModel.getSelectedData(stockData.toList()).isNotEmpty())
                     {
                         viewModel.prePareItemPayload("VERP",stockData.toList())
+                    }else{
+                        utils.makeToast(StringResources.SelectAtleastOne)
                     }
                 }
             }
@@ -132,6 +137,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel)
         uiState.value.error.isNotEmpty() -> {
             validationMessage= uiState.value.error
             isLoading=false
+            utils.makeToast(uiState.value.error)
         }
 
         uiState.value.data!=null ->{
@@ -148,13 +154,21 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel)
         }
 
         uiBinTransferState.value.error.isNotEmpty() -> {
-            validationMessage= uiState.value.error
+            validationMessage= uiBinTransferState.value.error
             isLoading=false
+            utils.makeToast(uiBinTransferState.value.error)
         }
 
         uiBinTransferState.value.data!=null ->{
-            validationMessage= uiState.value.error
+            validationMessage= uiBinTransferState.value.error
             isLoading=false
+            if (uiBinTransferState.value.successCount>0)
+            {
+                utils.makeToast(uiBinTransferState.value.successBuilder)
+            }else if (uiBinTransferState.value.errorCount>0)
+            {
+                utils.makeToast(uiBinTransferState.value.errorBuilder)
+            }
             viewModel.getStockByBin(bin)
         }
 

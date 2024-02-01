@@ -10,6 +10,9 @@ object StringResources {
     const val LogOut="Logout"
     const val Execute="Execute"
     const val Submit="Submit"
+    const val NoDataFound="NoDataFound"
+    const val SelectAtleastOne="SelectAtleastOne"
+    const val InvalidBin="Invalid Bin"
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
