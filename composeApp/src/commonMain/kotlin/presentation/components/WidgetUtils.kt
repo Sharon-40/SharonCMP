@@ -8,8 +8,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -28,10 +31,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import moe.tlaster.precompose.navigation.Navigator
+
+
+@Composable
+fun CustomCircleProgressbar()
+{
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        CircularProgressIndicator(color = ColorResources.ColorPrimary)
+    }
+}
 
 @Composable
 fun ProfileListTile(leadingIcon:ImageVector,title:String,desc:String)
@@ -45,8 +56,8 @@ fun ProfileListTile(leadingIcon:ImageVector,title:String,desc:String)
         Spacer(modifier = Modifier.width(5.dp))
 
         Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
-            Text(text = title, style = Utils.headerFontStyle())
-            Text(text = desc, style = Utils.valueFontStyle())
+            Text(text = title, style = Utils.getRegularFontStyle())
+            Text(text = desc, style = Utils.getBoldFontStyle())
         }
 
     }
@@ -67,10 +78,11 @@ fun ToolBarWithBack(navigator: Navigator,title: String)
                 navigator.popBackStack()
             })
             Spacer(modifier = Modifier.width(10.dp))
-            Text(text = title, style = Utils.valueFontStyle(), color = Color.White)
+            Text(text = title, style = Utils.getBoldFontStyle(), color = Color.White)
         }
     }
 }
+
 
 @Composable
 fun PrimaryButton(text: String, onClick: () -> Unit = {}) {

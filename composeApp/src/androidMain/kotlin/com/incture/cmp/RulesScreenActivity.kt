@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import data.model.UserModel
 import data.preferences.LocalSharedStorage
 import org.koin.android.ext.android.inject
+import presentation.components.CustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.viewmodels.LoginViewModel
 
@@ -75,9 +76,7 @@ class RulesScreenActivity : ComponentActivity() {
 
         when {
             uiState.value.isLoading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
-                }
+                CustomCircleProgressbar()
             }
 
             !uiState.value.error.isNullOrEmpty() -> {

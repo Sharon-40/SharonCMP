@@ -47,7 +47,7 @@ import presentation.navigation.NavigationRoute
 @Composable
 fun DashBoardScreen(navigator: Navigator) {
 
-    val apps= arrayListOf(AppModel(StringResources.Apps.GoodsReceiving.name,ImageResources.goods_recieveing,NavigationRoute.ProductList.route),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway,NavigationRoute.Putaway.route),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin,NavigationRoute.ProductList.route))
+    val apps= arrayListOf(AppModel(StringResources.Apps.GoodsReceiving.name,ImageResources.goods_recieveing,NavigationRoute.ProductList.route),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway,NavigationRoute.PutAway.route),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin,NavigationRoute.BinToBin.route))
 
     Scaffold(topBar = {
         TopAppBar(
@@ -59,7 +59,7 @@ fun DashBoardScreen(navigator: Navigator) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = StringResources.AppName, style = Utils.valueFontStyle(), color = White)
+                Text(text = StringResources.AppName, style = Utils.getBoldFontStyle(), color = White)
                 Image(imageVector = Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier.clickable {
                     navigator.navigate(NavigationRoute.Profile.route)
                 }, colorFilter = ColorFilter.tint(color = White))
@@ -70,7 +70,7 @@ fun DashBoardScreen(navigator: Navigator) {
 
         Column (modifier = Modifier.fillMaxHeight().background(ColorResources.Background).padding(10.dp)) {
 
-            Text(text = StringResources.WareHouseTransactions, style = Utils.valueFontStyle())
+            Text(text = StringResources.WareHouseTransactions, style = Utils.getBoldFontStyle())
 
             Spacer(modifier = Modifier.height(5.dp))
 

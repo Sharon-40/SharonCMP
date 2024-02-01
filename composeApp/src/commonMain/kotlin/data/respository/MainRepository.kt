@@ -1,6 +1,7 @@
 package data.respository
 
 import data.local_db.LocalDbDao
+import data.model.BinTransferModel
 import data.model.ProductModel
 import data.network.ApiInterfaceImpl
 import io.ktor.client.statement.HttpResponse
@@ -17,6 +18,14 @@ class MainRepository(private val apiInterfaceImpl: ApiInterfaceImpl,private val 
 
     suspend fun getPutAwayWarehouseTasks(warehouse:String, warehouseOrder:String?, warehouseTask:String?, purchaseOrder:String?, inboundDelivery:String?, product:String?, status:String?): HttpResponse {
         return apiInterfaceImpl.getPutAwayWarehouseTasks(warehouse,"1",warehouseOrder,warehouseTask,purchaseOrder,inboundDelivery,product,status)
+    }
+
+    suspend fun getStockByBin(bin:String): HttpResponse {
+        return apiInterfaceImpl.getStockByBin(bin)
+    }
+
+    suspend fun postBinTransfer(transactions:ArrayList<BinTransferModel>): HttpResponse {
+        return apiInterfaceImpl.postBinTransfer(transactions)
     }
 
     suspend fun insert(id: Int, title: String, desc: String, image: String) {

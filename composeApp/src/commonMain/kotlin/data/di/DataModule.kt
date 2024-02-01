@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 val dataModule = module {
 
-    factory<ApiInterfaceImpl> { ApiInterfaceImpl(get<HttpClient>()) }
+    factory<ApiInterfaceImpl> { ApiInterfaceImpl(get<HttpClient>(),get<LocalSharedStorage>()) }
 
     factory<LocalDbDao> { LocalDbDao(get<AppDatabase>()) }
 

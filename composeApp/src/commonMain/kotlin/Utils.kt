@@ -1,5 +1,4 @@
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Typography
@@ -18,7 +17,17 @@ import data.font
 object Utils {
 
     @Composable
-    fun headerFontStyle(color:Color=Color.Black,size:TextUnit=14.sp): TextStyle {
+    fun getRegularFontStyle(color:Color=Color.Black, size:TextUnit=12.sp): TextStyle {
+        return TextStyle(
+            color = color,
+            fontSize = size,
+            fontFamily = getRegularFont(),
+            fontWeight = FontWeight.Normal
+        )
+    }
+
+    @Composable
+    fun getSemiBoldFontStyle(color:Color=Color.Black, size:TextUnit=14.sp): TextStyle {
         return TextStyle(
             color = color,
             fontSize = size,
@@ -28,7 +37,7 @@ object Utils {
     }
 
     @Composable
-    fun valueFontStyle(color:Color=Color.Black,size:TextUnit=16.sp): TextStyle {
+    fun getBoldFontStyle(color:Color=Color.Black, size:TextUnit=16.sp): TextStyle {
         return TextStyle(
             color = color,
             fontSize = size,

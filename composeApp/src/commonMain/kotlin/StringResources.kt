@@ -9,6 +9,7 @@ object StringResources {
     const val Printer="Printer"
     const val LogOut="Logout"
     const val Execute="Execute"
+    const val Submit="Submit"
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
@@ -32,6 +33,15 @@ object StringResources {
         const val InboundDelivery="Inbound Delivery"
         const val Product="Product"
         const val ProductId="Product Id"
+        const val Bin="Bin"
+        const val ProductDesc="Product Desc"
+        const val Qty="Qty"
+        const val Uom="Uom"
+        const val StockType="StockType"
+        const val Batch="Batch"
+        const val TransferQty="TransferQty"
+        const val DestinationStorageType="Dest.Str.Type"
+        const val DestinationBin="Dest.Bin"
     }
 
     object ValidationTypes{

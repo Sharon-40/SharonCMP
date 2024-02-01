@@ -1,15 +1,19 @@
 package data.network
 
 import StringResources
+import data.model.BinTransferModel
 import data.model.ProductModel
+import data.preferences.LocalSharedStorage
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 
-class ApiInterfaceImpl(private val httpClient: HttpClient) : ApiInterface {
+class ApiInterfaceImpl(private val httpClient: HttpClient,private val localSharedStorage: LocalSharedStorage) : ApiInterface {
     override suspend fun getProfile(userId:String): HttpResponse {
         return httpClient.get {
             url("${StringResources.BASEURL}/label/userDetail")
@@ -32,6 +36,25 @@ class ApiInterfaceImpl(private val httpClient: HttpClient) : ApiInterface {
             parameter("EWMDelivery", inboundDelivery)
             parameter("Product", product)
             parameter("WarehouseTaskStatus", status)
+        }
+    }
+
+    override suspend fun getStockByBin(bin: String): HttpResponse {
+        return httpClient.get {
+            url("${StringResources.BASEURL}/getAvailStock")
+            parameter("Plant",localSharedStorage.getPlant())
+            parameter("EWMWarehouse", localSharedStorage.getWareHouse())
+            parameter("StorageBin", bin)
+            parameter("Language","EN")
+        }
+    }
+
+    override suspend fun postBinTransfer(transactions:ArrayList<BinTransferModel>): HttpResponse {
+        return httpClient.post {
+            url("${StringResources.BASEURL}/bin/binTransfer")
+            parameter("Plant",localSharedStorage.getPlant())
+            parameter("EWMWarehouse", localSharedStorage.getWareHouse())
+            setBody(transactions)
         }
     }
 

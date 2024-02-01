@@ -2,7 +2,10 @@ package domain.use_cases
 
 import StringResources
 import data.logs.LogUtils
+import data.model.BinTransferModel
+import data.model.ConfirmTaskResponse
 import data.model.StandardResponse
+import data.model.StockModel
 import data.model.UserModel
 import data.model.WarehouseTaskModel
 import data.utils.NetworkResult
@@ -64,6 +67,62 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
             LogUtils.logDebug(StringResources.RESPONSE_CODE,response.status.toString())
 
             val result=response.body<StandardResponse<ArrayList<WarehouseTaskModel>>>()
+
+            LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
+
+            if (result.status)
+            {
+                emit(NetworkResult.Success(data = result.data))
+            }else{
+                emit(NetworkResult.Error(result.message))
+            }
+        }else{
+            emit(NetworkResult.Error(response.status.toString()))
+        }
+
+    }.catch {
+        emit(NetworkResult.Error(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun getStockByBin(bin:String) = flow {
+
+        emit(NetworkResult.Loading())
+
+        val response=mainRepository.getStockByBin(bin)
+
+        if (response.status== HttpStatusCode.OK)
+        {
+            LogUtils.logDebug(StringResources.RESPONSE_CODE,response.status.toString())
+
+            val result=response.body<StandardResponse<ArrayList<StockModel>>>()
+
+            LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
+
+            if (result.status)
+            {
+                emit(NetworkResult.Success(data = result.data))
+            }else{
+                emit(NetworkResult.Error(result.message))
+            }
+        }else{
+            emit(NetworkResult.Error(response.status.toString()))
+        }
+
+    }.catch {
+        emit(NetworkResult.Error(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun postBinTransfer(transactions:ArrayList<BinTransferModel>) = flow {
+
+        emit(NetworkResult.Loading())
+
+        val response=mainRepository.postBinTransfer(transactions)
+
+        if (response.status== HttpStatusCode.OK)
+        {
+            LogUtils.logDebug(StringResources.RESPONSE_CODE,response.status.toString())
+
+            val result=response.body<StandardResponse<ArrayList<ConfirmTaskResponse>>>()
 
             LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
 

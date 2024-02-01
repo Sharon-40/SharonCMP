@@ -8,9 +8,11 @@ import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.screens.DashBoardScreen
 import presentation.screens.ProductListScreen
-import presentation.viewmodels.ProductListViewModel
 import presentation.screens.ProfileScreen
+import presentation.screens.bintobin.BinToBinScreen
 import presentation.screens.putaway.PutAwayScreen
+import presentation.viewmodels.BinToBinViewModel
+import presentation.viewmodels.ProductListViewModel
 
 @Composable
 fun AppNavigation() {
@@ -35,9 +37,14 @@ fun AppNavigation() {
             }
         }
 
-        scene(route = NavigationRoute.Putaway.route) {
+        scene(route = NavigationRoute.PutAway.route) {
             val localSharedStorage: LocalSharedStorage = koinInject()
             PutAwayScreen(navigator,localSharedStorage)
+        }
+
+        scene(route = NavigationRoute.BinToBin.route) {
+            val viewModel: BinToBinViewModel = koinViewModel(BinToBinViewModel::class)
+            BinToBinScreen(navigator,viewModel)
         }
 
     }
@@ -50,5 +57,7 @@ sealed class NavigationRoute(val route: String) {
     data object ProductList : NavigationRoute("product_list")
     data object Profile : NavigationRoute("profile")
 
-    data object Putaway : NavigationRoute("putaway")
+    data object PutAway : NavigationRoute("putAway")
+
+    data object BinToBin : NavigationRoute("binTobin")
 }
