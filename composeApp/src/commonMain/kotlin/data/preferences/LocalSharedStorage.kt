@@ -1,52 +1,52 @@
 package data.preferences
 
-import com.liftric.kvault.KVault
+import com.russhwolf.settings.Settings
 
-class LocalSharedStorage(private val store: KVault) {
+class LocalSharedStorage(private val store: Settings) {
 
     fun saveUserId(name: String) {
-        store.set(USER_ID, name)
+        store.putString(USER_ID, name)
     }
 
     fun getUserId(): String {
-        return store.string(USER_ID) ?: ""
+        return store.getString(USER_ID,"")
     }
 
     fun saveUserName(name: String) {
-        store.set(USER_NAME, name)
+        store.putString(USER_NAME, name)
     }
 
 
     fun getUserName(): String {
-        return store.string(USER_NAME) ?: ""
+        return store.getString(USER_NAME,"")
     }
 
 
     fun savePlant(name: String) {
-        store.set(PREF_PLANT, name)
+        store.putString(PREF_PLANT, name)
     }
 
 
     fun getPlant(): String {
-        return store.string(PREF_PLANT) ?: ""
+        return store.getString(PREF_PLANT,"")
     }
 
 
     fun saveWareHouse(name: String) {
-        store.set(PREF_WAREHOUSE, name)
+        store.putString(PREF_WAREHOUSE, name)
     }
 
 
     fun getWareHouse(): String {
-        return store.string(PREF_WAREHOUSE) ?: ""
+        return store.getString(PREF_WAREHOUSE,"")
     }
 
     fun savePrinter(name: String) {
-        store.set(PREF_PRINTER, name)
+        store.putString(PREF_PRINTER, name)
     }
 
     fun getPrinter(): String {
-        return store.string(PREF_PRINTER) ?: ""
+        return store.getString(PREF_PRINTER,"")
     }
 
     fun clearAll() {

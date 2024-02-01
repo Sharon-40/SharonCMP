@@ -1,4 +1,5 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -19,6 +20,8 @@ kotlin {
         }
     }
 
+    jvm("desktop")
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -31,6 +34,8 @@ kotlin {
     }
 
     sourceSets {
+
+        val desktopMain by getting
 
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
@@ -78,20 +83,30 @@ kotlin {
             // sqldelight ext
             implementation("app.cash.sqldelight:coroutines-extensions:2.0.1")
 
-            //Kvault
-            implementation("com.liftric:kvault:1.12.0")
 
-            //ChipView
-            implementation("com.robertlevonyan.compose:materialchip:3.0.8")
+            //Shared Settings
+            implementation("com.russhwolf:multiplatform-settings-no-arg:1.1.1")
 
 
         }
+
         iosMain.dependencies {
             // darwin ktor client for ios
             implementation("io.ktor:ktor-client-darwin:2.3.7")
 
             // sql delight ios driver
             implementation("app.cash.sqldelight:native-driver:2.0.1")
+        }
+
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(compose.desktop.common)
+
+            // darwin ktor client for jvm
+            implementation("io.ktor:ktor-client-apache:2.3.7")
+
+            // sql delight desktop driver
+            implementation("app.cash.sqldelight:sqlite-driver:2.0.0")
         }
     }
 
@@ -181,3 +196,14 @@ android {
     }
 }
 
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "com.incture.cmp"
+            packageVersion = "1.0.0"
+        }
+    }
+}

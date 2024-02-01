@@ -1,7 +1,7 @@
 package data.preferences
 
-import com.liftric.kvault.KVault
+import com.russhwolf.settings.Settings
 
 expect class KVaultFactory(context: Any?) {
-    fun createStoreInstance(): KVault
+    fun createStoreInstance(): Settings
 }
