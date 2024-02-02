@@ -12,6 +12,11 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
+import io.ktor.http.content.TextContent
+import io.ktor.http.contentType
+import io.ktor.util.InternalAPI
+import kotlinx.serialization.json.Json
 
 class ApiInterfaceImpl(private val httpClient: HttpClient,private val localSharedStorage: LocalSharedStorage) : ApiInterface {
     override suspend fun getProfile(userId:String): HttpResponse {
@@ -49,11 +54,13 @@ class ApiInterfaceImpl(private val httpClient: HttpClient,private val localShare
         }
     }
 
+    @OptIn(InternalAPI::class)
     override suspend fun postBinTransfer(transactions:ArrayList<BinTransferModel>): HttpResponse {
         return httpClient.post {
             url("${StringResources.BASEURL}/bin/binTransfer")
             parameter("Plant",localSharedStorage.getPlant())
             parameter("EWMWarehouse", localSharedStorage.getWareHouse())
+            contentType(ContentType.Application.Json)
             setBody(transactions)
         }
     }

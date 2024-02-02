@@ -12,14 +12,11 @@ data class ConfirmTaskResponse(
     @SerialName("ResponseMsg")
     var responseMsg:String,
 
-    @SerialName("WarehouseTask")
-    var warehouseTask:String,
-
     @SerialName("DestinationStorageBin")
     var destinationStorageBin:String,
 
     @SerialName("Quantity")
-    var quantity:String,
+    var quantity:Double,
 
     @SerialName("Product")
     var product:String,

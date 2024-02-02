@@ -126,12 +126,8 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
 
             LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
 
-            if (result.status)
-            {
-                emit(NetworkResult.Success(data = result.data))
-            }else{
-                emit(NetworkResult.Error(result.message))
-            }
+            emit(NetworkResult.Success(data = result.data))
+
         }else{
             emit(NetworkResult.Error(response.status.toString()))
         }

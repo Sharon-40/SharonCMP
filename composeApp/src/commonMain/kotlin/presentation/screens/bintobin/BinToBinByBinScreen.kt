@@ -7,7 +7,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,10 +39,9 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 {
 
     var isLoading by remember { mutableStateOf(false) }
-    var validationMessage by remember { mutableStateOf("") }
 
     var enteredBin by remember { mutableStateOf("") }
-    val stockData = remember { mutableStateListOf<StockModel>() }
+    var stockData:ArrayList<StockModel> by remember { mutableStateOf(ArrayList()) }
 
     val uiState = viewModel.uiState.collectAsState()
     val uiBinTransferState = viewModel.uiBinTransferState.collectAsState()
@@ -70,7 +71,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 
             if (stockData.isNotEmpty())
             {
-                LazyColumn {
+                LazyColumn (modifier = Modifier.fillMaxHeight(0.9f)){
 
                     itemsIndexed(stockData){ index, item ->
 
@@ -80,7 +81,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
                                 stockData[index].isSelected=it
                             })
 
-                            Spacer(modifier = Modifier.width(5.dp))
+                            Spacer(modifier = Modifier.width(2.dp))
 
                             Column {
                                 Row {
@@ -98,19 +99,18 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
                                     VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Batch, valueText = item.batch)
                                 }
 
-                                Row {
-                                    QRPickerTextField (headerText = StringResources.WareHouseTechTerms.TransferQty, onValueChange = {
-                                        stockData[index].enteredQty=it
-                                    })
+                                QRPickerTextField ( headerText = StringResources.WareHouseTechTerms.TransferQty, onValueChange = {
+                                    stockData[index].enteredQty=it
+                                })
 
-                                    QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationStorageType, onValueChange = {
-                                        stockData[index].selectedDestStorageType=it
-                                    })
+                                QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationStorageType, onValueChange = {
+                                    stockData[index].selectedDestStorageType=it
+                                })
 
-                                    QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationBin, onValueChange = {
-                                        stockData[index].selectedDestBin=it
-                                    })
-                                }
+                                QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationBin, onValueChange = {
+                                    stockData[index].selectedDestBin=it
+                                })
+
                             }
                         }
                     }
@@ -119,7 +119,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
                 PrimaryButton(StringResources.Submit) {
                     if (viewModel.getSelectedData(stockData.toList()).isNotEmpty())
                     {
-                        viewModel.prePareItemPayload("VERP",stockData.toList())
+                        viewModel.prePareItemPayload("VERP",viewModel.getSelectedData(stockData.toList()))
                     }else{
                         utils.makeToast(StringResources.SelectAtleastOne)
                     }
@@ -135,15 +135,14 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
         }
 
         uiState.value.error.isNotEmpty() -> {
-            validationMessage= uiState.value.error
             isLoading=false
             utils.makeToast(uiState.value.error)
         }
 
         uiState.value.data!=null ->{
-            validationMessage= uiState.value.error
             isLoading=false
-            stockData.addAll(uiState.value.data!!)
+            stockData=uiState.value.data as ArrayList<StockModel>
+            //stockData.addAll(uiState.value.data!!)
         }
 
     }
@@ -154,13 +153,11 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
         }
 
         uiBinTransferState.value.error.isNotEmpty() -> {
-            validationMessage= uiBinTransferState.value.error
             isLoading=false
             utils.makeToast(uiBinTransferState.value.error)
         }
 
         uiBinTransferState.value.data!=null ->{
-            validationMessage= uiBinTransferState.value.error
             isLoading=false
             if (uiBinTransferState.value.successCount>0)
             {
