@@ -1,6 +1,7 @@
 package data
 
 import platform.Foundation.NSURLComponents
+import platform.Foundation.NSURLQueryItem
 import platform.UIKit.UIAlertAction
 import platform.UIKit.UIAlertActionStyleDefault
 import platform.UIKit.UIAlertController
@@ -33,6 +34,22 @@ actual class Utils actual constructor(context: Any?) {
     }
 
     actual fun getQueryParameter(url:String,name: String): String?{
-        return NSURLComponents(string = url).queryItems?.firstOrNull()?.toString()
+
+        val uri= NSURLComponents(string = url)
+
+        var queryValue:String?=null
+
+        uri.queryItems?.let {
+            for (i in it){
+                val item= i as NSURLQueryItem
+                if (item.name==name)
+                {
+                    queryValue=item.value
+                    break
+                }
+            }
+        }
+        return queryValue
+
     }
 }

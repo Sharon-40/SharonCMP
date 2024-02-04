@@ -71,7 +71,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 
             if (stockData.isNotEmpty())
             {
-                LazyColumn (modifier = Modifier.fillMaxHeight(0.9f)){
+                LazyColumn (modifier = Modifier.fillMaxHeight(0.85f)){
 
                     itemsIndexed(stockData){ index, item ->
 
