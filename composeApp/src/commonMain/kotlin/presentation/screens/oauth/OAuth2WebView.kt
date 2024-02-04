@@ -1,10 +1,10 @@
 package presentation.screens.oauth
 
+import ColorResources
 import StringResources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import data.oauth.OAuthConfig
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,10 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material.Text
+import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,8 +27,8 @@ import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewState
 import data.Utils
 import data.logs.LogUtils
+import data.oauth.OAuthConfig
 import data.preferences.LocalSharedStorage
-import presentation.navigation.NavigationRoute
 
 @Composable
 fun OAuth2WebView(utils: Utils, localSharedStorage: LocalSharedStorage, onAuthorizationCodeReceived: (String) -> Unit) {
@@ -40,8 +39,7 @@ fun OAuth2WebView(utils: Utils, localSharedStorage: LocalSharedStorage, onAuthor
 
     LogUtils.logDebug(StringResources.RESPONSE,url)
 
-    Column(Modifier.fillMaxSize()) {
-
+    Scaffold(topBar = {
         TopAppBar(
             contentColor = Color.White,
             backgroundColor = ColorResources.ColorPrimary
@@ -68,15 +66,21 @@ fun OAuth2WebView(utils: Utils, localSharedStorage: LocalSharedStorage, onAuthor
             }
 
         }
+    }) {
 
-        val loadingState = webViewState.loadingState
-        if (loadingState is LoadingState.Loading) {
-            LinearProgressIndicator(
-                progress = loadingState.progress,
-                modifier = Modifier.fillMaxWidth()
-            )
+        Column(Modifier.fillMaxSize()) {
+
+            val loadingState = webViewState.loadingState
+            if (loadingState is LoadingState.Loading) {
+                LinearProgressIndicator(
+                    progress = loadingState.progress,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            WebView(webViewState)
         }
-        WebView(webViewState)
     }
+
+
 
 }
