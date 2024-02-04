@@ -87,6 +87,9 @@ kotlin {
             //Shared Settings
             implementation("com.russhwolf:multiplatform-settings-no-arg:1.1.1")
 
+            //WebView
+            implementation("io.github.kevinnzou:compose-webview-multiplatform:1.8.6")
+
 
         }
 
@@ -204,6 +207,14 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.incture.cmp"
             packageVersion = "1.0.0"
+        }
+
+        jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+        jvmArgs("--add-opens", "java.desktop/java.awt.peer=ALL-UNNAMED") // recommended but not necessary
+
+        if (System.getProperty("os.name").contains("Mac")) {
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED")
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED")
         }
     }
 }

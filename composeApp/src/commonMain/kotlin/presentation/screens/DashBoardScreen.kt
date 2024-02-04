@@ -3,7 +3,7 @@ package presentation.screens
 import ColorResources
 import ImageResources
 import StringResources
-import Utils
+import StyleUtils
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -59,7 +59,7 @@ fun DashBoardScreen(navigator: Navigator) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = StringResources.AppName, style = Utils.getBoldFontStyle(), color = White)
+                Text(text = StringResources.AppName, style = StyleUtils.getBoldFontStyle(), color = White)
                 Image(imageVector = Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier.clickable {
                     navigator.navigate(NavigationRoute.Profile.route)
                 }, colorFilter = ColorFilter.tint(color = White))
@@ -70,7 +70,7 @@ fun DashBoardScreen(navigator: Navigator) {
 
         Column (modifier = Modifier.fillMaxHeight().background(ColorResources.Background).padding(10.dp)) {
 
-            Text(text = StringResources.WareHouseTransactions, style = Utils.getBoldFontStyle())
+            Text(text = StringResources.WareHouseTransactions, style = StyleUtils.getBoldFontStyle())
 
             Spacer(modifier = Modifier.height(5.dp))
 
@@ -95,7 +95,7 @@ fun DashBoardScreen(navigator: Navigator) {
 
                         Text(
                             text = it.appName,
-                            style = TextStyle(color = ColorResources.ColorAccent,fontSize = 12.sp, fontFamily = Utils.getBoldFont(), fontWeight = FontWeight.Bold),
+                            style = TextStyle(color = ColorResources.ColorAccent,fontSize = 12.sp, fontFamily = StyleUtils.getBoldFont(), fontWeight = FontWeight.Bold),
                             overflow = TextOverflow.Ellipsis, maxLines = 2
                         )
 

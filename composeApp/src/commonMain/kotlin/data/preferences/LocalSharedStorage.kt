@@ -49,6 +49,30 @@ class LocalSharedStorage(private val store: Settings) {
         return store.getString(PREF_PRINTER,"")
     }
 
+    fun saveAuthCode(name: String) {
+        store.putString(AUTH_CODE, name)
+    }
+
+    fun getAuthCode(): String {
+        return store.getString(AUTH_CODE,"")
+    }
+
+    fun saveAccessToken(name: String) {
+        store.putString(ACCESS_TOKEN, name)
+    }
+
+    fun getAccessToken(): String {
+        return store.getString(ACCESS_TOKEN,"")
+    }
+
+    fun saveRefreshToken(name: String) {
+        store.putString(REFRESH_TOKEN, name)
+    }
+
+    fun getRefreshToken(): String {
+        return store.getString(REFRESH_TOKEN,"")
+    }
+
     fun clearAll() {
         store.clear()
     }
@@ -59,6 +83,9 @@ class LocalSharedStorage(private val store: Settings) {
         private const val PREF_PLANT = "PREF_PLANT"
         private const val PREF_WAREHOUSE = "PREF_WAREHOUSE"
         private const val PREF_PRINTER = "PREF_PRINTER"
+        private const val AUTH_CODE = "AUTH_CODE"
+        private const val ACCESS_TOKEN = "ACCESS_TOKEN"
+        private const val REFRESH_TOKEN = "REFRESH_TOKEN"
     }
 
 }

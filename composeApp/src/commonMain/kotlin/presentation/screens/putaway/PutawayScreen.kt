@@ -1,7 +1,7 @@
 package presentation.screens.putaway
 
 import StringResources
-import Utils
+import StyleUtils
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +27,7 @@ fun PutAwayScreen(navigator: Navigator, localSharedStorage: LocalSharedStorage) 
         ToolBarWithBack(navigator, StringResources.Apps.PutAway.name)
     }) {
 
-        Column (modifier = Utils.getStandardModifier()) {
+        Column (modifier = StyleUtils.getStandardModifier()) {
 
 
             Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {

@@ -12,4 +12,6 @@ interface ApiInterface {
     suspend fun getPutAwayWarehouseTasks(warehouse: String, processCategory: String, warehouseOrder: String?, warehouseTask: String?, purchaseOrder: String?, inboundDelivery: String?, product: String?, status: String?): HttpResponse
     suspend fun getStockByBin(bin: String): HttpResponse
     suspend fun postBinTransfer(transactions: ArrayList<BinTransferModel>): HttpResponse
+    suspend fun getAccessTokenByCode(code: String): HttpResponse
+    suspend fun getAccessTokenByRefreshToken(refreshToken: String): HttpResponse
 }

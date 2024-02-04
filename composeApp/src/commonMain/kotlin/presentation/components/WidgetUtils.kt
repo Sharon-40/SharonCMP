@@ -1,7 +1,7 @@
 package presentation.components
 
 import ColorResources
-import Utils
+import StyleUtils
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -56,8 +56,8 @@ fun ProfileListTile(leadingIcon:ImageVector,title:String,desc:String)
         Spacer(modifier = Modifier.width(5.dp))
 
         Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
-            Text(text = title, style = Utils.getRegularFontStyle())
-            Text(text = desc, style = Utils.getBoldFontStyle())
+            Text(text = title, style = StyleUtils.getRegularFontStyle())
+            Text(text = desc, style = StyleUtils.getBoldFontStyle())
         }
 
     }
@@ -78,7 +78,7 @@ fun ToolBarWithBack(navigator: Navigator,title: String)
                 navigator.popBackStack()
             })
             Spacer(modifier = Modifier.width(10.dp))
-            Text(text = title, style = Utils.getBoldFontStyle(), color = Color.White)
+            Text(text = title, style = StyleUtils.getBoldFontStyle(), color = Color.White)
         }
     }
 }
@@ -92,7 +92,7 @@ fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
         border = BorderStroke(1.dp, Color.White),
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = Color.White, fontFamily = Utils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
+        Text(text = text, style = TextStyle(color = Color.White, fontFamily = StyleUtils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
     }
 }
 
@@ -104,6 +104,6 @@ fun SecondaryButton(text: String, onClick: () -> Unit = {}) {
         border = BorderStroke(1.dp, ColorResources.ColorPrimary),
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = Color.Blue, fontFamily = Utils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
+        Text(text = text, style = TextStyle(color = Color.Blue, fontFamily = StyleUtils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
     }
 }

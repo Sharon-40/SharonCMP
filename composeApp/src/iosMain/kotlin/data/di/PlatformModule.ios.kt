@@ -4,8 +4,11 @@ package data.di
 import app_db.AppDatabase
 import data.Utils
 import data.local_db.SqlDriverFactory
+import data.preferences.LocalSharedStorage
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -18,6 +21,15 @@ actual val platformModule: Module
                     json(kotlinx.serialization.json.Json {
                         ignoreUnknownKeys = true
                     })
+                }
+
+                val localSharedStorage=get<LocalSharedStorage>()
+
+                defaultRequest {
+                    header(
+                        "Authorization",
+                        "Bearer ${localSharedStorage.getAccessToken()}"
+                    )
                 }
             }
         }

@@ -1,5 +1,6 @@
 package data
 
+import platform.Foundation.NSURLComponents
 import platform.UIKit.UIAlertAction
 import platform.UIKit.UIAlertActionStyleDefault
 import platform.UIKit.UIAlertController
@@ -29,5 +30,9 @@ actual class Utils actual constructor(context: Any?) {
 
         val presentingViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
         presentingViewController?.presentViewController(alertController, animated = true, completion = {})
+    }
+
+    actual fun getQueryParameter(url:String,name: String): String?{
+        return NSURLComponents(string = url).queryItems?.firstOrNull()?.toString()
     }
 }

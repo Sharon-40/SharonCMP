@@ -28,6 +28,14 @@ class MainRepository(private val apiInterfaceImpl: ApiInterfaceImpl,private val 
         return apiInterfaceImpl.postBinTransfer(transactions)
     }
 
+    suspend fun getAccessTokenByCode(code:String): HttpResponse {
+        return apiInterfaceImpl.getAccessTokenByCode(code)
+    }
+
+    suspend fun getAccessTokenByRefreshToken(refreshToken:String): HttpResponse {
+        return apiInterfaceImpl.getAccessTokenByRefreshToken(refreshToken)
+    }
+
     suspend fun insert(id: Int, title: String, desc: String, image: String) {
         localDbDao.insert(id = id, title = title, desc = desc, image = image)
     }
