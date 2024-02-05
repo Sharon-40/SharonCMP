@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -58,8 +59,8 @@ import org.koin.compose.koinInject
 import presentation.viewmodels.CustomComponentsViewModel
 
 @Composable
-fun VerticalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black){
-    Column(modifier = Modifier.padding(7.dp)) {
+fun VerticalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black,modifier: Modifier=Modifier){
+    Column(modifier = modifier.padding(7.dp)) {
         Text(headerText, style = StyleUtils.getRegularFontStyle(color = headerColor))
         Spacer(modifier = Modifier.height(2.dp))
         Text(valueText, style = StyleUtils.getBoldFontStyle(color = valueColor))
@@ -67,8 +68,8 @@ fun VerticalCustomText(headerText:String="",headerColor:Color=Color.Black,valueT
 }
 
 @Composable
-fun HorizontalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black){
-    Row(modifier = Modifier.padding(7.dp), verticalAlignment = Alignment.CenterVertically) {
+fun HorizontalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black,modifier: Modifier=Modifier){
+    Row(modifier = modifier.padding(7.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(headerText, style = StyleUtils.getRegularFontStyle(headerColor))
         Spacer(modifier = Modifier.width(2.dp))
         Text(valueText, style = StyleUtils.getBoldFontStyle(valueColor))
@@ -76,7 +77,7 @@ fun HorizontalCustomText(headerText:String="",headerColor:Color=Color.Black,valu
 }
 
 @Composable
-fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, valueText:String="",onValueChange:(String)->Unit={}, isMandatory:Boolean=false, enableCharCount:Boolean=false, maxLength:Int=100, validation:Boolean=false, validationType:String?=null)
+fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, valueText:String="",onValueChange:(String)->Unit={}, isMandatory:Boolean=false, enableCharCount:Boolean=false, maxLength:Int=100, validation:Boolean=false, validationType:String?=null,modifier: Modifier=Modifier.fillMaxWidth())
 {
 
 
@@ -91,7 +92,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
 
     val uiState = viewModel.uiState.collectAsState()
 
-    Column(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
+    Column(modifier = modifier.padding(2.dp)) {
 
         Row(modifier = Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically) {
             Text(headerText, style = StyleUtils.getRegularFontStyle(color = headerColor))

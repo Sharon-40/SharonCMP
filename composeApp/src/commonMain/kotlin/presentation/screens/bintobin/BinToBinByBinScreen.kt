@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,7 +18,6 @@ import androidx.compose.material.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -75,9 +73,14 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 
                     itemsIndexed(stockData){ index, item ->
 
+                        var isChecked  by remember { mutableStateOf(item.isSelected) }
+
+
                         Row (modifier = Modifier.fillMaxWidth().padding(3.dp).border(border =  BorderStroke(1.dp, ColorResources.ColorPrimary), shape = RoundedCornerShape(8.dp)).padding(5.dp)){
 
-                            Checkbox(item.isSelected,{
+                            Checkbox(isChecked,{
+                                isChecked=it
+                                item.isSelected=it
                                 stockData[index].isSelected=it
                             })
 
@@ -85,32 +88,36 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 
                             Column {
                                 Row {
-                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Product, valueText = item.product)
-                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.ProductDesc, valueText = item.productDesc)
+                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Product,modifier = Modifier.weight(1f), valueText = item.product)
+                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.ProductDesc,modifier = Modifier.weight(2f), valueText = item.productDesc)
                                 }
 
                                 Row {
-                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Qty, valueText = item.qty)
-                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Uom, valueText = item.uom)
+                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Qty,modifier = Modifier.weight(1f), valueText = item.qty)
+                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Uom,modifier = Modifier.weight(1f), valueText = item.uom)
+                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.StockType,modifier = Modifier.weight(1f), valueText = item.stockType)
                                 }
 
                                 Row {
-                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.StockType, valueText = item.stockType)
-                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Batch, valueText = item.batch)
+
+                                    VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Batch,modifier = Modifier.weight(1f), valueText = item.batch)
+
+                                    QRPickerTextField ( headerText = StringResources.WareHouseTechTerms.TransferQty,modifier = Modifier.weight(1f), onValueChange = {
+                                        stockData[index].enteredQty=it
+                                    })
+
                                 }
 
-                                QRPickerTextField ( headerText = StringResources.WareHouseTechTerms.TransferQty, onValueChange = {
-                                    stockData[index].enteredQty=it
-                                })
 
-                                QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationStorageType, onValueChange = {
-                                    stockData[index].selectedDestStorageType=it
-                                })
+                                Row {
+                                    QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationStorageType,modifier = Modifier.weight(1f), onValueChange = {
+                                        stockData[index].selectedDestStorageType=it
+                                    })
 
-                                QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationBin, onValueChange = {
-                                    stockData[index].selectedDestBin=it
-                                })
-
+                                    QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationBin,modifier = Modifier.weight(1f), onValueChange = {
+                                        stockData[index].selectedDestBin=it
+                                    })
+                                }
                             }
                         }
                     }
