@@ -1,11 +1,12 @@
 package data
 
 import java.net.URI
+import javax.swing.JOptionPane
 
 actual class Utils actual constructor(context: Any?) {
 
     actual fun makeToast(message: String) {
-        print(message)
+        JOptionPane.showMessageDialog(null, message, null, JOptionPane.INFORMATION_MESSAGE)
     }
 
     actual fun getQueryParameter(url: String, name: String): String? {
