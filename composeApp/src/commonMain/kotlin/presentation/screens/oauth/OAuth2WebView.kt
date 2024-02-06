@@ -25,13 +25,13 @@ import androidx.compose.ui.unit.dp
 import com.multiplatform.webview.web.LoadingState
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewState
-import data.Utils
+import data.PlatformUtils
 import data.logs.LogUtils
 import data.oauth.OAuthConfig
 import data.preferences.LocalSharedStorage
 
 @Composable
-fun OAuth2WebView(utils: Utils, localSharedStorage: LocalSharedStorage, onAuthorizationCodeReceived: (String) -> Unit) {
+fun OAuth2WebView(platformUtils: PlatformUtils, localSharedStorage: LocalSharedStorage, onAuthorizationCodeReceived: (String) -> Unit) {
 
     val url="${OAuthConfig.AUTH_END_POINT}?response_type=code&client_id=${OAuthConfig.CLIENT_ID}&redirect_uri=${OAuthConfig.REDIRECT_URL}"
 
@@ -55,7 +55,7 @@ fun OAuth2WebView(utils: Utils, localSharedStorage: LocalSharedStorage, onAuthor
                     val currentUrl = webViewState.lastLoadedUrl
                     LogUtils.logDebug(StringResources.RESPONSE,currentUrl.toString())
                     if (currentUrl?.startsWith(OAuthConfig.REDIRECT_URL) == true) {
-                        utils.getQueryParameter(currentUrl,"code")?.let {
+                        platformUtils.getQueryParameter(currentUrl,"code")?.let {
                             LogUtils.logDebug(StringResources.RESPONSE,it)
                             localSharedStorage.saveAuthCode(it)
                             onAuthorizationCodeReceived(it)

@@ -9,29 +9,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import data.Utils
+import data.CommonUtils
+import data.PlatformUtils
 import data.logs.LogUtils
-import data.model.StandardResponse
-import data.model.UserModel
 import data.oauth.AccessTokenModel
 import data.preferences.LocalSharedStorage
 import data.respository.MainRepository
-import data.utils.NetworkResult
 import io.ktor.client.call.body
 import io.ktor.http.HttpStatusCode
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.CustomCircleProgressbar
-import presentation.components.ToolBarWithBack
 import presentation.navigation.NavigationRoute
 
 @Composable
-fun OAuth2Screen(navigator: Navigator, mainRepository: MainRepository, localSharedStorage: LocalSharedStorage, utils: Utils) {
+fun OAuth2Screen(navigator: Navigator, mainRepository: MainRepository, localSharedStorage: LocalSharedStorage, platformUtils: PlatformUtils) {
 
     Scaffold {
 
@@ -56,20 +49,20 @@ fun OAuth2Screen(navigator: Navigator, mainRepository: MainRepository, localShar
                             saveAccessToken(result.accessToken)
                             saveRefreshToken(result.refreshToken)
 
-                            saveUserId("JN")
-                            saveUserName("JN")
+                            saveUserId(CommonUtils.getUserId(result.accessToken))
+                            saveUserName(CommonUtils.getUserName(result.accessToken))
                         }
 
                         navigator.navigate(NavigationRoute.BussRules.route)
 
                     } else {
-                        utils.makeToast(response.status.toString())
+                        platformUtils.makeToast(response.status.toString())
                         LogUtils.logDebug(StringResources.RESPONSE_ERROR, response.status.toString())
                     }
                 }catch (e:Exception)
                 {
                     LogUtils.logDebug(StringResources.RESPONSE_ERROR, e.message.toString())
-                    utils.makeToast(e.toString())
+                    platformUtils.makeToast(e.toString())
                 }
             }
         }

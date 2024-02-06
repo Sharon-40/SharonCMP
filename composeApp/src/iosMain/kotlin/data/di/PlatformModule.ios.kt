@@ -2,7 +2,7 @@ package data.di
 
 
 import app_db.AppDatabase
-import data.Utils
+import data.PlatformUtils
 import data.local_db.SqlDriverFactory
 import data.oauth.AccessTokenModel
 import data.oauth.OAuthConfig
@@ -78,5 +78,5 @@ actual val platformModule: Module
         }
         single { SqlDriverFactory(null).createSqlDriver() }
         single { AppDatabase.invoke(get()) }
-        single { Utils(null) }
+        single { PlatformUtils(null) }
     }

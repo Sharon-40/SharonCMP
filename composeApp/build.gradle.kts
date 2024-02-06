@@ -91,6 +91,8 @@ kotlin {
             //WebView
             implementation("io.github.kevinnzou:compose-webview-multiplatform:1.8.6")
 
+            implementation("com.squareup.okio:okio:3.7.0")
+
 
         }
 

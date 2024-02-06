@@ -24,7 +24,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import data.Utils
+import data.PlatformUtils
 import data.model.StockModel
 import presentation.components.CustomCircleProgressbar
 import presentation.components.PrimaryButton
@@ -33,7 +33,7 @@ import presentation.custom_views.VerticalCustomText
 import presentation.viewmodels.BinToBinViewModel
 
 @Composable
-fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
+fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUtils)
 {
 
     var isLoading by remember { mutableStateOf(false) }
@@ -58,7 +58,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
                 {
                     viewModel.getStockByBin(enteredBin)
                 }else{
-                    utils.makeToast(StringResources.InvalidBin)
+                    platformUtils.makeToast(StringResources.InvalidBin)
                 }
             }
 
@@ -128,7 +128,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
                     {
                         viewModel.prePareItemPayload("VERP",viewModel.getSelectedData(stockData.toList()))
                     }else{
-                        utils.makeToast(StringResources.SelectAtleastOne)
+                        platformUtils.makeToast(StringResources.SelectAtleastOne)
                     }
                 }
             }
@@ -143,7 +143,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 
         uiState.value.error.isNotEmpty() -> {
             isLoading=false
-            utils.makeToast(uiState.value.error)
+            platformUtils.makeToast(uiState.value.error)
         }
 
         uiState.value.data!=null ->{
@@ -161,17 +161,17 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel,utils: Utils)
 
         uiBinTransferState.value.error.isNotEmpty() -> {
             isLoading=false
-            utils.makeToast(uiBinTransferState.value.error)
+            platformUtils.makeToast(uiBinTransferState.value.error)
         }
 
         uiBinTransferState.value.data!=null ->{
             isLoading=false
             if (uiBinTransferState.value.successCount>0)
             {
-                utils.makeToast(uiBinTransferState.value.successBuilder)
+                platformUtils.makeToast(uiBinTransferState.value.successBuilder)
             }else if (uiBinTransferState.value.errorCount>0)
             {
-                utils.makeToast(uiBinTransferState.value.errorBuilder)
+                platformUtils.makeToast(uiBinTransferState.value.errorBuilder)
             }
             viewModel.getStockByBin(enteredBin)
         }

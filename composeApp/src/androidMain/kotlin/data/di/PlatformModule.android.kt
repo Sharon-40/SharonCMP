@@ -3,7 +3,7 @@ package data.di
 import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
 import app_db.AppDatabase
-import data.Utils
+import data.PlatformUtils
 import data.local_db.SqlDriverFactory
 import data.oauth.AccessTokenModel
 import data.oauth.OAuthConfig
@@ -98,5 +98,5 @@ actual val platformModule: Module
 
         single { SqlDriverFactory(get<Context>()).createSqlDriver() }
         single { AppDatabase.invoke(get<SqlDriver>()) }
-        single { Utils(get<Context>())}
+        single { PlatformUtils(get<Context>())}
     }

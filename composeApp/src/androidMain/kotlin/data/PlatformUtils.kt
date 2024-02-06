@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 
-actual class Utils actual constructor(context: Any?) {
+actual class PlatformUtils actual constructor(context: Any?) {
 
     private var context: Context
 

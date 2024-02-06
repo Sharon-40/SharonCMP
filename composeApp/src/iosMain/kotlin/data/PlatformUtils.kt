@@ -8,7 +8,7 @@ import platform.UIKit.UIAlertController
 import platform.UIKit.UIAlertControllerStyleAlert
 import platform.UIKit.UIApplication
 
-actual class Utils actual constructor(context: Any?) {
+actual class PlatformUtils actual constructor(context: Any?) {
 
     actual fun makeToast(message:String){
 
@@ -52,4 +52,5 @@ actual class Utils actual constructor(context: Any?) {
         return queryValue
 
     }
+
 }
