@@ -36,12 +36,13 @@ fun RulesScreen(
 
         !uiState.value.error.isNullOrEmpty() -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(text = uiState.value.error.toString())
                     Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
 
                         PrimaryButton(StringResources.LogOut) {
-
+                            localSharedStorage.clearAll()
+                            navigator.navigate(NavigationRoute.OauthWebView.route)
                         }
                     }
                 }
