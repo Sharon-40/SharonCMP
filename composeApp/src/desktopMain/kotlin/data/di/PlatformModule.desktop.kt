@@ -24,7 +24,7 @@ import org.koin.dsl.module
 actual val platformModule: Module
     get() = module {
 
-        single<HttpClient> {
+        factory<HttpClient> {
             HttpClient {
 
                 install(ContentNegotiation) {
