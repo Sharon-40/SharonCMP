@@ -2,7 +2,6 @@ package data.respository
 
 import data.local_db.LocalDbDao
 import data.model.BinTransferModel
-import data.model.ProductModel
 import data.network.ApiInterfaceImpl
 import io.ktor.client.statement.HttpResponse
 
@@ -12,8 +11,8 @@ class MainRepository(private val apiInterfaceImpl: ApiInterfaceImpl,private val 
         return apiInterfaceImpl.getProfile(userId)
     }
 
-    suspend fun getProducts(): List<ProductModel> {
-        return apiInterfaceImpl.getProducts()
+    suspend fun getTasks(): HttpResponse {
+        return apiInterfaceImpl.getTasks()
     }
 
     suspend fun getPutAwayWarehouseTasks(warehouse:String, warehouseOrder:String?, warehouseTask:String?, purchaseOrder:String?, inboundDelivery:String?, product:String?, status:String?): HttpResponse {

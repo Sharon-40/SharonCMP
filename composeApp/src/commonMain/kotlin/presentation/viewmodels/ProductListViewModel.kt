@@ -1,6 +1,6 @@
 package presentation.viewmodels
 
-import data.model.ProductModel
+import data.model.TaskModel
 import data.utils.NetworkResult
 import domain.use_cases.MainUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,34 +12,34 @@ import kotlinx.coroutines.flow.update
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
-data class ProductListStateHolder(
+data class TaskListStateHolder(
     val isLoading: Boolean = false,
-    val data: List<ProductModel>? = null,
+    val data: List<TaskModel>? = null,
     val error: String = ""
 )
 
 class ProductListViewModel(private val mainUseCase: MainUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(ProductListStateHolder())
-    val uiState: StateFlow<ProductListStateHolder> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(TaskListStateHolder())
+    val uiState: StateFlow<TaskListStateHolder> = _uiState.asStateFlow()
 
     init {
-        getProductList()
+        getTasks()
     }
 
-    private fun getProductList() = mainUseCase.getProducts().onEach { res ->
+    private fun getTasks() = mainUseCase.getTasks().onEach { res ->
         when (res) {
             is NetworkResult.Loading -> {
-                _uiState.update { ProductListStateHolder(isLoading = true) }
+                _uiState.update { TaskListStateHolder(isLoading = true) }
             }
 
             is NetworkResult.Success -> {
-                _uiState.update { ProductListStateHolder(data = res.data) }
+                _uiState.update { TaskListStateHolder(data = res.data) }
 
             }
 
             is NetworkResult.Error -> {
-                _uiState.update { ProductListStateHolder(error = res.message) }
+                _uiState.update { TaskListStateHolder(error = res.message) }
             }
         }
     }.launchIn(viewModelScope)

@@ -8,7 +8,7 @@ import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.screens.DashBoardScreen
-import presentation.screens.ProductListScreen
+import presentation.screens.TaskListScreen
 import presentation.screens.ProfileScreen
 import presentation.screens.SplashScreen
 import presentation.screens.bintobin.BinToBinScreen
@@ -57,7 +57,11 @@ fun AppNavigation() {
         }
 
         scene(route = NavigationRoute.DashBoard.route) {
-            DashBoardScreen(navigator)
+            val viewModel: ProductListViewModel = koinViewModel(ProductListViewModel::class)
+            TaskListScreen(viewModel, navigator) {
+
+            }
+            //DashBoardScreen(navigator)
         }
 
         scene(route = NavigationRoute.Profile.route) {
@@ -66,7 +70,7 @@ fun AppNavigation() {
 
         scene(route = NavigationRoute.ProductList.route) {
             val viewModel: ProductListViewModel = koinViewModel(ProductListViewModel::class)
-            ProductListScreen(viewModel, navigator) {
+            TaskListScreen(viewModel, navigator) {
 
             }
         }

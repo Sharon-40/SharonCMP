@@ -1,6 +1,6 @@
 object StringResources {
 
-    const val AppName="Smart Warehouse"
+    const val AppName="Murphy"
     const val WareHouseTransactions="Warehouse Transactions"
     const val Profile="Profile"
     const val UserName="UserName"
@@ -14,7 +14,7 @@ object StringResources {
     const val SelectAtleastOne="SelectAtleastOne"
     const val InvalidBin="Invalid Bin"
 
-    const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
+    const val BASEURL = "https://taskmanagementrestzqc750d9c2.us2.hana.ondemand.com/TaskManagement_Rest/murphy/"
 
 
     const val  RESPONSE_SUCCESS = "ResponseS"

@@ -6,6 +6,7 @@ import data.model.BinTransferModel
 import data.model.ConfirmTaskResponse
 import data.model.StandardResponse
 import data.model.StockModel
+import data.model.TaskResponseModel
 import data.model.UserModel
 import data.model.WarehouseTaskModel
 import data.utils.NetworkResult
@@ -21,9 +22,28 @@ import org.koin.core.component.KoinComponent
 
 class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
 
-    fun getProducts() = flow {
+    fun getTasks() = flow {
         emit(NetworkResult.Loading())
-        emit(NetworkResult.Success(data = mainRepository.getProducts()))
+
+        val response=mainRepository.getTasks()
+
+        if (response.status== HttpStatusCode.OK)
+        {
+            LogUtils.logDebug(StringResources.RESPONSE_CODE,response.status.toString())
+
+            val result=response.body<TaskResponseModel>()
+
+            LogUtils.logDebug(StringResources.RESPONSE,result.toString())
+
+            if (result.taskList.isNotEmpty())
+            {
+                emit(NetworkResult.Success(data = result.taskList ))
+            }else{
+                emit(NetworkResult.Error("No data found"))
+            }
+        }else{
+            emit(NetworkResult.Error(response.status.toString()))
+        }
     }.catch {
         emit(NetworkResult.Error(it.message.toString()))
     }.flowOn(Dispatchers.IO)

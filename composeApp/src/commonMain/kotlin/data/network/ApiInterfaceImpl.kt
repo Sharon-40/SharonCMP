@@ -3,10 +3,8 @@ package data.network
 import data.oauth.OAuthConfig
 import StringResources
 import data.model.BinTransferModel
-import data.model.ProductModel
 import data.preferences.LocalSharedStorage
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -24,8 +22,15 @@ class ApiInterfaceImpl(private val httpClient: HttpClient,private val localShare
         }
     }
 
-    override suspend fun getProducts(): List<ProductModel> {
-        return httpClient.get("https://fakestoreapi.com/products/").body<List<ProductModel>>()
+    override suspend fun getTasks(): HttpResponse {
+        return httpClient.get {
+            url("${StringResources.BASEURL}/tasks/getTasksByUser")
+            parameter("userId", "pmapps_user@murphyoilcorp.com")
+            parameter("userType", "FIELD")
+            parameter("origin", "Dispatch")
+            parameter("device", "Mobile")
+            parameter("country", "CA")
+        }
     }
 
     override suspend fun getPutAwayWarehouseTasks(warehouse:String,processCategory:String, warehouseOrder:String?, warehouseTask:String?, purchaseOrder:String?, inboundDelivery:String?, product:String?, status:String?): HttpResponse {

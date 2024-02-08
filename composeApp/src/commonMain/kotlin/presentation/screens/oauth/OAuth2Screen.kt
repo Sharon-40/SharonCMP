@@ -53,7 +53,7 @@ fun OAuth2Screen(navigator: Navigator, mainRepository: MainRepository, localShar
                             saveUserName(CommonUtils.getUserName(result.accessToken))
                         }
 
-                        navigator.navigate(NavigationRoute.BussRules.route)
+                        navigator.navigate(NavigationRoute.DashBoard.route)
 
                     } else {
                         platformUtils.makeToast(response.status.toString())
