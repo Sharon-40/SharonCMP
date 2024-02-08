@@ -37,12 +37,14 @@ fun AppNavigation() {
         scene(route = NavigationRoute.Splash.route) {
            SplashScreen {
 
-               if (localSharedStorage.getUserId().isEmpty())
+               navigator.navigate(NavigationRoute.DashBoard.route)
+
+               /*if (localSharedStorage.getUserId().isEmpty())
                {
                    navigator.navigate(NavigationRoute.OauthWebView.route)
                }else{
                    navigator.navigate(NavigationRoute.DashBoard.route)
-               }
+               }*/
            }
         }
 

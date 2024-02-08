@@ -19,17 +19,11 @@ fun main() = application {
 
     initKoin()
 
-  /*  val localSharedStorage: LocalSharedStorage = koinInject()
-
-    localSharedStorage.saveUserId("JN")
-    localSharedStorage.saveUserName("JN")
-    localSharedStorage.savePlant("AW02")
-    localSharedStorage.saveWareHouse("OS00")
-    localSharedStorage.savePrinter("LP01")
-*/
     Window(onCloseRequest = ::exitApplication, title = StringResources.AppName) {
 
-        var restartRequired by remember { mutableStateOf(false) }
+        App()
+
+        /*var restartRequired by remember { mutableStateOf(false) }
         var downloading by remember { mutableStateOf(0F) }
         var initialized by remember { mutableStateOf(false) }
 
@@ -70,6 +64,6 @@ fun main() = application {
             onDispose {
                 KCEF.disposeBlocking()
             }
-        }
+        }*/
     }
 }
