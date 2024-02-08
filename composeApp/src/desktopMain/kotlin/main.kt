@@ -21,9 +21,7 @@ fun main() = application {
 
     Window(onCloseRequest = ::exitApplication, title = StringResources.AppName) {
 
-        App()
-
-        /*var restartRequired by remember { mutableStateOf(false) }
+        var restartRequired by remember { mutableStateOf(false) }
         var downloading by remember { mutableStateOf(0F) }
         var initialized by remember { mutableStateOf(false) }
 
@@ -64,6 +62,6 @@ fun main() = application {
             onDispose {
                 KCEF.disposeBlocking()
             }
-        }*/
+        }
     }
 }

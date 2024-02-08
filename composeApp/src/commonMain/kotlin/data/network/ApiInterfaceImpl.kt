@@ -77,7 +77,7 @@ class ApiInterfaceImpl(private val httpClient: HttpClient,private val localShare
     override suspend fun getAccessTokenByCode(code:String): HttpResponse {
         return httpClient.post {
             url(OAuthConfig.TOKEN_END_POINT)
-            parameter("grant_type","authorization_code")
+            parameter("grant_type",OAuthConfig.GRANT_TYPE)
             parameter("code",code)
             parameter("client_id", OAuthConfig.CLIENT_ID)
             parameter("redirect_uri", OAuthConfig.REDIRECT_URL)

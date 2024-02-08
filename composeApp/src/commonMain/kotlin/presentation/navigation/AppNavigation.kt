@@ -4,7 +4,6 @@ import StringResources
 import androidx.compose.runtime.Composable
 import data.PlatformUtils
 import data.logs.LogUtils
-import data.model.TaskDetailsModel
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
@@ -12,10 +11,10 @@ import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.screens.DashBoardScreen
-import presentation.screens.TaskListScreen
 import presentation.screens.ProfileScreen
 import presentation.screens.SplashScreen
 import presentation.screens.TaskDetailScreen
+import presentation.screens.TaskListScreen
 import presentation.screens.bintobin.BinToBinScreen
 import presentation.screens.oauth.OAuth2Screen
 import presentation.screens.oauth.OAuth2WebView
@@ -37,20 +36,19 @@ fun AppNavigation() {
         scene(route = NavigationRoute.Splash.route) {
            SplashScreen {
 
-               navigator.navigate(NavigationRoute.DashBoard.route)
-
-               /*if (localSharedStorage.getUserId().isEmpty())
+               if (localSharedStorage.getUserId().isEmpty())
                {
                    navigator.navigate(NavigationRoute.OauthWebView.route)
                }else{
-                   navigator.navigate(NavigationRoute.DashBoard.route)
-               }*/
+                   navigator.navigate(NavigationRoute.ProductList.route)
+               }
            }
         }
 
         scene(route = NavigationRoute.OauthWebView.route) {
             OAuth2WebView(koinInject(),koinInject()) {
-                navigator.navigate(NavigationRoute.Oauth.route)
+                localSharedStorage.saveUserId("Murphy")
+                navigator.navigate(NavigationRoute.ProductList.route)
             }
         }
 
@@ -64,11 +62,7 @@ fun AppNavigation() {
         }
 
         scene(route = NavigationRoute.DashBoard.route) {
-            val viewModel: ProductListViewModel = koinViewModel(ProductListViewModel::class)
-            TaskListScreen(viewModel, navigator) {
-                navigator.navigate(NavigationRoute.TaskDetails.getTaskId(it))
-            }
-            //DashBoardScreen(navigator)
+            DashBoardScreen(navigator)
         }
 
         scene(route = NavigationRoute.Profile.route) {
@@ -78,7 +72,7 @@ fun AppNavigation() {
         scene(route = NavigationRoute.ProductList.route) {
             val viewModel: ProductListViewModel = koinViewModel(ProductListViewModel::class)
             TaskListScreen(viewModel, navigator) {
-
+                navigator.navigate(NavigationRoute.TaskDetails.getTaskId(it))
             }
         }
 

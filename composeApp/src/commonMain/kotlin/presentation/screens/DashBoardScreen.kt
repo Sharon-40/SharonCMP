@@ -43,11 +43,10 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.navigation.NavigationRoute
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun DashBoardScreen(navigator: Navigator) {
 
-    val apps= arrayListOf(AppModel(StringResources.Apps.GoodsReceiving.name,ImageResources.goods_recieveing,NavigationRoute.ProductList.route),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway,NavigationRoute.PutAway.route),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin,NavigationRoute.BinToBin.route))
+    val apps= arrayListOf(AppModel(StringResources.Apps.TaskManagment.name,ImageResources.goods_recieveing,NavigationRoute.ProductList.route))
 
     Scaffold(topBar = {
         TopAppBar(
@@ -70,7 +69,7 @@ fun DashBoardScreen(navigator: Navigator) {
 
         Column (modifier = Modifier.fillMaxHeight().background(ColorResources.Background).padding(10.dp)) {
 
-            Text(text = StringResources.WareHouseTransactions, style = StyleUtils.getBoldFontStyle())
+            //Text(text = StringResources.WareHouseTransactions, style = StyleUtils.getBoldFontStyle())
 
             Spacer(modifier = Modifier.height(5.dp))
 
@@ -85,13 +84,6 @@ fun DashBoardScreen(navigator: Navigator) {
                             }
                             .padding(2.dp).border(1.dp, ColorResources.ColorAccent, RoundedCornerShape(5.dp)).background(White).padding(10.dp)
                     ) {
-
-                        Image(
-                            painter = painterResource(it.icon),
-                            null, modifier = Modifier.height(60.dp).width(60.dp)
-                        )
-
-                        Spacer(modifier = Modifier.height(5.dp))
 
                         Text(
                             text = it.appName,

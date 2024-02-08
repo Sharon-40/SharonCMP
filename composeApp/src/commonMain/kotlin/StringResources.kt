@@ -23,7 +23,7 @@ object StringResources {
     const val  RESPONDED = "Responded"
     const val  RESPONSE_CODE = "Response_code"
 
-    enum class Apps{ PutAway,BinToBin,GoodsReceiving }
+    enum class Apps{ PutAway,BinToBin,GoodsReceiving ,TaskManagment}
 
 
     object WareHouseTechTerms{
