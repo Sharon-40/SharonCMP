@@ -69,12 +69,13 @@ fun VerticalCustomText(headerText:String="",headerColor:Color=Color.Black,valueT
 
 @Composable
 fun HorizontalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black,modifier: Modifier=Modifier){
-    Row(modifier = modifier.padding(3.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(modifier = modifier.padding(3.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
         Text(headerText, style = StyleUtils.getRegularFontStyle(headerColor))
         Spacer(modifier = Modifier.width(2.dp))
         Text(valueText, style = StyleUtils.getBoldFontStyle(valueColor))
     }
 }
+
 
 @Composable
 fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, valueText:String="",onValueChange:(String)->Unit={}, isMandatory:Boolean=false, enableCharCount:Boolean=false, maxLength:Int=100, validation:Boolean=false, validationType:String?=null,modifier: Modifier=Modifier.fillMaxWidth())

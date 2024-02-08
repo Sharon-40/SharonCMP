@@ -1,16 +1,21 @@
 package presentation.navigation
 
+import StringResources
 import androidx.compose.runtime.Composable
 import data.PlatformUtils
+import data.logs.LogUtils
+import data.model.TaskDetailsModel
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.NavHost
+import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import org.koin.compose.koinInject
 import presentation.screens.DashBoardScreen
 import presentation.screens.TaskListScreen
 import presentation.screens.ProfileScreen
 import presentation.screens.SplashScreen
+import presentation.screens.TaskDetailScreen
 import presentation.screens.bintobin.BinToBinScreen
 import presentation.screens.oauth.OAuth2Screen
 import presentation.screens.oauth.OAuth2WebView
@@ -59,7 +64,7 @@ fun AppNavigation() {
         scene(route = NavigationRoute.DashBoard.route) {
             val viewModel: ProductListViewModel = koinViewModel(ProductListViewModel::class)
             TaskListScreen(viewModel, navigator) {
-
+                navigator.navigate(NavigationRoute.TaskDetails.getTaskId(it))
             }
             //DashBoardScreen(navigator)
         }
@@ -71,6 +76,19 @@ fun AppNavigation() {
         scene(route = NavigationRoute.ProductList.route) {
             val viewModel: ProductListViewModel = koinViewModel(ProductListViewModel::class)
             TaskListScreen(viewModel, navigator) {
+
+            }
+        }
+
+        scene(route = NavigationRoute.TaskDetails.route) {
+
+
+            val id: String = it.path<String>("id").toString()
+
+            LogUtils.logDebug(StringResources.RESPONSE, id)
+
+            val viewModel: ProductListViewModel = koinViewModel(ProductListViewModel::class)
+            TaskDetailScreen(viewModel, navigator,id) {
 
             }
         }
@@ -106,6 +124,10 @@ sealed class NavigationRoute(val route: String) {
     data object Splash : NavigationRoute("splash")
 
     data object BussRules : NavigationRoute("buss_rules")
+
+    data object TaskDetails : NavigationRoute("task_details/{id}"){
+        fun getTaskId(id: String) = "task_details/${id}"
+    }
 
 
 }

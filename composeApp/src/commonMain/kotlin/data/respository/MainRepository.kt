@@ -15,6 +15,11 @@ class MainRepository(private val apiInterfaceImpl: ApiInterfaceImpl,private val 
         return apiInterfaceImpl.getTasks()
     }
 
+
+    suspend fun getTaskDetails(taskId:String): HttpResponse {
+        return apiInterfaceImpl.getTaskDetails(taskId)
+    }
+
     suspend fun getPutAwayWarehouseTasks(warehouse:String, warehouseOrder:String?, warehouseTask:String?, purchaseOrder:String?, inboundDelivery:String?, product:String?, status:String?): HttpResponse {
         return apiInterfaceImpl.getPutAwayWarehouseTasks(warehouse,"1",warehouseOrder,warehouseTask,purchaseOrder,inboundDelivery,product,status)
     }

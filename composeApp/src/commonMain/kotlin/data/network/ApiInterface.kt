@@ -14,4 +14,5 @@ interface ApiInterface {
     suspend fun postBinTransfer(transactions: ArrayList<BinTransferModel>): HttpResponse
     suspend fun getAccessTokenByCode(code: String): HttpResponse
     suspend fun getAccessTokenByRefreshToken(refreshToken: String): HttpResponse
+    suspend fun getTaskDetails(taskId: String): HttpResponse
 }

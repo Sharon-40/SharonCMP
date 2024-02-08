@@ -33,6 +33,13 @@ class ApiInterfaceImpl(private val httpClient: HttpClient,private val localShare
         }
     }
 
+    override suspend fun getTaskDetails(taskId:String): HttpResponse {
+        return httpClient.get {
+            url("${StringResources.BASEURL}/tasks/read")
+            parameter("taskId", taskId)
+        }
+    }
+
     override suspend fun getPutAwayWarehouseTasks(warehouse:String,processCategory:String, warehouseOrder:String?, warehouseTask:String?, purchaseOrder:String?, inboundDelivery:String?, product:String?, status:String?): HttpResponse {
         return httpClient.get {
             url("${StringResources.BASEURL}/allWarehouseTasksPutaway")

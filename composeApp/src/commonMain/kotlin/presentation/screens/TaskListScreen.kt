@@ -24,6 +24,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,8 +41,15 @@ import presentation.viewmodels.ProductListViewModel
 fun TaskListScreen(
     viewModel: ProductListViewModel,
     navigator: Navigator,
-    onClick: (Int) -> Unit
+    onClick: (String) -> Unit
 ) {
+
+
+    LaunchedEffect(Unit)
+    {
+        viewModel.getTasks()
+    }
+
     val uiState = viewModel.uiState.collectAsState()
 
     Scaffold(topBar = {
@@ -76,7 +84,7 @@ fun TaskListScreen(
                                     Column(
                                         modifier = Modifier.fillMaxWidth().wrapContentHeight()
                                             .clickable {
-
+                                                onClick(item.taskId)
                                             }
                                             .padding(12.dp)
                                     ) {

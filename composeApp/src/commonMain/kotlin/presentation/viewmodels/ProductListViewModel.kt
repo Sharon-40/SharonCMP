@@ -1,5 +1,6 @@
 package presentation.viewmodels
 
+import data.model.TaskDetailsResponseModel
 import data.model.TaskModel
 import data.utils.NetworkResult
 import domain.use_cases.MainUseCase
@@ -18,16 +19,22 @@ data class TaskListStateHolder(
     val error: String = ""
 )
 
+data class TaskDetailsStateHolder(
+    val isLoading: Boolean = false,
+    val data: TaskDetailsResponseModel? = null,
+    val error: String = ""
+)
+
 class ProductListViewModel(private val mainUseCase: MainUseCase) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TaskListStateHolder())
     val uiState: StateFlow<TaskListStateHolder> = _uiState.asStateFlow()
 
-    init {
-        getTasks()
-    }
+    private val _taskDetailsState = MutableStateFlow(TaskDetailsStateHolder())
+    val uiDetailsState: StateFlow<TaskDetailsStateHolder> = _taskDetailsState.asStateFlow()
 
-    private fun getTasks() = mainUseCase.getTasks().onEach { res ->
+
+    fun getTasks() = mainUseCase.getTasks().onEach { res ->
         when (res) {
             is NetworkResult.Loading -> {
                 _uiState.update { TaskListStateHolder(isLoading = true) }
@@ -40,6 +47,23 @@ class ProductListViewModel(private val mainUseCase: MainUseCase) : ViewModel() {
 
             is NetworkResult.Error -> {
                 _uiState.update { TaskListStateHolder(error = res.message) }
+            }
+        }
+    }.launchIn(viewModelScope)
+
+    fun getTasksDetails(taskId:String) = mainUseCase.getTasksDetails(taskId).onEach { res ->
+        when (res) {
+            is NetworkResult.Loading -> {
+                _taskDetailsState.update { TaskDetailsStateHolder(isLoading = true) }
+            }
+
+            is NetworkResult.Success -> {
+                _taskDetailsState.update { TaskDetailsStateHolder(data = res.data) }
+
+            }
+
+            is NetworkResult.Error -> {
+                _taskDetailsState.update { TaskDetailsStateHolder(error = res.message) }
             }
         }
     }.launchIn(viewModelScope)
