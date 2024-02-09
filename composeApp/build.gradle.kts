@@ -91,7 +91,11 @@ kotlin {
             //WebView
             implementation("io.github.kevinnzou:compose-webview-multiplatform:1.8.6")
 
+            //Base64
             implementation("com.squareup.okio:okio:3.7.0")
+
+            //Icons
+            implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
 
 
         }
