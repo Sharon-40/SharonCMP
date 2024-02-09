@@ -13,6 +13,7 @@ object StringResources {
     const val NoDataFound="NoDataFound"
     const val SelectAtleastOne="SelectAtleastOne"
     const val InvalidBin="Invalid Bin"
+    const val LogOutDesc="Sure do you want to Logout?"
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
@@ -53,6 +54,11 @@ object StringResources {
         const val ValidationType_PutAway_PurchaseOrder="PutAway_PurchaseOrder"
         const val ValidationType_PutAway_Inbound="PutAway_Inbound"
         const val ValidationType_PutAway_Product="PutAway_Product"
+    }
+
+    object Actions{
+        const val OK="Ok"
+        const val Cancel="Cancel"
     }
 
     enum class ValidationStatus{ VALIDATED,INVALID,CLEAR }

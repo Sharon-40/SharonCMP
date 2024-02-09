@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -33,6 +32,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.mohamedrejeb.calf.ui.progress.AdaptiveCircularProgressIndicator
 import moe.tlaster.precompose.navigation.Navigator
 
 
@@ -40,7 +40,7 @@ import moe.tlaster.precompose.navigation.Navigator
 fun CustomCircleProgressbar()
 {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(color = ColorResources.ColorPrimary)
+        AdaptiveCircularProgressIndicator(color = ColorResources.ColorPrimary)
     }
 }
 

@@ -18,8 +18,13 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mohamedrejeb.calf.ui.dialog.AdaptiveAlertDialog
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.PrimaryButton
@@ -28,32 +33,66 @@ import presentation.components.ToolBarWithBack
 import presentation.navigation.NavigationRoute
 
 @Composable
-fun ProfileScreen(navigator: Navigator,localSharedStorage: LocalSharedStorage) {
+fun ProfileScreen(navigator: Navigator, localSharedStorage: LocalSharedStorage) {
 
-    Scaffold(topBar = { ToolBarWithBack(navigator,StringResources.Profile) }) {
+    var showDialog by remember { mutableStateOf(false) }
 
-        Column (modifier = Modifier.fillMaxSize().background(ColorResources.Background).padding(10.dp)) {
+    Scaffold(topBar = { ToolBarWithBack(navigator, StringResources.Profile) }) {
 
-            ProfileListTile(Icons.Default.AccountCircle,StringResources.UserName,localSharedStorage.getUserName())
+        Column(
+            modifier = Modifier.fillMaxSize().background(ColorResources.Background).padding(10.dp)
+        ) {
+
+            ProfileListTile(
+                Icons.Default.AccountCircle,
+                StringResources.UserName,
+                localSharedStorage.getUserName()
+            )
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            ProfileListTile(Icons.Default.Place,StringResources.Plant,localSharedStorage.getPlant())
+            ProfileListTile(
+                Icons.Default.Place,
+                StringResources.Plant,
+                localSharedStorage.getPlant()
+            )
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            ProfileListTile(Icons.Default.Home,StringResources.Warehouse,localSharedStorage.getWareHouse())
+            ProfileListTile(
+                Icons.Default.Home,
+                StringResources.Warehouse,
+                localSharedStorage.getWareHouse()
+            )
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            ProfileListTile(Icons.Default.Info,StringResources.Printer,localSharedStorage.getPrinter())
+            ProfileListTile(
+                Icons.Default.Info,
+                StringResources.Printer,
+                localSharedStorage.getPrinter()
+            )
 
-            Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
 
                 PrimaryButton(StringResources.LogOut) {
-                    localSharedStorage.clearAll()
-                    navigator.navigate(NavigationRoute.OauthWebView.route)
+                    showDialog=true
                 }
+            }
+
+            if (showDialog) {
+                AdaptiveAlertDialog(
+                    onConfirm = {
+                        showDialog = false
+                        localSharedStorage.clearAll()
+                        navigator.navigate(NavigationRoute.OauthWebView.route)
+                    },
+                    onDismiss = { showDialog = false },
+                    confirmText = StringResources.Actions.OK,
+                    dismissText = StringResources.Actions.Cancel,
+                    title = StringResources.LogOut,
+                    text = StringResources.LogOutDesc,
+                )
             }
 
         }

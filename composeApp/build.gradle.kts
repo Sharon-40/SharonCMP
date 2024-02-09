@@ -29,7 +29,10 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
-//            isStatic = true
+            //isStatic = true
+
+            // IMPORTANT: Exporting calf-ui is required for some functionalities to work
+            export("com.mohamedrejeb.calf:calf-ui:0.3.1")
         }
     }
 
@@ -96,6 +99,9 @@ kotlin {
 
             //Icons
             implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
+
+            // For Adaptive UI components
+            api("com.mohamedrejeb.calf:calf-ui:0.3.1")
 
 
         }
