@@ -7,11 +7,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import data.preferences.LocalSharedStorage
 import dev.datlag.kcef.KCEF
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.compose.koinInject
 import java.io.File
 import kotlin.math.max
 
@@ -19,14 +17,6 @@ fun main() = application {
 
     initKoin()
 
-  /*  val localSharedStorage: LocalSharedStorage = koinInject()
-
-    localSharedStorage.saveUserId("JN")
-    localSharedStorage.saveUserName("JN")
-    localSharedStorage.savePlant("AW02")
-    localSharedStorage.saveWareHouse("OS00")
-    localSharedStorage.savePrinter("LP01")
-*/
     Window(onCloseRequest = ::exitApplication, title = StringResources.AppName) {
 
         var restartRequired by remember { mutableStateOf(false) }
