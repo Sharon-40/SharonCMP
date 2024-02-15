@@ -6,6 +6,7 @@ import data.model.StockModel
 import data.preferences.LocalSharedStorage
 import data.utils.NetworkResult
 import domain.use_cases.MainUseCase
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,25 +35,23 @@ data class BinTransferStateHolder(
 
 class BinToBinViewModel(private val mainUseCase: MainUseCase,private val localSharedStorage: LocalSharedStorage) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(StockStateHolder())
-    val uiState: StateFlow<StockStateHolder> = _uiState.asStateFlow()
+    val _uiState = MutableSharedFlow<StockStateHolder>()
 
-    private val _uiBinTransferState = MutableStateFlow(BinTransferStateHolder())
-    val uiBinTransferState: StateFlow<BinTransferStateHolder> = _uiBinTransferState.asStateFlow()
+    val _uiBinTransferState = MutableSharedFlow<BinTransferStateHolder>()
 
      fun getStockByBin(bin:String) = mainUseCase.getStockByBin(bin).onEach { res ->
         when (res) {
             is NetworkResult.Loading -> {
-                _uiState.update { StockStateHolder(isLoading = true) }
+                _uiState.emit(StockStateHolder(isLoading = true))
             }
 
             is NetworkResult.Success -> {
-                _uiState.update { StockStateHolder(data = res.data) }
+                _uiState.emit(StockStateHolder(data = res.data) )
 
             }
 
             is NetworkResult.Error -> {
-                _uiState.update { StockStateHolder(error = res.message) }
+                _uiState.emit( StockStateHolder(error = res.message) )
             }
         }
     }.launchIn(viewModelScope)
@@ -101,7 +100,7 @@ class BinToBinViewModel(private val mainUseCase: MainUseCase,private val localSh
     private fun postBinTransfer(lines:ArrayList<BinTransferModel>) = mainUseCase.postBinTransfer(lines).onEach { res ->
         when (res) {
             is NetworkResult.Loading -> {
-                _uiBinTransferState.update { BinTransferStateHolder(isLoading = true) }
+                _uiBinTransferState.emit( BinTransferStateHolder(isLoading = true) )
             }
 
             is NetworkResult.Success -> {
@@ -125,12 +124,12 @@ class BinToBinViewModel(private val mainUseCase: MainUseCase,private val localSh
                     }
                 }
 
-                _uiBinTransferState.update { BinTransferStateHolder(data = res.data , successCount = successCount , successBuilder = successBuilder.toString() , errorCount = errorCount, errorBuilder = errorBuilder.toString()) }
+                _uiBinTransferState.emit( BinTransferStateHolder(data = res.data , successCount = successCount , successBuilder = successBuilder.toString() , errorCount = errorCount, errorBuilder = errorBuilder.toString()) )
 
             }
 
             is NetworkResult.Error -> {
-                _uiBinTransferState.update { BinTransferStateHolder(error = res.message) }
+                _uiBinTransferState.emit( BinTransferStateHolder(error = res.message) )
             }
         }
     }.launchIn(viewModelScope)

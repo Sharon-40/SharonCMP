@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.PlatformUtils
 import data.model.StockModel
+import kotlinx.coroutines.flow.collect
 import presentation.components.CustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.custom_views.QRPickerTextField
@@ -41,8 +43,6 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
     var enteredBin by remember { mutableStateOf("") }
     var stockData:ArrayList<StockModel> by remember { mutableStateOf(ArrayList()) }
 
-    val uiState = viewModel.uiState.collectAsState()
-    val uiBinTransferState = viewModel.uiBinTransferState.collectAsState()
 
     Column(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
 
@@ -136,46 +136,62 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
 
     }
 
-    when {
-        uiState.value.isLoading-> {
-            isLoading=true
-        }
+    LaunchedEffect(Unit)
+    {
 
-        uiState.value.error.isNotEmpty() -> {
-            isLoading=false
-            platformUtils.makeToast(uiState.value.error)
-        }
+        viewModel._uiState.collect {
 
-        uiState.value.data!=null ->{
-            isLoading=false
-            stockData=uiState.value.data as ArrayList<StockModel>
-            //stockData.addAll(uiState.value.data!!)
-        }
+            when {
+                it.isLoading-> {
+                    isLoading=true
+                }
 
-    }
+                it.error.isNotEmpty() -> {
+                    isLoading=false
+                    platformUtils.makeToast(it.error)
+                }
 
-    when {
-        uiBinTransferState.value.isLoading-> {
-            isLoading=true
-        }
+                it.data!=null ->{
+                    isLoading=false
+                    stockData=it.data as ArrayList<StockModel>
+                }
 
-        uiBinTransferState.value.error.isNotEmpty() -> {
-            isLoading=false
-            platformUtils.makeToast(uiBinTransferState.value.error)
-        }
-
-        uiBinTransferState.value.data!=null ->{
-            isLoading=false
-            if (uiBinTransferState.value.successCount>0)
-            {
-                platformUtils.makeToast(uiBinTransferState.value.successBuilder)
-            }else if (uiBinTransferState.value.errorCount>0)
-            {
-                platformUtils.makeToast(uiBinTransferState.value.errorBuilder)
             }
-            viewModel.getStockByBin(enteredBin)
         }
 
     }
+
+
+    LaunchedEffect(Unit)
+    {
+
+        viewModel._uiBinTransferState.collect{
+            when {
+
+                it.isLoading-> {
+                    isLoading=true
+                }
+
+                it.error.isNotEmpty() -> {
+                    isLoading=false
+                    platformUtils.makeToast(it.error)
+                }
+
+                it.data!=null -> {
+                    isLoading=false
+                    if (it.successCount>0)
+                    {
+                        platformUtils.makeToast(it.successBuilder)
+                    }else if (it.errorCount>0)
+                    {
+                        platformUtils.makeToast(it.errorBuilder)
+                    }
+                    viewModel.getStockByBin(enteredBin)
+                }
+
+            }
+        }
+    }
+
 
 }
