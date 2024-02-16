@@ -75,7 +75,8 @@ fun AppNavigation() {
         }
 
         scene(route = NavigationRoute.PutAway.route) {
-            Navigator(PutAwayScreen(navigator))
+            val viewModel: PutAwayViewModel = koinViewModel(PutAwayViewModel::class)
+            Navigator(PutAwayScreen(navigator,viewModel,localSharedStorage,platformUtils))
         }
 
         scene(route = NavigationRoute.BinToBin.route) {

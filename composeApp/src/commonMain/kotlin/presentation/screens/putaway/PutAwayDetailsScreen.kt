@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -88,12 +89,12 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
 
                 TabRow(
                     selectedTabIndex = selectedTabIndex,
-                    backgroundColor = ColorResources.ColorAccent,
-                    contentColor = Color.White,
+                    backgroundColor = Color.White,
+                    contentColor = ColorResources.ColorAccent,
                     indicator = { tabPositions ->
                         TabRowDefaults.Indicator(
                             Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
-                            color = Color.Black
+                            color = ColorResources.ColorAccent
                         )
                     }
                 ) {
@@ -105,6 +106,8 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                         )
                     }
                 }
+
+                Spacer(modifier = Modifier.height(8.dp))
 
                 if (selectedTabIndex == 0) {
                     OpenLines()
@@ -135,8 +138,8 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
         Column {
 
             if (openWareHouseTasks.isNotEmpty()) {
-                Column {
 
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     LazyColumn(modifier = Modifier.fillMaxHeight(0.85f)) {
 
                         itemsIndexed(openWareHouseTasks) { index, item ->
@@ -194,6 +197,11 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                             modifier = Modifier.weight(1f),
                                             valueText = item.createdBy
                                         )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Batch,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.batch
+                                        )
                                     }
 
                                     Row {
@@ -208,14 +216,14 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                             valueText = item.sourceBin
                                         )
                                         VerticalCustomText(
-                                            headerText = StringResources.WareHouseTechTerms.Batch,
-                                            modifier = Modifier.weight(1f),
-                                            valueText = item.batch
-                                        )
-                                        VerticalCustomText(
                                             headerText = StringResources.WareHouseTechTerms.StockType,
                                             modifier = Modifier.weight(1f),
                                             valueText = item.stockType
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Qty,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = "${item.qty} ${item.uom}"
                                         )
 
                                     }
@@ -225,6 +233,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                         QRPickerTextField(
                                             headerText = StringResources.WareHouseTechTerms.DestinationStorageType,
                                             modifier = Modifier.weight(1f),
+                                            valueText = item.destStorageType,
                                             onValueChange = {
                                                 openWareHouseTasks[index].selectedDestStorageType = it
                                             })
@@ -232,6 +241,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                         QRPickerTextField(
                                             headerText = StringResources.WareHouseTechTerms.DestinationBin,
                                             modifier = Modifier.weight(1f),
+                                            valueText = item.destBin,
                                             onValueChange = {
                                                 openWareHouseTasks[index].selectedDestBin = it
                                             })
@@ -239,6 +249,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                         QRPickerTextField(
                                             headerText = StringResources.WareHouseTechTerms.TransferQty,
                                             modifier = Modifier.weight(1f),
+                                            valueText = item.qty,
                                             onValueChange = {
                                                 openWareHouseTasks[index].enteredQty = it
                                             })
@@ -252,7 +263,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                     Row {
                         SecondaryButton(StringResources.RePrint) {
                             if (viewModel.getSelectedData(openWareHouseTasks.toList()).isNotEmpty()) {
-                                platformUtils.makeToast("Success")
+                                rePrint(viewModel.getSelectedData(openWareHouseTasks.toList()))
                             } else {
                                 platformUtils.makeToast(StringResources.SelectAtLeastOne)
                             }
@@ -260,7 +271,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
 
                         PrimaryButton(StringResources.Submit) {
                             if (viewModel.getSelectedData(openWareHouseTasks.toList()).isNotEmpty()) {
-                                platformUtils.makeToast("Success")
+                                preparePayload(viewModel.getSelectedData(openWareHouseTasks.toList()))
                             } else {
                                 platformUtils.makeToast(StringResources.SelectAtLeastOne)
                             }
@@ -276,10 +287,11 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
     @Composable
     private fun ConfirmedLines() {
 
-        Column {
+        Column{
+
             if (confirmedWareHouseTasks.isNotEmpty())
             {
-                Column {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     LazyColumn(modifier = Modifier.fillMaxHeight(0.85f)) {
 
                         itemsIndexed(confirmedWareHouseTasks) { index, item ->
@@ -337,6 +349,11 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                             modifier = Modifier.weight(1f),
                                             valueText = item.confirmedByUser?:""
                                         )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Batch,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.batch
+                                        )
                                     }
 
                                     Row {
@@ -351,14 +368,14 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                             valueText = item.sourceBin
                                         )
                                         VerticalCustomText(
-                                            headerText = StringResources.WareHouseTechTerms.Batch,
-                                            modifier = Modifier.weight(1f),
-                                            valueText = item.batch
-                                        )
-                                        VerticalCustomText(
                                             headerText = StringResources.WareHouseTechTerms.StockType,
                                             modifier = Modifier.weight(1f),
                                             valueText = item.stockType
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Qty,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = "${item.qty} ${item.uom}"
                                         )
 
                                     }
@@ -376,7 +393,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                         )
                                         VerticalCustomText(
                                             headerText = StringResources.WareHouseTechTerms.TransferQty,
-                                            modifier = Modifier.weight(1f),
+                                            modifier = Modifier.weight(2f),
                                             valueText = item.qty
                                         )
                                     }
@@ -387,7 +404,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
 
                     SecondaryButton(StringResources.RePrint) {
                         if (viewModel.getSelectedData(confirmedWareHouseTasks.toList()).isNotEmpty()) {
-                            platformUtils.makeToast("Success")
+                            rePrint(viewModel.getSelectedData(confirmedWareHouseTasks.toList()))
                         } else {
                             platformUtils.makeToast(StringResources.SelectAtLeastOne)
                         }
@@ -397,6 +414,16 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                 NoDataView()
             }
         }
+    }
+
+    private fun rePrint(lines: List<WarehouseTaskModel>)
+    {
+        platformUtils.makeToast("Success")
+    }
+
+    private fun preparePayload(lines: List<WarehouseTaskModel>)
+    {
+        platformUtils.makeToast("Success")
     }
 
 }

@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -45,9 +46,8 @@ import data.PlatformUtils
 import data.logs.LogUtils
 import data.model.WarehouseTaskModel
 import data.preferences.LocalSharedStorage
-import moe.tlaster.precompose.koin.koinViewModel
 import moe.tlaster.precompose.navigation.Navigator
-import org.koin.compose.koinInject
+import presentation.components.CustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.components.SecondaryButton
 import presentation.components.ToolBarWithBack
@@ -57,26 +57,23 @@ import presentation.custom_views.VerticalCustomText
 import presentation.viewmodels.PutAwayViewModel
 
 
-class PutAwayScreen(private val preComposeNavigator: Navigator) : Screen {
+class PutAwayScreen(private val preComposeNavigator: Navigator, private val viewModel: PutAwayViewModel, val localSharedStorage: LocalSharedStorage, private val platformUtils: PlatformUtils) : Screen {
+
+    private val warehouseOrders = ArrayList<String>()
+    private val warehouseTasks = ArrayList<String>()
+    private val purchaseOrders = ArrayList<String>()
+    private val inboundDeliveries = ArrayList<String>()
+    private val products = ArrayList<String>()
 
     @Composable
     override fun Content()
     {
         val navigator = LocalNavigator.currentOrThrow
 
-        val viewModel: PutAwayViewModel = koinViewModel(PutAwayViewModel::class)
-        val localSharedStorage: LocalSharedStorage = koinInject()
-        val platformUtils: PlatformUtils = koinInject()
-
-        val warehouseOrders = ArrayList<String>()
-        val warehouseTasks = ArrayList<String>()
-        val purchaseOrders = ArrayList<String>()
-        val inboundDeliveries = ArrayList<String>()
-        val products = ArrayList<String>()
-
         var openWarehouseTasks: List<WarehouseTaskModel> by remember { mutableStateOf(emptyList()) }
 
         var showDialog by  remember { mutableStateOf(false) }
+        var isLoading by remember { mutableStateOf(false) }
 
 
         Scaffold(topBar = {
@@ -154,9 +151,14 @@ class PutAwayScreen(private val preComposeNavigator: Navigator) : Screen {
                         {
                             platformUtils.makeToast(StringResources.Enter_one_of_the_below_field)
                         }else{
-                            platformUtils.makeToast("Success")
+                            viewModel.getLines(localSharedStorage.getWareHouse(),warehouseOrders,warehouseOrders,purchaseOrders,inboundDeliveries,products)
                         }
                     }
+                }
+
+                if (isLoading)
+                {
+                    CustomCircleProgressbar()
                 }
 
                 if (showDialog)
@@ -179,8 +181,30 @@ class PutAwayScreen(private val preComposeNavigator: Navigator) : Screen {
                     }
                 }
             }
-
         }
+
+        LaunchedEffect(Unit)
+        {
+            viewModel._uiState.collect{
+
+                when {
+                    it.isLoading -> {
+                        isLoading=true
+                    }
+
+                    it.error.isNotEmpty() -> {
+                        isLoading=false
+                    }
+
+                    it.data!=null ->{
+                        isLoading=false
+                        navigator.push(PutAwayDetailsScreen(it.data,viewModel,localSharedStorage,platformUtils))
+                    }
+
+                }
+            }
+        }
+
     }
 
     @Composable
