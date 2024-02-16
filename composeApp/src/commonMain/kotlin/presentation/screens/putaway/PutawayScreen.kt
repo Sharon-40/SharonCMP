@@ -43,7 +43,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import data.PlatformUtils
 import data.logs.LogUtils
-import data.model.WarehouseTaskModel
+import data.model.putaway.WarehouseTaskModel
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.DialogCustomCircleProgressbar
@@ -207,7 +207,7 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
     }
 
     @Composable
-    fun OpenWhoDialog(setShowDialog: (Boolean) -> Unit , opensTasks:List<WarehouseTaskModel>,platformUtils: PlatformUtils,viewModel: PutAwayViewModel,selectedLines: (List<WarehouseTaskModel>)->Unit) {
+    fun OpenWhoDialog(setShowDialog: (Boolean) -> Unit, opensTasks:List<WarehouseTaskModel>, platformUtils: PlatformUtils, viewModel: PutAwayViewModel, selectedLines: (List<WarehouseTaskModel>)->Unit) {
 
         Dialog(onDismissRequest = { setShowDialog(false) }) {
 

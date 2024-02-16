@@ -1,7 +1,9 @@
 package data.network
 
-import data.model.BinTransferModel
+import data.model.bintobin.BinTransferModel
 import data.model.ProductModel
+import data.model.putaway.ConfirmWareHouseTaskBatchResponseModel
+import data.model.putaway.ConfirmWareHouseTaskModel
 import io.ktor.client.statement.HttpResponse
 
 interface ApiInterface {
@@ -14,4 +16,6 @@ interface ApiInterface {
     suspend fun postBinTransfer(transactions: ArrayList<BinTransferModel>): HttpResponse
     suspend fun getAccessTokenByCode(code: String): HttpResponse
     suspend fun getAccessTokenByRefreshToken(refreshToken: String): HttpResponse
+    suspend fun postPutAway(transactions: ArrayList<ConfirmWareHouseTaskModel>): HttpResponse
+    suspend fun putAwayBatchLocationUrl(transactions: ConfirmWareHouseTaskBatchResponseModel): HttpResponse
 }

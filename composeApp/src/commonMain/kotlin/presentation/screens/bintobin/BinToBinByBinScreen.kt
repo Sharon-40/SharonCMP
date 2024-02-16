@@ -25,7 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.PlatformUtils
-import data.model.StockModel
+import data.model.bintobin.StockModel
 import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.custom_views.QRPickerTextField

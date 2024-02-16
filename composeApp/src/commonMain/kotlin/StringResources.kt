@@ -74,4 +74,8 @@ object StringResources {
         const val CANCELLED_TASK: String = "A"
     }
 
+    object PutawayExceptionCodes{
+        const val CHBD="CHBD"
+    }
+
 }

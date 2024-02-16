@@ -2,18 +2,21 @@ package domain.use_cases
 
 import StringResources
 import data.logs.LogUtils
-import data.model.BinTransferModel
-import data.model.ConfirmTaskResponse
-import data.model.StandardResponse
-import data.model.StockModel
+import data.model.bintobin.BinTransferModel
+import data.model.container.ConfirmTaskResponse
+import data.model.container.StandardResponse
+import data.model.bintobin.StockModel
 import data.model.UserModel
-import data.model.WarehouseTaskModel
+import data.model.putaway.ConfirmWareHouseTaskBatchResponseModel
+import data.model.putaway.ConfirmWareHouseTaskModel
+import data.model.putaway.WarehouseTaskModel
 import data.utils.NetworkResult
 import data.respository.MainRepository
 import io.ktor.client.call.body
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -127,6 +130,46 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
             LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
 
             emit(NetworkResult.Success(data = result.data))
+
+        }else{
+            emit(NetworkResult.Error(response.status.toString()))
+        }
+
+    }.catch {
+        emit(NetworkResult.Error(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun postPutAway(transactions:ArrayList<ConfirmWareHouseTaskModel>) = flow {
+
+        emit(NetworkResult.Loading())
+
+        val response=mainRepository.postPutAway(transactions)
+
+        if (response.status== HttpStatusCode.OK)
+        {
+            LogUtils.logDebug(StringResources.RESPONSE_CODE,response.status.toString())
+
+            val result=response.body<StandardResponse<ConfirmWareHouseTaskBatchResponseModel>>()
+
+            if (result.data!=null)
+            {
+
+                delay(10000)
+
+                val responseLocationUrl=mainRepository.putAwayBatchLocationUrl(result.data!!)
+
+                if (responseLocationUrl.status== HttpStatusCode.OK){
+
+                    val resultLocationUrl=responseLocationUrl.body<StandardResponse<ArrayList<ConfirmTaskResponse>>>()
+
+                    emit(NetworkResult.Success(data = resultLocationUrl.data))
+                }else{
+                    emit(NetworkResult.Error(response.status.toString()))
+                }
+
+            }else{
+                emit(NetworkResult.Error(result.message))
+            }
 
         }else{
             emit(NetworkResult.Error(response.status.toString()))

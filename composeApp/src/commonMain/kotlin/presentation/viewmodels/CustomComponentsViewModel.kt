@@ -1,6 +1,6 @@
 package presentation.viewmodels
 
-import data.model.WarehouseTaskModel
+import data.model.putaway.WarehouseTaskModel
 import data.utils.NetworkResult
 import domain.use_cases.MainUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow

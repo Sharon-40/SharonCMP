@@ -1,4 +1,4 @@
-package data.model
+package data.model.container
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -23,5 +23,8 @@ data class ConfirmTaskResponse(
 
     @SerialName("SourceStorageBin")
     var sourceStorageBin:String,
+
+    @SerialName("WarehouseTask")
+    var warehouseTask:String?=null,
 
     )

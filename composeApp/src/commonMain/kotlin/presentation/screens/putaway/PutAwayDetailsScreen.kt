@@ -25,6 +25,7 @@ import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,8 +39,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import data.CommonUtils
 import data.PlatformUtils
-import data.model.WarehouseTaskModel
+import data.logs.LogUtils
+import data.model.putaway.WarehouseTaskModel
 import data.preferences.LocalSharedStorage
+import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.NoDataView
 import presentation.components.PrimaryButton
 import presentation.components.SecondaryButton
@@ -49,7 +52,7 @@ import presentation.custom_views.QRPickerTextField
 import presentation.custom_views.VerticalCustomText
 import presentation.viewmodels.PutAwayViewModel
 
-class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,private val viewModel: PutAwayViewModel, val localSharedStorage: LocalSharedStorage, private val platformUtils: PlatformUtils) : Screen {
+class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>, private val viewModel: PutAwayViewModel, val localSharedStorage: LocalSharedStorage, private val platformUtils: PlatformUtils) : Screen {
 
     private val openWareHouseTasks = ArrayList<WarehouseTaskModel>()
     private val confirmedWareHouseTasks = ArrayList<WarehouseTaskModel>()
@@ -62,6 +65,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
         val navigator = LocalNavigator.currentOrThrow
 
         var selectedTabIndex by remember { mutableStateOf(0) }
+        var isLoading by remember { mutableStateOf(false) }
 
         segregateTasks()
 
@@ -116,6 +120,41 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                     ConfirmedLines()
                 }
 
+                if (isLoading)
+                {
+                    DialogCustomCircleProgressbar()
+                }
+
+            }
+        }
+
+        LaunchedEffect(Unit)
+        {
+
+            viewModel._uiPutAwayTransferState.collect{
+                when {
+
+                    it.isLoading-> {
+                        isLoading=true
+                    }
+
+                    it.error.isNotEmpty() -> {
+                        isLoading=false
+                        platformUtils.makeToast(it.error)
+                    }
+
+                    it.data!=null -> {
+                        isLoading=false
+                        if (it.successCount>0)
+                        {
+                            platformUtils.makeToast(it.successBuilder)
+                        }else if (it.errorCount>0)
+                        {
+                            platformUtils.makeToast(it.errorBuilder)
+                        }
+                        navigator.pop()
+                    }
+                }
             }
         }
     }
@@ -424,7 +463,8 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
 
     private fun preparePayload(lines: List<WarehouseTaskModel>)
     {
-        platformUtils.makeToast("Success")
+        viewModel.preParePayload(lines)
     }
+
 
 }

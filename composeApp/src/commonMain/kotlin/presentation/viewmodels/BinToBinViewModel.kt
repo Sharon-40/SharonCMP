@@ -1,18 +1,14 @@
 package presentation.viewmodels
 
-import data.model.BinTransferModel
-import data.model.ConfirmTaskResponse
-import data.model.StockModel
+import data.model.bintobin.BinTransferModel
+import data.model.container.ConfirmTaskResponse
+import data.model.bintobin.StockModel
 import data.preferences.LocalSharedStorage
 import data.utils.NetworkResult
 import domain.use_cases.MainUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.update
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 

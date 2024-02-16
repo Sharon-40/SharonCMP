@@ -2,8 +2,10 @@ package data.network
 
 import data.oauth.OAuthConfig
 import StringResources
-import data.model.BinTransferModel
+import data.model.bintobin.BinTransferModel
 import data.model.ProductModel
+import data.model.putaway.ConfirmWareHouseTaskBatchResponseModel
+import data.model.putaway.ConfirmWareHouseTaskModel
 import data.preferences.LocalSharedStorage
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -79,6 +81,26 @@ class ApiInterfaceImpl(private val httpClient: HttpClient,private val localShare
             parameter("refresh_token",refreshToken)
             parameter("client_id", OAuthConfig.CLIENT_ID)
             parameter("redirect_uri", OAuthConfig.REDIRECT_URL)
+        }
+    }
+
+    override suspend fun postPutAway(transactions:ArrayList<ConfirmWareHouseTaskModel>): HttpResponse {
+        return httpClient.post {
+            url("${StringResources.BASEURL}/batch/confirmWarehouseTaskBatch")
+            parameter("Plant",localSharedStorage.getPlant())
+            parameter("EWMWarehouse", localSharedStorage.getWareHouse())
+            contentType(ContentType.Application.Json)
+            setBody(transactions)
+        }
+    }
+
+    override suspend fun putAwayBatchLocationUrl(transactions: ConfirmWareHouseTaskBatchResponseModel): HttpResponse {
+        return httpClient.post {
+            url("${StringResources.BASEURL}/batch/callOdataLocationUrl")
+            parameter("Plant",localSharedStorage.getPlant())
+            parameter("EWMWarehouse", localSharedStorage.getWareHouse())
+            contentType(ContentType.Application.Json)
+            setBody(transactions)
         }
     }
 

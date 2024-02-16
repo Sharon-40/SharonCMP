@@ -19,5 +19,5 @@ val presentationModule = module {
 
     factory { BinToBinViewModel(get<MainUseCase>(),get<LocalSharedStorage>()) }
 
-    factory { PutAwayViewModel(get<MainUseCase>()) }
+    factory { PutAwayViewModel(get<MainUseCase>(),get<LocalSharedStorage>())}
 }

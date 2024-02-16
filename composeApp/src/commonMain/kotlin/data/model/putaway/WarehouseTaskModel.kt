@@ -1,4 +1,4 @@
-package data.model
+package data.model.putaway
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -29,6 +29,9 @@ data class WarehouseTaskModel(
 
     @SerialName("BaseUnit")
     var uom: String = "",
+
+    @SerialName("CommercialUoM")
+    var comUom: String = "",
 
     @SerialName("SourceStorageType")
     var sourceStorageType: String = "",

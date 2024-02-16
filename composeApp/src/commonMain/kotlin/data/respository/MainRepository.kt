@@ -1,8 +1,10 @@
 package data.respository
 
 import data.local_db.LocalDbDao
-import data.model.BinTransferModel
+import data.model.bintobin.BinTransferModel
 import data.model.ProductModel
+import data.model.putaway.ConfirmWareHouseTaskBatchResponseModel
+import data.model.putaway.ConfirmWareHouseTaskModel
 import data.network.ApiInterfaceImpl
 import io.ktor.client.statement.HttpResponse
 
@@ -35,7 +37,13 @@ class MainRepository(private val apiInterfaceImpl: ApiInterfaceImpl,private val 
     suspend fun getAccessTokenByRefreshToken(refreshToken:String): HttpResponse {
         return apiInterfaceImpl.getAccessTokenByRefreshToken(refreshToken)
     }
+    suspend fun postPutAway(transactions:ArrayList<ConfirmWareHouseTaskModel>): HttpResponse {
+        return apiInterfaceImpl.postPutAway(transactions)
+    }
 
+    suspend fun putAwayBatchLocationUrl(transactions: ConfirmWareHouseTaskBatchResponseModel): HttpResponse {
+        return apiInterfaceImpl.putAwayBatchLocationUrl(transactions)
+    }
     suspend fun insert(id: Int, title: String, desc: String, image: String) {
         localDbDao.insert(id = id, title = title, desc = desc, image = image)
     }
