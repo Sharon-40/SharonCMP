@@ -1,6 +1,7 @@
 package presentation.components
 
 import ColorResources
+import StringResources
 import StyleUtils
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -125,5 +126,13 @@ fun SecondaryButton(text: String, onClick: () -> Unit = {}) {
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
         Text(text = text, style = TextStyle(color = ColorResources.ColorPrimary, fontFamily = StyleUtils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
+    }
+}
+
+@Composable
+fun NoDataView()
+{
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(text = StringResources.NoDataFound, style = StyleUtils.getBoldFontStyle())
     }
 }

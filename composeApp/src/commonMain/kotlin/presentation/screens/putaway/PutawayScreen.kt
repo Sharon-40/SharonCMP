@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -87,23 +88,26 @@ class PutAwayScreen(private val preComposeNavigator: Navigator) : Screen {
             Column (modifier = StyleUtils.getStandardModifier()) {
 
 
-                Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    HorizontalCustomText(headerText = StringResources.Plant, valueText = localSharedStorage.getPlant())
-                    Spacer(modifier = Modifier.width(2.dp))
-                    HorizontalCustomText(headerText = StringResources.Warehouse, valueText = localSharedStorage.getWareHouse())
-                }
+                Row (horizontalArrangement = Arrangement.SpaceBetween , modifier = Modifier.fillMaxWidth()){
 
-                Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    SecondaryButton(StringResources.Open_WHO) {
-                        if (openWarehouseTasks.isNotEmpty())
-                        {
-                            showDialog=true
-                        }else{
-                            platformUtils.makeToast(StringResources.NoDataFound)
+                    Row( modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.Start) {
+                        SecondaryButton(StringResources.Open_WHO) {
+                            if (openWarehouseTasks.isNotEmpty())
+                            {
+                                showDialog=true
+                            }else{
+                                platformUtils.makeToast(StringResources.NoDataFound)
+                            }
                         }
                     }
-                }
 
+
+                    Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                        HorizontalCustomText(headerText = StringResources.Plant, valueText = localSharedStorage.getPlant())
+                        Spacer(modifier = Modifier.width(2.dp))
+                        HorizontalCustomText(headerText = StringResources.Warehouse, valueText = localSharedStorage.getWareHouse())
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(5.dp))
 
@@ -158,7 +162,7 @@ class PutAwayScreen(private val preComposeNavigator: Navigator) : Screen {
                 if (showDialog)
                 {
                     OpenWhoDialog({ showDialog=it },openWarehouseTasks,platformUtils,viewModel){
-                        navigator.push(PutAwayDetailsScreen(it))
+                        navigator.push(PutAwayDetailsScreen(it,viewModel,localSharedStorage,platformUtils))
                     }
                 }
             }

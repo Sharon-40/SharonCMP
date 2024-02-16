@@ -70,8 +70,8 @@ fun VerticalCustomText(headerText:String="",headerColor:Color=Color.Black,valueT
 fun HorizontalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black,modifier: Modifier=Modifier){
     Row(modifier = modifier.padding(7.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(headerText, style = StyleUtils.getRegularFontStyle(headerColor))
-        Spacer(modifier = Modifier.width(2.dp))
-        Text(valueText, style = StyleUtils.getBoldFontStyle(valueColor))
+        Spacer(modifier = Modifier.width(5.dp))
+        Text(valueText, style = StyleUtils.getSemiBoldFontStyle(valueColor))
     }
 }
 

@@ -76,7 +76,10 @@ data class WarehouseTaskModel(
     var batch: String = "",
 
     @SerialName("ConfirmedByUser")
-    var confirmedByUser: String = "",
+    var confirmedByUser: String? = null,
+
+    @SerialName("ConfirmationUTCDateTime")
+    var completedDate: String? = null,
 
     @SerialName("EWMStockType")
     var stockType: String = "",

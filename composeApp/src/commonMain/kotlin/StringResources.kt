@@ -10,12 +10,13 @@ object StringResources {
     const val LogOut="Logout"
     const val Execute="Execute"
     const val Submit="Submit"
-    const val NoDataFound="NoDataFound"
+    const val NoDataFound="No Data Found"
     const val SelectAtLeastOne="Select At least One"
     const val InvalidBin="Invalid Bin"
     const val Enter_one_of_the_below_field="Enter one of the field"
     const val Open_WHO="Open WHO"
     const val Select="Select"
+    const val RePrint="RePrint"
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
@@ -48,8 +49,12 @@ object StringResources {
         const val TransferQty="TransferQty"
         const val DestinationStorageType="Dest.Str.Type"
         const val DestinationBin="Dest.Bin"
+        const val SourceStorageType="Src.Str.Type"
+        const val SourceBin="Src.Bin"
         const val CreatedOn="Created On"
         const val CreatedBy="Created By"
+        const val ConfirmedOn="Confirmed On"
+        const val ConfirmedBy="Confirmed By"
     }
 
     object ValidationTypes{
@@ -61,5 +66,11 @@ object StringResources {
     }
 
     enum class ValidationStatus{ VALIDATED,INVALID,CLEAR }
+
+    object WarehouseTaskStatus{
+        const val OPEN_TASK:String=""
+        const val COMPLETED_TASK:String="C"
+        const val CANCELLED_TASK:String="A"
+    }
 
 }

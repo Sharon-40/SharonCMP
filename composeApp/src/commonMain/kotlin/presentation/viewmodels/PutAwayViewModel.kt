@@ -1,5 +1,7 @@
 package presentation.viewmodels
 
+import StringResources
+import data.logs.LogUtils
 import data.model.WarehouseTaskModel
 import data.utils.NetworkResult
 import domain.use_cases.MainUseCase
@@ -20,10 +22,12 @@ class PutAwayViewModel(private val mainUseCase: MainUseCase) : ViewModel() {
             }
 
             is NetworkResult.Success -> {
+                LogUtils.logDebug(StringResources.RESPONSE,res.data.toString())
                 _openWhoState.emit( WarehouseTasksStateHolder(data = res.data) )
             }
 
             is NetworkResult.Error -> {
+                LogUtils.logDebug(StringResources.RESPONSE, res.message)
                 _openWhoState.emit( WarehouseTasksStateHolder(error = res.message) )
             }
         }
