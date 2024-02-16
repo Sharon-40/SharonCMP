@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.PlatformUtils
 import data.model.StockModel
-import kotlinx.coroutines.flow.collect
 import presentation.components.CustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.custom_views.QRPickerTextField
@@ -128,7 +126,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
                     {
                         viewModel.prePareItemPayload("VERP",viewModel.getSelectedData(stockData.toList()))
                     }else{
-                        platformUtils.makeToast(StringResources.SelectAtleastOne)
+                        platformUtils.makeToast(StringResources.SelectAtLeastOne)
                     }
                 }
             }

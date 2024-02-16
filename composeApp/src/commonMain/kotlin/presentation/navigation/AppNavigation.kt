@@ -19,6 +19,7 @@ import presentation.screens.putaway.PutAwayScreen
 import presentation.viewmodels.BinToBinViewModel
 import presentation.viewmodels.LoginViewModel
 import presentation.viewmodels.ProductListViewModel
+import presentation.viewmodels.PutAwayViewModel
 
 @Composable
 fun AppNavigation() {
@@ -73,7 +74,8 @@ fun AppNavigation() {
         }
 
         scene(route = NavigationRoute.PutAway.route) {
-            PutAwayScreen(navigator,localSharedStorage,platformUtils)
+            val viewModel: PutAwayViewModel = koinViewModel(PutAwayViewModel::class)
+            PutAwayScreen(navigator,localSharedStorage,platformUtils,viewModel)
         }
 
         scene(route = NavigationRoute.BinToBin.route) {

@@ -104,6 +104,6 @@ fun SecondaryButton(text: String, onClick: () -> Unit = {}) {
         border = BorderStroke(1.dp, ColorResources.ColorPrimary),
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = Color.Blue, fontFamily = StyleUtils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
+        Text(text = text, style = TextStyle(color = ColorResources.ColorPrimary, fontFamily = StyleUtils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
     }
 }

@@ -11,9 +11,11 @@ object StringResources {
     const val Execute="Execute"
     const val Submit="Submit"
     const val NoDataFound="NoDataFound"
-    const val SelectAtleastOne="SelectAtleastOne"
+    const val SelectAtLeastOne="Select At least One"
     const val InvalidBin="Invalid Bin"
     const val Enter_one_of_the_below_field="Enter one of the field"
+    const val Open_WHO="Open WHO"
+    const val Select="Select"
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 
@@ -46,6 +48,8 @@ object StringResources {
         const val TransferQty="TransferQty"
         const val DestinationStorageType="Dest.Str.Type"
         const val DestinationBin="Dest.Bin"
+        const val CreatedOn="Created On"
+        const val CreatedBy="Created By"
     }
 
     object ValidationTypes{
