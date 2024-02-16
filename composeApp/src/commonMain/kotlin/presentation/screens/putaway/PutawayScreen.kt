@@ -20,7 +20,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -47,7 +46,6 @@ import data.logs.LogUtils
 import data.model.WarehouseTaskModel
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.navigation.Navigator
-import presentation.components.CustomCircleProgressbar
 import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.components.SecondaryButton

@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.PlatformUtils
 import data.model.StockModel
-import presentation.components.CustomCircleProgressbar
 import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.custom_views.QRPickerTextField
@@ -125,7 +124,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
                 PrimaryButton(StringResources.Submit) {
                     if (viewModel.getSelectedData(stockData.toList()).isNotEmpty())
                     {
-                        viewModel.prePareItemPayload("VERP",viewModel.getSelectedData(stockData.toList()))
+                        viewModel.prePareItemPayload(StringResources.COST_CENTER,viewModel.getSelectedData(stockData.toList()))
                     }else{
                         platformUtils.makeToast(StringResources.SelectAtLeastOne)
                     }
