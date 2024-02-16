@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import data.font
 
-object Utils {
+object StyleUtils {
 
     @Composable
     fun getRegularFontStyle(color:Color=Color.Black, size:TextUnit=12.sp): TextStyle {

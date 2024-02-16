@@ -1,5 +1,6 @@
 package data.network
 
+import data.oauth.OAuthConfig
 import StringResources
 import data.model.BinTransferModel
 import data.model.ProductModel
@@ -12,6 +13,8 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 
 class ApiInterfaceImpl(private val httpClient: HttpClient,private val localSharedStorage: LocalSharedStorage) : ApiInterface {
     override suspend fun getProfile(userId:String): HttpResponse {
@@ -54,7 +57,28 @@ class ApiInterfaceImpl(private val httpClient: HttpClient,private val localShare
             url("${StringResources.BASEURL}/bin/binTransfer")
             parameter("Plant",localSharedStorage.getPlant())
             parameter("EWMWarehouse", localSharedStorage.getWareHouse())
+            contentType(ContentType.Application.Json)
             setBody(transactions)
+        }
+    }
+
+    override suspend fun getAccessTokenByCode(code:String): HttpResponse {
+        return httpClient.post {
+            url(OAuthConfig.TOKEN_END_POINT)
+            parameter("grant_type","authorization_code")
+            parameter("code",code)
+            parameter("client_id", OAuthConfig.CLIENT_ID)
+            parameter("redirect_uri", OAuthConfig.REDIRECT_URL)
+        }
+    }
+
+    override suspend fun getAccessTokenByRefreshToken(refreshToken:String): HttpResponse {
+        return httpClient.post {
+            url(OAuthConfig.TOKEN_END_POINT)
+            parameter("grant_type","refresh_token")
+            parameter("refresh_token",refreshToken)
+            parameter("client_id", OAuthConfig.CLIENT_ID)
+            parameter("redirect_uri", OAuthConfig.REDIRECT_URL)
         }
     }
 

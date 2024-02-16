@@ -30,7 +30,6 @@ data class WarehouseTaskModel(
     @SerialName("BaseUnit")
     var uom: String = "",
 
-
     @SerialName("SourceStorageType")
     var sourceStorageType: String = "",
 
@@ -48,6 +47,9 @@ data class WarehouseTaskModel(
 
     @SerialName("WarehouseTaskStatus")
     var status: String = "",
+
+    @SerialName("WhseTaskCrtnUTCDateTime")
+    var createdOn: String = "",
 
     @SerialName("CreatedByUser")
     var createdBy: String = "",
@@ -74,7 +76,10 @@ data class WarehouseTaskModel(
     var batch: String = "",
 
     @SerialName("ConfirmedByUser")
-    var confirmedByUser: String = "",
+    var confirmedByUser: String? = null,
+
+    @SerialName("ConfirmationUTCDateTime")
+    var completedDate: String? = null,
 
     @SerialName("EWMStockType")
     var stockType: String = "",

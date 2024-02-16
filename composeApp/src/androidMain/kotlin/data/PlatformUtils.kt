@@ -1,9 +1,10 @@
 package data
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 
-actual class Utils actual constructor(context: Any?) {
+actual class PlatformUtils actual constructor(context: Any?) {
 
     private var context: Context
 
@@ -13,6 +14,10 @@ actual class Utils actual constructor(context: Any?) {
 
     actual fun makeToast(message:String){
         Toast.makeText(context,message, Toast.LENGTH_LONG).show()
+    }
+
+    actual fun getQueryParameter(url:String,name: String): String?{
+        return Uri.parse(url).getQueryParameter(name)
     }
 
 }

@@ -1,7 +1,8 @@
 package presentation.components
 
 import ColorResources
-import Utils
+import StringResources
+import StyleUtils
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,6 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import moe.tlaster.precompose.navigation.Navigator
 
 
@@ -41,6 +43,16 @@ fun CustomCircleProgressbar()
 {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator(color = ColorResources.ColorPrimary)
+    }
+}
+
+@Composable
+fun DialogCustomCircleProgressbar()
+{
+    Dialog(onDismissRequest = {}){
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(color = Color.White)
+        }
     }
 }
 
@@ -56,8 +68,8 @@ fun ProfileListTile(leadingIcon:ImageVector,title:String,desc:String)
         Spacer(modifier = Modifier.width(5.dp))
 
         Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
-            Text(text = title, style = Utils.getRegularFontStyle())
-            Text(text = desc, style = Utils.getBoldFontStyle())
+            Text(text = title, style = StyleUtils.getRegularFontStyle())
+            Text(text = desc, style = StyleUtils.getBoldFontStyle())
         }
 
     }
@@ -78,7 +90,27 @@ fun ToolBarWithBack(navigator: Navigator,title: String)
                 navigator.popBackStack()
             })
             Spacer(modifier = Modifier.width(10.dp))
-            Text(text = title, style = Utils.getBoldFontStyle(), color = Color.White)
+            Text(text = title, style = StyleUtils.getBoldFontStyle(), color = Color.White)
+        }
+    }
+}
+
+@Composable
+fun ToolBarWithBack(onBackPressed:() ->Unit ,title: String)
+{
+    TopAppBar(
+        contentColor = Color.White,
+        backgroundColor = ColorResources.ColorPrimary
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null, colorFilter = ColorFilter.tint(color = Color.White),modifier = Modifier.clickable {
+                onBackPressed()
+            })
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(text = title, style = StyleUtils.getBoldFontStyle(), color = Color.White)
         }
     }
 }
@@ -92,7 +124,7 @@ fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
         border = BorderStroke(1.dp, Color.White),
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = Color.White, fontFamily = Utils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
+        Text(text = text, style = TextStyle(color = Color.White, fontFamily = StyleUtils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
     }
 }
 
@@ -104,6 +136,14 @@ fun SecondaryButton(text: String, onClick: () -> Unit = {}) {
         border = BorderStroke(1.dp, ColorResources.ColorPrimary),
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = Color.Blue, fontFamily = Utils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
+        Text(text = text, style = TextStyle(color = ColorResources.ColorPrimary, fontFamily = StyleUtils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
+    }
+}
+
+@Composable
+fun NoDataView()
+{
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(text = StringResources.NoDataFound, style = StyleUtils.getBoldFontStyle())
     }
 }

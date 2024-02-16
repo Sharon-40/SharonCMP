@@ -10,20 +10,20 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import data.Utils
+import data.PlatformUtils
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.ToolBarWithBack
 import presentation.viewmodels.BinToBinViewModel
 
 @Composable
-fun BinToBinScreen(navigator: Navigator,viewModel: BinToBinViewModel,utils: Utils) {
+fun BinToBinScreen(navigator: Navigator, viewModel: BinToBinViewModel, platformUtils: PlatformUtils) {
 
     Scaffold(topBar = {
         ToolBarWithBack(navigator, StringResources.Apps.BinToBin.name)
     }) {
 
         Column (modifier = Modifier.fillMaxHeight().background(ColorResources.Background).padding(10.dp)){
-            BinToBinByBinScreen(viewModel,utils)
+            BinToBinByBinScreen(viewModel,platformUtils)
         }
     }
 }

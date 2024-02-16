@@ -2,7 +2,7 @@ package presentation.custom_views
 
 import ColorResources
 import StringResources
-import Utils
+import StyleUtils
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.ScrollableDefaults
@@ -35,7 +35,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -58,25 +58,25 @@ import org.koin.compose.koinInject
 import presentation.viewmodels.CustomComponentsViewModel
 
 @Composable
-fun VerticalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black){
-    Column(modifier = Modifier.padding(7.dp)) {
-        Text(headerText, style = Utils.getRegularFontStyle(color = headerColor))
+fun VerticalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black,modifier: Modifier=Modifier){
+    Column(modifier = modifier.padding(7.dp)) {
+        Text(headerText, style = StyleUtils.getRegularFontStyle(color = headerColor))
         Spacer(modifier = Modifier.height(2.dp))
-        Text(valueText, style = Utils.getBoldFontStyle(color = valueColor))
+        Text(valueText, style = StyleUtils.getBoldFontStyle(color = valueColor))
     }
 }
 
 @Composable
-fun HorizontalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black){
-    Row(modifier = Modifier.padding(7.dp), verticalAlignment = Alignment.CenterVertically) {
-        Text(headerText, style = Utils.getRegularFontStyle(headerColor))
-        Spacer(modifier = Modifier.width(2.dp))
-        Text(valueText, style = Utils.getBoldFontStyle(valueColor))
+fun HorizontalCustomText(headerText:String="",headerColor:Color=Color.Black,valueText:String="",valueColor:Color=Color.Black,modifier: Modifier=Modifier){
+    Row(modifier = modifier.padding(7.dp), verticalAlignment = Alignment.CenterVertically) {
+        Text(headerText, style = StyleUtils.getRegularFontStyle(headerColor))
+        Spacer(modifier = Modifier.width(5.dp))
+        Text(valueText, style = StyleUtils.getSemiBoldFontStyle(valueColor))
     }
 }
 
 @Composable
-fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, valueText:String="",onValueChange:(String)->Unit={}, isMandatory:Boolean=false, enableCharCount:Boolean=false, maxLength:Int=100, validation:Boolean=false, validationType:String?=null)
+fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, valueText:String="",onValueChange:(String)->Unit={}, isMandatory:Boolean=false, enableCharCount:Boolean=false, maxLength:Int=100, validation:Boolean=false, validationType:String?=null,modifier: Modifier=Modifier.fillMaxWidth())
 {
 
 
@@ -89,15 +89,13 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
     val viewModel: CustomComponentsViewModel = koinViewModel(CustomComponentsViewModel::class)
     val localSharedStorage: LocalSharedStorage = koinInject()
 
-    val uiState = viewModel.uiState.collectAsState()
-
-    Column(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
+    Column(modifier = modifier.padding(2.dp)) {
 
         Row(modifier = Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically) {
-            Text(headerText, style = Utils.getRegularFontStyle(color = headerColor))
+            Text(headerText, style = StyleUtils.getRegularFontStyle(color = headerColor))
             if (isMandatory)
             {
-                Text("*", style = Utils.getRegularFontStyle(color = Color.Red))
+                Text("*", style = StyleUtils.getRegularFontStyle(color = Color.Red))
             }
         }
 
@@ -117,7 +115,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
                 },
                 singleLine = true,
                 placeholder = {
-                    Text("Enter $headerText",style = Utils.getRegularFontStyle(color = headerColor, size = 12.sp))
+                    Text("Enter $headerText",style = StyleUtils.getRegularFontStyle(color = headerColor, size = 12.sp))
                 },
                 trailingIcon = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -147,7 +145,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                textStyle = Utils.getBoldFontStyle(),
+                textStyle = StyleUtils.getBoldFontStyle(),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
                 keyboardActions = KeyboardActions(onDone = {
                     if (validation && !validationType.isNullOrEmpty() && enteredValue.isNotEmpty())
@@ -182,7 +180,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
                 Text(
                     text = validationMessage,
                     textAlign = TextAlign.Start,
-                    style = Utils.getBoldFontStyle(Color.Green,12.sp)
+                    style = StyleUtils.getBoldFontStyle(Color.Green,12.sp)
                 )
             }
 
@@ -191,7 +189,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
                 Text(
                     text = validationMessage,
                     textAlign = TextAlign.Start,
-                    style = Utils.getBoldFontStyle(Color.Red,12.sp)
+                    style = StyleUtils.getBoldFontStyle(Color.Red,12.sp)
                 )
             }
 
@@ -201,31 +199,39 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
                     text = "${enteredValue.length} / $maxLength",
                     modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
                     textAlign = TextAlign.End,
-                    style = Utils.getBoldFontStyle()
+                    style = StyleUtils.getBoldFontStyle()
                 )
             }
         }
 
     }
 
-    when {
-        uiState.value.isLoading && enteredValue.isNotEmpty()-> {
-            isLoading=true
-        }
+    LaunchedEffect(Unit)
+    {
+        viewModel._uiState.collect{
 
-        !uiState.value.error.isNullOrEmpty() && enteredValue.isNotEmpty()-> {
-            validationMessage= StringResources.ValidationStatus.INVALID.name
-            validationStatus=StringResources.ValidationStatus.INVALID
-            isLoading=false
-        }
+            when {
+                it.isLoading -> {
+                    isLoading=true
+                }
 
-        uiState.value.data!=null && enteredValue.isNotEmpty()->{
-            validationMessage= StringResources.ValidationStatus.VALIDATED.name
-            validationStatus=StringResources.ValidationStatus.VALIDATED
-            isLoading=false
-        }
+                it.error.isNotEmpty() -> {
+                    validationMessage= StringResources.ValidationStatus.INVALID.name
+                    validationStatus=StringResources.ValidationStatus.INVALID
+                    isLoading=false
+                }
 
+                it.data!=null ->{
+                    validationMessage= StringResources.ValidationStatus.VALIDATED.name
+                    validationStatus=StringResources.ValidationStatus.VALIDATED
+                    isLoading=false
+                }
+
+            }
+        }
     }
+
+
 
 }
 
@@ -234,9 +240,9 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
 {
 
     var enteredValue by remember { mutableStateOf(valueText) }
-    val isLoading by remember { mutableStateOf(false) }
-    val validationStatus by remember { mutableStateOf(StringResources.ValidationStatus.CLEAR) }
-    val validationMessage by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(false) }
+    var validationStatus by remember { mutableStateOf(StringResources.ValidationStatus.CLEAR) }
+    var validationMessage by remember { mutableStateOf("") }
 
     val chips = remember { mutableStateListOf<String>() }
 
@@ -244,15 +250,13 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
     val viewModel: CustomComponentsViewModel = koinViewModel(CustomComponentsViewModel::class)
     val localSharedStorage: LocalSharedStorage = koinInject()
 
-    //val uiState = viewModel.uiState.collectAsState()
-
     Column(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
 
         Row(modifier = Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically) {
-            Text(headerText, style = Utils.getRegularFontStyle(color = headerColor))
+            Text(headerText, style = StyleUtils.getRegularFontStyle(color = headerColor))
             if (isMandatory)
             {
-                Text("*", style = Utils.getRegularFontStyle(color = Color.Red))
+                Text("*", style = StyleUtils.getRegularFontStyle(color = Color.Red))
             }
         }
 
@@ -269,14 +273,14 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 },
                 singleLine = true,
                 placeholder = {
-                    Text("Enter $headerText",style = Utils.getRegularFontStyle(color = headerColor, size = 12.sp))
+                    Text("Enter $headerText",style = StyleUtils.getRegularFontStyle(color = headerColor, size = 12.sp))
                 },
                 trailingIcon = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if (enteredValue.isNotEmpty()) {
                             IconButton(onClick = {
                                 enteredValue = ""
-                                //validationStatus=StringResources.ValidationStatus.CLEAR
+                                validationStatus=StringResources.ValidationStatus.CLEAR
                             }) {
                                 Icon(
                                     imageVector = Icons.Outlined.Delete,
@@ -299,14 +303,14 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                textStyle = Utils.getBoldFontStyle(),
+                textStyle = StyleUtils.getBoldFontStyle(),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done, keyboardType = KeyboardType.Number),
                 keyboardActions = KeyboardActions(onDone = {
                     if (validation && !validationType.isNullOrEmpty() && enteredValue.isNotEmpty())
                     {
-                        chips.add(enteredValue)
-                        enteredValue = ""
-                        /*when (validationType) {
+                        /*chips.add(enteredValue)
+                        enteredValue = ""*/
+                        when (validationType) {
                             StringResources.ValidationTypes.ValidationType_PutAway_WarehouseOrder -> {
                                 viewModel.getPutAwayWarehouseTasks(localSharedStorage.getWareHouse(),enteredValue,null,null,null,null,null)
                             }
@@ -322,7 +326,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                             StringResources.ValidationTypes.ValidationType_PutAway_Product -> {
                                 viewModel.getPutAwayWarehouseTasks(localSharedStorage.getWareHouse(),null,null,null,null,enteredValue,null)
                             }
-                        }*/
+                        }
                     }
                 })
             )
@@ -336,7 +340,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 Text(
                     text = validationMessage,
                     textAlign = TextAlign.Start,
-                    style = Utils.getBoldFontStyle(Color.Red,12.sp)
+                    style = StyleUtils.getBoldFontStyle(Color.Red,12.sp)
                 )
             }
 
@@ -347,29 +351,37 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 }
             )
 
-
         }
 
     }
 
-   /* when {
-        uiState.value.isLoading-> {
-            isLoading=true
+    LaunchedEffect(Unit)
+    {
+
+        viewModel._uiState.collect{
+            when {
+                it.isLoading && enteredValue.isNotEmpty()-> {
+                    isLoading=true
+                }
+
+                it.error.isNotEmpty() && enteredValue.isNotEmpty()-> {
+                    validationMessage= StringResources.ValidationStatus.INVALID.name
+                    validationStatus=StringResources.ValidationStatus.INVALID
+                    isLoading=false
+                }
+
+                it.data!=null && enteredValue.isNotEmpty() ->{
+                    isLoading=false
+                    chips.add(enteredValue)
+                    enteredValue = ""
+                    onChipSelected(chips.toList())
+                }
+
+            }
         }
 
-        !uiState.value.error.isNullOrEmpty()-> {
-            validationMessage= StringResources.ValidationStatus.INVALID.name
-            validationStatus=StringResources.ValidationStatus.INVALID
-            isLoading=false
-        }
 
-        uiState.value.data!=null ->{
-            isLoading=false
-            chips.add(enteredValue)
-            //chips= arrayListOf(enteredValue)
-        }
-
-    }*/
+    }
 
 }
 
@@ -383,7 +395,7 @@ fun MaterialChipGroup(
     strokeSize: Dp = 1.dp,
     strokeColor: Color = ColorResources.ColorSecondary,
     horizontalPadding: Dp = 5.dp,
-    textStyle: TextStyle=Utils.getBoldFontStyle(color = ColorResources.ColorSecondary, size = 12.sp),
+    textStyle: TextStyle=StyleUtils.getBoldFontStyle(color = ColorResources.ColorSecondary, size = 12.sp),
     onChipSelected: (List<String>) -> Unit = {  _ -> },
 ) {
 
@@ -439,7 +451,7 @@ fun MaterialChip(
             .height(30.dp)
             .border(width = strokeSize, color = strokeColor, shape = chipShape)
     ) {
-        Row(modifier = modifier.wrapContentWidth(), horizontalArrangement = Arrangement.Center) {
+        Row(modifier = modifier.wrapContentWidth().padding(5.dp), verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween) {
 
             Spacer(modifier=Modifier.width(5.dp))
 

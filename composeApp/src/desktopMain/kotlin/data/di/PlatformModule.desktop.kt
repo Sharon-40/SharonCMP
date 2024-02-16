@@ -23,6 +23,7 @@ import org.koin.dsl.module
 
 actual val platformModule: Module
     get() = module {
+
         factory<HttpClient> {
             HttpClient {
 
@@ -74,6 +75,7 @@ actual val platformModule: Module
                         }
                     }
                 }
+
             }
         }
         single { SqlDriverFactory(null).createSqlDriver() }

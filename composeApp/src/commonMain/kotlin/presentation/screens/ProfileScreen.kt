@@ -1,9 +1,7 @@
 package presentation.screens
 
 import ColorResources
-import presentation.components.ProfileListTile
 import StringResources
-import presentation.components.ToolBarWithBack
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,12 +18,14 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.PrimaryButton
+import presentation.components.ProfileListTile
+import presentation.components.ToolBarWithBack
+import presentation.navigation.NavigationRoute
 
 @Composable
 fun ProfileScreen(navigator: Navigator,localSharedStorage: LocalSharedStorage) {
@@ -51,7 +51,8 @@ fun ProfileScreen(navigator: Navigator,localSharedStorage: LocalSharedStorage) {
             Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
 
                 PrimaryButton(StringResources.LogOut) {
-
+                    localSharedStorage.clearAll()
+                    navigator.navigate(NavigationRoute.OauthWebView.route)
                 }
             }
 

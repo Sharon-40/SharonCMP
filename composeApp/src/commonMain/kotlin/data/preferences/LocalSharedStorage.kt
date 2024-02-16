@@ -1,52 +1,76 @@
 package data.preferences
 
-import com.liftric.kvault.KVault
+import com.russhwolf.settings.Settings
 
-class LocalSharedStorage(private val store: KVault) {
+class LocalSharedStorage(private val store: Settings) {
 
     fun saveUserId(name: String) {
-        store.set(USER_ID, name)
+        store.putString(USER_ID, name)
     }
 
     fun getUserId(): String {
-        return store.string(USER_ID) ?: ""
+        return store.getString(USER_ID,"")
     }
 
     fun saveUserName(name: String) {
-        store.set(USER_NAME, name)
+        store.putString(USER_NAME, name)
     }
 
 
     fun getUserName(): String {
-        return store.string(USER_NAME) ?: ""
+        return store.getString(USER_NAME,"")
     }
 
 
     fun savePlant(name: String) {
-        store.set(PREF_PLANT, name)
+        store.putString(PREF_PLANT, name)
     }
 
 
     fun getPlant(): String {
-        return store.string(PREF_PLANT) ?: ""
+        return store.getString(PREF_PLANT,"")
     }
 
 
     fun saveWareHouse(name: String) {
-        store.set(PREF_WAREHOUSE, name)
+        store.putString(PREF_WAREHOUSE, name)
     }
 
 
     fun getWareHouse(): String {
-        return store.string(PREF_WAREHOUSE) ?: ""
+        return store.getString(PREF_WAREHOUSE,"")
     }
 
     fun savePrinter(name: String) {
-        store.set(PREF_PRINTER, name)
+        store.putString(PREF_PRINTER, name)
     }
 
     fun getPrinter(): String {
-        return store.string(PREF_PRINTER) ?: ""
+        return store.getString(PREF_PRINTER,"")
+    }
+
+    fun saveAuthCode(name: String) {
+        store.putString(AUTH_CODE, name)
+    }
+
+    fun getAuthCode(): String {
+        return store.getString(AUTH_CODE,"")
+    }
+
+    fun saveAccessToken(name: String) {
+        store.putString(ACCESS_TOKEN, name)
+    }
+
+    fun getAccessToken(): String {
+        return store.getString(ACCESS_TOKEN,"")
+    }
+
+    fun saveRefreshToken(name: String) {
+        store.putString(REFRESH_TOKEN, name)
+    }
+
+    fun getRefreshToken(): String {
+        return store.getString(REFRESH_TOKEN,"")
     }
 
     fun clearAll() {
@@ -59,6 +83,9 @@ class LocalSharedStorage(private val store: KVault) {
         private const val PREF_PLANT = "PREF_PLANT"
         private const val PREF_WAREHOUSE = "PREF_WAREHOUSE"
         private const val PREF_PRINTER = "PREF_PRINTER"
+        private const val AUTH_CODE = "AUTH_CODE"
+        private const val ACCESS_TOKEN = "ACCESS_TOKEN"
+        private const val REFRESH_TOKEN = "REFRESH_TOKEN"
     }
 
 }

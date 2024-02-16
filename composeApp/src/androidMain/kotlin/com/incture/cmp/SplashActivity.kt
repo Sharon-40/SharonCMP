@@ -1,6 +1,5 @@
 package com.incture.cmp
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -42,7 +41,7 @@ class SplashActivity : ComponentActivity() {
                 color = MaterialTheme.colorScheme.background
             ) {
                 SplashScreen {
-                    launchWelcomeActivity()
+                    launchWelcomeActivity(applicationContext)
                 }
             }
         }
@@ -67,12 +66,6 @@ class SplashActivity : ComponentActivity() {
         }
     }
 
-    private fun launchWelcomeActivity() {
-        val intent = Intent(applicationContext, WelcomeActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        }
-        startActivity(intent)
-    }
 }
 
 
