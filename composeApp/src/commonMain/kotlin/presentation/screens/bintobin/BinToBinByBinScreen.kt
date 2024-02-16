@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import data.PlatformUtils
 import data.model.StockModel
 import presentation.components.CustomCircleProgressbar
+import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.custom_views.QRPickerTextField
 import presentation.custom_views.VerticalCustomText
@@ -62,7 +63,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
 
             if (isLoading)
             {
-                CustomCircleProgressbar()
+                DialogCustomCircleProgressbar()
             }
 
             if (stockData.isNotEmpty())

@@ -48,6 +48,7 @@ import data.model.WarehouseTaskModel
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.CustomCircleProgressbar
+import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
 import presentation.components.SecondaryButton
 import presentation.components.ToolBarWithBack
@@ -156,16 +157,16 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                     }
                 }
 
-                if (isLoading)
-                {
-                    CustomCircleProgressbar()
-                }
-
                 if (showDialog)
                 {
                     OpenWhoDialog({ showDialog=it },openWarehouseTasks,platformUtils,viewModel){
                         navigator.push(PutAwayDetailsScreen(it,viewModel,localSharedStorage,platformUtils))
                     }
+                }
+
+                if (isLoading)
+                {
+                    DialogCustomCircleProgressbar()
                 }
             }
         }
