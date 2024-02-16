@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,7 +35,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -89,8 +88,6 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
 
     val viewModel: CustomComponentsViewModel = koinViewModel(CustomComponentsViewModel::class)
     val localSharedStorage: LocalSharedStorage = koinInject()
-
-    val uiState = viewModel.uiState.collectAsState()
 
     Column(modifier = modifier.padding(2.dp)) {
 
@@ -209,24 +206,32 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
 
     }
 
-    when {
-        uiState.value.isLoading && enteredValue.isNotEmpty()-> {
-            isLoading=true
-        }
+    LaunchedEffect(Unit)
+    {
+        viewModel._uiState.collect{
 
-        !uiState.value.error.isNullOrEmpty() && enteredValue.isNotEmpty()-> {
-            validationMessage= StringResources.ValidationStatus.INVALID.name
-            validationStatus=StringResources.ValidationStatus.INVALID
-            isLoading=false
-        }
+            when {
+                it.isLoading -> {
+                    isLoading=true
+                }
 
-        uiState.value.data!=null && enteredValue.isNotEmpty()->{
-            validationMessage= StringResources.ValidationStatus.VALIDATED.name
-            validationStatus=StringResources.ValidationStatus.VALIDATED
-            isLoading=false
-        }
+                it.error.isNotEmpty() -> {
+                    validationMessage= StringResources.ValidationStatus.INVALID.name
+                    validationStatus=StringResources.ValidationStatus.INVALID
+                    isLoading=false
+                }
 
+                it.data!=null ->{
+                    validationMessage= StringResources.ValidationStatus.VALIDATED.name
+                    validationStatus=StringResources.ValidationStatus.VALIDATED
+                    isLoading=false
+                }
+
+            }
+        }
     }
+
+
 
 }
 
@@ -235,17 +240,15 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
 {
 
     var enteredValue by remember { mutableStateOf(valueText) }
-    val isLoading by remember { mutableStateOf(false) }
-    val validationStatus by remember { mutableStateOf(StringResources.ValidationStatus.CLEAR) }
-    val validationMessage by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(false) }
+    var validationStatus by remember { mutableStateOf(StringResources.ValidationStatus.CLEAR) }
+    var validationMessage by remember { mutableStateOf("") }
 
     val chips = remember { mutableStateListOf<String>() }
 
 
     val viewModel: CustomComponentsViewModel = koinViewModel(CustomComponentsViewModel::class)
     val localSharedStorage: LocalSharedStorage = koinInject()
-
-    //val uiState = viewModel.uiState.collectAsState()
 
     Column(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
 
@@ -277,7 +280,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                         if (enteredValue.isNotEmpty()) {
                             IconButton(onClick = {
                                 enteredValue = ""
-                                //validationStatus=StringResources.ValidationStatus.CLEAR
+                                validationStatus=StringResources.ValidationStatus.CLEAR
                             }) {
                                 Icon(
                                     imageVector = Icons.Outlined.Delete,
@@ -305,9 +308,9 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 keyboardActions = KeyboardActions(onDone = {
                     if (validation && !validationType.isNullOrEmpty() && enteredValue.isNotEmpty())
                     {
-                        chips.add(enteredValue)
-                        enteredValue = ""
-                        /*when (validationType) {
+                        /*chips.add(enteredValue)
+                        enteredValue = ""*/
+                        when (validationType) {
                             StringResources.ValidationTypes.ValidationType_PutAway_WarehouseOrder -> {
                                 viewModel.getPutAwayWarehouseTasks(localSharedStorage.getWareHouse(),enteredValue,null,null,null,null,null)
                             }
@@ -323,7 +326,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                             StringResources.ValidationTypes.ValidationType_PutAway_Product -> {
                                 viewModel.getPutAwayWarehouseTasks(localSharedStorage.getWareHouse(),null,null,null,null,enteredValue,null)
                             }
-                        }*/
+                        }
                     }
                 })
             )
@@ -348,29 +351,37 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 }
             )
 
-
         }
 
     }
 
-   /* when {
-        uiState.value.isLoading-> {
-            isLoading=true
+    LaunchedEffect(Unit)
+    {
+
+        viewModel._uiState.collect{
+            when {
+                it.isLoading && enteredValue.isNotEmpty()-> {
+                    isLoading=true
+                }
+
+                it.error.isNotEmpty() && enteredValue.isNotEmpty()-> {
+                    validationMessage= StringResources.ValidationStatus.INVALID.name
+                    validationStatus=StringResources.ValidationStatus.INVALID
+                    isLoading=false
+                }
+
+                it.data!=null && enteredValue.isNotEmpty() ->{
+                    isLoading=false
+                    chips.add(enteredValue)
+                    enteredValue = ""
+                    onChipSelected(chips.toList())
+                }
+
+            }
         }
 
-        !uiState.value.error.isNullOrEmpty()-> {
-            validationMessage= StringResources.ValidationStatus.INVALID.name
-            validationStatus=StringResources.ValidationStatus.INVALID
-            isLoading=false
-        }
 
-        uiState.value.data!=null ->{
-            isLoading=false
-            chips.add(enteredValue)
-            //chips= arrayListOf(enteredValue)
-        }
-
-    }*/
+    }
 
 }
 
@@ -440,7 +451,7 @@ fun MaterialChip(
             .height(30.dp)
             .border(width = strokeSize, color = strokeColor, shape = chipShape)
     ) {
-        Row(modifier = modifier.wrapContentWidth(), horizontalArrangement = Arrangement.Center) {
+        Row(modifier = modifier.wrapContentWidth().padding(5.dp), verticalAlignment = Alignment.CenterVertically , horizontalArrangement = Arrangement.SpaceBetween) {
 
             Spacer(modifier=Modifier.width(5.dp))
 

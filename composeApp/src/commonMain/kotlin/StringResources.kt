@@ -13,6 +13,7 @@ object StringResources {
     const val NoDataFound="NoDataFound"
     const val SelectAtleastOne="SelectAtleastOne"
     const val InvalidBin="Invalid Bin"
+    const val Enter_one_of_the_below_field="Enter one of the field"
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 

@@ -26,6 +26,7 @@ fun AppNavigation() {
     val navigator = rememberNavigator()
 
     val localSharedStorage: LocalSharedStorage = koinInject()
+    val platformUtils: PlatformUtils = koinInject()
 
     NavHost(navigator = navigator, initialRoute = NavigationRoute.Splash.route) {
 
@@ -72,12 +73,11 @@ fun AppNavigation() {
         }
 
         scene(route = NavigationRoute.PutAway.route) {
-            PutAwayScreen(navigator,localSharedStorage)
+            PutAwayScreen(navigator,localSharedStorage,platformUtils)
         }
 
         scene(route = NavigationRoute.BinToBin.route) {
             val viewModel: BinToBinViewModel = koinViewModel(BinToBinViewModel::class)
-            val platformUtils: PlatformUtils = koinInject()
             BinToBinScreen(navigator,viewModel,platformUtils)
         }
 
