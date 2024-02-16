@@ -7,6 +7,7 @@ import presentation.viewmodels.BinToBinViewModel
 import presentation.viewmodels.CustomComponentsViewModel
 import presentation.viewmodels.LoginViewModel
 import presentation.viewmodels.ProductListViewModel
+import presentation.viewmodels.PutAwayViewModel
 
 val presentationModule = module {
 
@@ -17,4 +18,6 @@ val presentationModule = module {
     factory { CustomComponentsViewModel(get<MainUseCase>()) }
 
     factory { BinToBinViewModel(get<MainUseCase>(),get<LocalSharedStorage>()) }
+
+    factory { PutAwayViewModel(get<MainUseCase>()) }
 }

@@ -1,6 +1,7 @@
 package presentation.navigation
 
 import androidx.compose.runtime.Composable
+import cafe.adriel.voyager.navigator.Navigator
 import data.PlatformUtils
 import data.preferences.LocalSharedStorage
 import moe.tlaster.precompose.koin.koinViewModel
@@ -19,6 +20,7 @@ import presentation.screens.putaway.PutAwayScreen
 import presentation.viewmodels.BinToBinViewModel
 import presentation.viewmodels.LoginViewModel
 import presentation.viewmodels.ProductListViewModel
+import presentation.viewmodels.PutAwayViewModel
 
 @Composable
 fun AppNavigation() {
@@ -73,7 +75,8 @@ fun AppNavigation() {
         }
 
         scene(route = NavigationRoute.PutAway.route) {
-            PutAwayScreen(navigator,localSharedStorage,platformUtils)
+            val viewModel: PutAwayViewModel = koinViewModel(PutAwayViewModel::class)
+            Navigator(PutAwayScreen(navigator,viewModel,localSharedStorage,platformUtils))
         }
 
         scene(route = NavigationRoute.BinToBin.route) {

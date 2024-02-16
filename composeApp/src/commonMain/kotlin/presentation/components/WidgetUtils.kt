@@ -1,6 +1,7 @@
 package presentation.components
 
 import ColorResources
+import StringResources
 import StyleUtils
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -33,6 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import moe.tlaster.precompose.navigation.Navigator
 
 
@@ -41,6 +43,16 @@ fun CustomCircleProgressbar()
 {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator(color = ColorResources.ColorPrimary)
+    }
+}
+
+@Composable
+fun DialogCustomCircleProgressbar()
+{
+    Dialog(onDismissRequest = {}){
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator(color = Color.White)
+        }
     }
 }
 
@@ -83,6 +95,26 @@ fun ToolBarWithBack(navigator: Navigator,title: String)
     }
 }
 
+@Composable
+fun ToolBarWithBack(onBackPressed:() ->Unit ,title: String)
+{
+    TopAppBar(
+        contentColor = Color.White,
+        backgroundColor = ColorResources.ColorPrimary
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null, colorFilter = ColorFilter.tint(color = Color.White),modifier = Modifier.clickable {
+                onBackPressed()
+            })
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(text = title, style = StyleUtils.getBoldFontStyle(), color = Color.White)
+        }
+    }
+}
+
 
 @Composable
 fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
@@ -104,6 +136,14 @@ fun SecondaryButton(text: String, onClick: () -> Unit = {}) {
         border = BorderStroke(1.dp, ColorResources.ColorPrimary),
         shape = RoundedCornerShape(50),
         onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = Color.Blue, fontFamily = StyleUtils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
+        Text(text = text, style = TextStyle(color = ColorResources.ColorPrimary, fontFamily = StyleUtils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
+    }
+}
+
+@Composable
+fun NoDataView()
+{
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(text = StringResources.NoDataFound, style = StyleUtils.getBoldFontStyle())
     }
 }

@@ -97,6 +97,11 @@ kotlin {
             //Icons
             implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
 
+            // Voyager Navigator
+            implementation("cafe.adriel.voyager:voyager-navigator:1.0.0")
+
+            //KotlinX Date
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 
         }
 
