@@ -98,9 +98,10 @@ kotlin {
             implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.0")
 
             // Voyager Navigator
-            val voyagerVersion = "1.0.0"
-            implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+            implementation("cafe.adriel.voyager:voyager-navigator:1.0.0")
 
+            //KotlinX Date
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 
         }
 

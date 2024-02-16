@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import data.CommonUtils
 import data.PlatformUtils
 import data.model.WarehouseTaskModel
 import data.preferences.LocalSharedStorage
@@ -190,7 +191,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                         VerticalCustomText(
                                             headerText = StringResources.WareHouseTechTerms.CreatedOn,
                                             modifier = Modifier.weight(1f),
-                                            valueText = item.createdOn
+                                            valueText = CommonUtils.getParseTDate(item.createdOn)
                                         )
                                         VerticalCustomText(
                                             headerText = StringResources.WareHouseTechTerms.CreatedBy,
@@ -342,7 +343,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                         VerticalCustomText(
                                             headerText = StringResources.WareHouseTechTerms.ConfirmedOn,
                                             modifier = Modifier.weight(1f),
-                                            valueText = item.completedDate?:""
+                                            valueText = CommonUtils.getParseTDate(item.completedDate)
                                         )
                                         VerticalCustomText(
                                             headerText = StringResources.WareHouseTechTerms.ConfirmedBy,
