@@ -83,6 +83,26 @@ fun ToolBarWithBack(navigator: Navigator,title: String)
     }
 }
 
+@Composable
+fun ToolBarWithBack(onBackPressed:() ->Unit ,title: String)
+{
+    TopAppBar(
+        contentColor = Color.White,
+        backgroundColor = ColorResources.ColorPrimary
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null, colorFilter = ColorFilter.tint(color = Color.White),modifier = Modifier.clickable {
+                onBackPressed()
+            })
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(text = title, style = StyleUtils.getBoldFontStyle(), color = Color.White)
+        }
+    }
+}
+
 
 @Composable
 fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
