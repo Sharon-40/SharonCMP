@@ -107,50 +107,56 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
 
                 Spacer(modifier = Modifier.height(5.dp))
 
-                ChipQRPickerTextField (headerText = StringResources.WareHouseTechTerms.WarehouseOrder, validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_WarehouseOrder, onChipSelected = {
-                    warehouseOrders.clear()
-                    warehouseOrders.addAll(it)
-                })
+                LazyColumn {
+                    item {
+                        Column {
+                            ChipQRPickerTextField (headerText = StringResources.WareHouseTechTerms.WarehouseOrder, validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_WarehouseOrder, onChipSelected = {
+                                warehouseOrders.clear()
+                                warehouseOrders.addAll(it)
+                            })
 
-                Spacer(modifier = Modifier.height(5.dp))
+                            Spacer(modifier = Modifier.height(5.dp))
 
-                ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.WarehouseTask,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_WarehouseTask , onChipSelected = {
-                    warehouseTasks.clear()
-                    warehouseTasks.addAll(it)
-                })
+                            ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.WarehouseTask,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_WarehouseTask , onChipSelected = {
+                                warehouseTasks.clear()
+                                warehouseTasks.addAll(it)
+                            })
 
-                Spacer(modifier = Modifier.height(5.dp))
+                            Spacer(modifier = Modifier.height(5.dp))
 
-                ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.PurchaseOrder,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_PurchaseOrder , onChipSelected = {
-                    purchaseOrders.clear()
-                    purchaseOrders.addAll(it)
-                })
+                            ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.PurchaseOrder,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_PurchaseOrder , onChipSelected = {
+                                purchaseOrders.clear()
+                                purchaseOrders.addAll(it)
+                            })
 
-                Spacer(modifier = Modifier.height(5.dp))
+                            Spacer(modifier = Modifier.height(5.dp))
 
-                ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.InboundDelivery,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Inbound , onChipSelected = {
-                    inboundDeliveries.clear()
-                    inboundDeliveries.addAll(it)
-                })
+                            ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.InboundDelivery,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Inbound , onChipSelected = {
+                                inboundDeliveries.clear()
+                                inboundDeliveries.addAll(it)
+                            })
 
-                Spacer(modifier = Modifier.height(5.dp))
+                            Spacer(modifier = Modifier.height(5.dp))
 
-                ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.ProductId,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Product, onChipSelected = {
-                    products.clear()
-                    products.addAll(it)
-                })
+                            ChipQRPickerTextField(headerText = StringResources.WareHouseTechTerms.ProductId,validation = true, validationType = StringResources.ValidationTypes.ValidationType_PutAway_Product, onChipSelected = {
+                                products.clear()
+                                products.addAll(it)
+                            })
 
-                Spacer(modifier = Modifier.height(5.dp))
+                            Spacer(modifier = Modifier.height(5.dp))
 
-                Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
+                            Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center){
 
-                    PrimaryButton(StringResources.Execute) {
-                        LogUtils.logDebug(StringResources.RESPONSE,warehouseOrders.toString())
-                        if (warehouseOrders.isEmpty() && warehouseTasks.isEmpty() && purchaseOrders.isEmpty() && inboundDeliveries.isEmpty() && products.isEmpty())
-                        {
-                            platformUtils.makeToast(StringResources.Enter_one_of_the_below_field)
-                        }else{
-                            viewModel.getLines(localSharedStorage.getWareHouse(),warehouseOrders,warehouseOrders,purchaseOrders,inboundDeliveries,products)
+                                PrimaryButton(StringResources.Execute) {
+                                    LogUtils.logDebug(StringResources.RESPONSE,warehouseOrders.toString())
+                                    if (warehouseOrders.isEmpty() && warehouseTasks.isEmpty() && purchaseOrders.isEmpty() && inboundDeliveries.isEmpty() && products.isEmpty())
+                                    {
+                                        platformUtils.makeToast(StringResources.Enter_one_of_the_below_field)
+                                    }else{
+                                        viewModel.getLines(localSharedStorage.getWareHouse(),warehouseOrders,warehouseOrders,purchaseOrders,inboundDeliveries,products)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
