@@ -145,6 +145,10 @@ class PutAwayViewModel(private val mainUseCase: MainUseCase,val localSharedStora
                 isHandlingUnitWarehouseTask=details.isHandlingUnitWarehouseTask
                 batch=details.batch
                 serialNumbers=""
+                differenceQuantityInAltvUnit=""
+                sourceHandlingUnit=""
+                whseTaskExceptionCodeQtyDiff=""
+                isHandlingUnitWarehouseTask=false
                 payloads.add(this)
             }
         }
