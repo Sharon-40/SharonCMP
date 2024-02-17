@@ -87,7 +87,7 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                 Row (horizontalArrangement = Arrangement.SpaceBetween , modifier = Modifier.fillMaxWidth()){
 
                     Row( modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.Start) {
-                        SecondaryButton(StringResources.Open_WHO) {
+                        SecondaryButton(StringResources.Open_WHO+" ("+openWarehouseTasks.size+")", modifier =Modifier.width(200.dp).padding(5.dp)) {
                             if (openWarehouseTasks.isNotEmpty())
                             {
                                 showDialog=true
@@ -175,7 +175,16 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
 
             viewModel._openWhoState.collect{
                 when {
+                    it.isLoading -> {
+                        isLoading=true
+                    }
+
+                    it.error.isNotEmpty() -> {
+                        isLoading=false
+                    }
+
                     it.data!=null ->{
+                        isLoading=false
                         openWarehouseTasks=it.data
                     }
                 }

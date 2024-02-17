@@ -129,9 +129,9 @@ fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
 }
 
 @Composable
-fun SecondaryButton(text: String, onClick: () -> Unit = {}) {
+fun SecondaryButton(text: String,modifier: Modifier=Modifier.width(150.dp).padding(5.dp), onClick: () -> Unit = {}) {
     Button(
-        modifier = Modifier.width(150.dp).padding(5.dp),
+        modifier = modifier,
         colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.White),
         border = BorderStroke(1.dp, ColorResources.ColorPrimary),
         shape = RoundedCornerShape(50),
