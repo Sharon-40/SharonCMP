@@ -270,7 +270,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 value = enteredValue,
                 onValueChange = {
                     enteredValue = it
-                    //validationStatus=StringResources.ValidationStatus.CLEAR
+                    validationStatus=StringResources.ValidationStatus.CLEAR
                 },
                 singleLine = true,
                 placeholder = {
