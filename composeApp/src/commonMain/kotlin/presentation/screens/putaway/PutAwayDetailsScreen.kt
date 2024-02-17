@@ -189,7 +189,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
             if (openWareHouseTasks.isNotEmpty()) {
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LazyColumn(modifier = Modifier.fillMaxHeight(0.90f)) {
+                    LazyColumn(modifier = Modifier.fillMaxHeight(0.85f)) {
 
                         itemsIndexed(openWareHouseTasks) { index, item ->
 
@@ -643,7 +643,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
             if (confirmedWareHouseTasks.isNotEmpty())
             {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LazyColumn(modifier = Modifier.fillMaxHeight(0.90f)) {
+                    LazyColumn(modifier = Modifier.fillMaxHeight(0.85f)) {
 
                         itemsIndexed(confirmedWareHouseTasks) { index, item ->
 

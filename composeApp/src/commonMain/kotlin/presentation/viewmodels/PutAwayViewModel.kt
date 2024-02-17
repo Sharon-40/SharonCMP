@@ -198,15 +198,6 @@ class PutAwayViewModel(private val mainUseCase: MainUseCase,val localSharedStora
         }
     }.launchIn(viewModelScope)
 
-    fun getOpenWHOButtonWidth():Modifier
-    {
-        return if (platformUtils.isTablet()) {
-            Modifier.width(200.dp).padding(5.dp)
-        }else{
-            Modifier.width(150.dp).padding(5.dp)
-        }
-
-    }
 
     fun getOpenWHOColumnCount():Int
     {

@@ -85,11 +85,31 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
 
             Column (modifier = StyleUtils.getStandardModifier()) {
 
+                if (platformUtils.isTablet())
+                {
+                    Row (horizontalArrangement = Arrangement.SpaceBetween , modifier = Modifier.fillMaxWidth()){
 
-                Row (horizontalArrangement = Arrangement.SpaceBetween , modifier = Modifier.fillMaxWidth()){
+                        Row( modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.Start) {
+                            SecondaryButton(StringResources.Open_WHO+" ("+openWarehouseTasks.size+")" ) {
+                                if (openWarehouseTasks.isNotEmpty())
+                                {
+                                    showDialog=true
+                                }else{
+                                    platformUtils.makeToast(StringResources.NoDataFound)
+                                }
+                            }
+                        }
 
-                    Row( modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.Start) {
-                        SecondaryButton(StringResources.Open_WHO+" ("+openWarehouseTasks.size+")", modifier = viewModel.getOpenWHOButtonWidth() ) {
+                        getHeaderContent()
+
+                    }
+                }else{
+
+                    Column (horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxWidth()){
+
+                        getHeaderContent()
+
+                        SecondaryButton(StringResources.Open_WHO+" ("+openWarehouseTasks.size+")") {
                             if (openWarehouseTasks.isNotEmpty())
                             {
                                 showDialog=true
@@ -97,15 +117,11 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                                 platformUtils.makeToast(StringResources.NoDataFound)
                             }
                         }
-                    }
 
-
-                    Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                        HorizontalCustomText(headerText = StringResources.Plant, valueText = localSharedStorage.getPlant())
-                        Spacer(modifier = Modifier.width(2.dp))
-                        HorizontalCustomText(headerText = StringResources.Warehouse, valueText = localSharedStorage.getWareHouse())
                     }
                 }
+
+
 
                 Spacer(modifier = Modifier.height(5.dp))
 
@@ -317,6 +333,21 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                 }
             }
         }
+    }
+
+    @Composable
+    fun getHeaderContent()
+    {
+        Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+            HorizontalCustomText(headerText = StringResources.Plant, valueText = localSharedStorage.getPlant())
+            Spacer(modifier = Modifier.width(2.dp))
+            HorizontalCustomText(headerText = StringResources.Warehouse, valueText = localSharedStorage.getWareHouse())
+        }
+    }
+
+    fun getOpenWhOButton()
+    {
+
     }
 
 }
