@@ -62,7 +62,7 @@ fun VerticalCustomText(headerText:String="",headerColor:Color=Color.Black,valueT
     Column(modifier = modifier.padding(7.dp)) {
         Text(headerText, style = StyleUtils.getRegularFontStyle(color = headerColor))
         Spacer(modifier = Modifier.height(2.dp))
-        Text(valueText, style = StyleUtils.getBoldFontStyle(color = valueColor))
+        Text(valueText, style = StyleUtils.getBoldFontStyle(color = valueColor, size = 15.sp))
     }
 }
 

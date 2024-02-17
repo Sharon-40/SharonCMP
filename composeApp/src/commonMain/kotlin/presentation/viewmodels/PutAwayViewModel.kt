@@ -4,10 +4,10 @@ import StringResources
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import data.PlatformUtils
 import data.logs.LogUtils
-import data.model.bintobin.BinTransferModel
 import data.model.container.ConfirmTaskResponse
 import data.model.putaway.ConfirmWareHouseTaskModel
 import data.model.putaway.WarehouseTaskModel
@@ -214,6 +214,15 @@ class PutAwayViewModel(private val mainUseCase: MainUseCase,val localSharedStora
             3
         }else{
             2
+        }
+    }
+
+    fun getOpenWHOColumnHeight(): Dp
+    {
+        return if (platformUtils.isTablet()) {
+            100.dp
+        }else{
+            150.dp
         }
     }
 

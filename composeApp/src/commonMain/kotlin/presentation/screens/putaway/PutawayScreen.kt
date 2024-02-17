@@ -11,16 +11,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -268,7 +265,7 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
 
                                     var isChecked  by remember { mutableStateOf(item.isSelected) }
 
-                                    Row (modifier = Modifier.fillMaxWidth().padding(3.dp).border(border =  BorderStroke(1.dp, ColorResources.ColorPrimary), shape = RoundedCornerShape(8.dp)).padding(5.dp)){
+                                    Row (modifier = Modifier.fillMaxWidth().padding(2.dp).border(border =  BorderStroke(1.dp, ColorResources.ColorPrimary), shape = RoundedCornerShape(8.dp)).padding(5.dp)){
 
                                         Checkbox(isChecked,{
                                             isChecked=it
@@ -276,9 +273,9 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                                             opensTasks[index].isSelected=it
                                         })
 
-                                        Spacer(modifier = Modifier.width(2.dp))
+                                        Spacer(modifier = Modifier.width(1.dp))
 
-                                        LazyVerticalGrid(columns = GridCells.Fixed(viewModel.getOpenWHOColumnCount()), modifier = Modifier.fillMaxWidth().height(200.dp))
+                                        LazyVerticalGrid(columns = GridCells.Fixed(viewModel.getOpenWHOColumnCount()), modifier = Modifier.fillMaxWidth().height(viewModel.getOpenWHOColumnHeight()))
                                         {
                                             item {
                                                 VerticalCustomText(headerText = StringResources.WareHouseTechTerms.WarehouseOrder, valueText = item.wo)
