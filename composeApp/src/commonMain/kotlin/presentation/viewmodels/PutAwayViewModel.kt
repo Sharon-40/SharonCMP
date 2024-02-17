@@ -170,11 +170,11 @@ class PutAwayViewModel(private val mainUseCase: MainUseCase,val localSharedStora
                     if (it.status)
                     {
                         successCount++
-                        successBuilder.append(it.responseMsg)
+                        successBuilder.append(it.warehouseTask+" - "+it.responseMsg)
                         successBuilder.append("\n")
                     }else{
                         errorCount++
-                        errorBuilder.append(it.responseMsg)
+                        errorBuilder.append(it.warehouseTask+" - "+it.responseMsg)
                         errorBuilder.append("\n")
                     }
                 }

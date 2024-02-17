@@ -13,16 +13,16 @@ data class ConfirmTaskResponse(
     var responseMsg:String,
 
     @SerialName("DestinationStorageBin")
-    var destinationStorageBin:String,
+    var destinationStorageBin:String?=null,
 
     @SerialName("Quantity")
     var quantity:Double,
 
     @SerialName("Product")
-    var product:String,
+    var product:String?=null,
 
     @SerialName("SourceStorageBin")
-    var sourceStorageBin:String,
+    var sourceStorageBin:String?=null,
 
     @SerialName("WarehouseTask")
     var warehouseTask:String?=null,

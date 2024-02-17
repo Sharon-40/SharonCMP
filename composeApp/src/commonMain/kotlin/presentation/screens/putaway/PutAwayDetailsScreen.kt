@@ -39,7 +39,6 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import data.CommonUtils
 import data.PlatformUtils
-import data.logs.LogUtils
 import data.model.putaway.WarehouseTaskModel
 import data.preferences.LocalSharedStorage
 import presentation.components.DialogCustomCircleProgressbar
@@ -270,26 +269,29 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
 
                                     Row {
 
+                                        openWareHouseTasks[index].selectedDestStorageType = item.destStorageType
                                         QRPickerTextField(
                                             headerText = StringResources.WareHouseTechTerms.DestinationStorageType,
                                             modifier = Modifier.weight(1f),
-                                            valueText = item.destStorageType,
+                                            valueText = item.selectedDestStorageType?:item.destStorageType,
                                             onValueChange = {
                                                 openWareHouseTasks[index].selectedDestStorageType = it
                                             })
 
+                                        openWareHouseTasks[index].selectedDestBin = item.destBin
                                         QRPickerTextField(
                                             headerText = StringResources.WareHouseTechTerms.DestinationBin,
                                             modifier = Modifier.weight(1f),
-                                            valueText = item.destBin,
+                                            valueText = item.selectedDestBin?:item.destBin,
                                             onValueChange = {
                                                 openWareHouseTasks[index].selectedDestBin = it
                                             })
 
+                                        openWareHouseTasks[index].enteredQty = item.qty
                                         QRPickerTextField(
                                             headerText = StringResources.WareHouseTechTerms.TransferQty,
                                             modifier = Modifier.weight(1f),
-                                            valueText = item.qty,
+                                            valueText = item.enteredQty?:item.qty,
                                             onValueChange = {
                                                 openWareHouseTasks[index].enteredQty = it
                                             })

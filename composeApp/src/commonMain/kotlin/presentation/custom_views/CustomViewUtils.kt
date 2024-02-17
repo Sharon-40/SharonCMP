@@ -89,7 +89,6 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
     val viewModel: CustomComponentsViewModel = koinViewModel(CustomComponentsViewModel::class)
     val localSharedStorage: LocalSharedStorage = koinInject()
 
-    onValueChange(enteredValue)
 
     Column(modifier = modifier.padding(2.dp)) {
 

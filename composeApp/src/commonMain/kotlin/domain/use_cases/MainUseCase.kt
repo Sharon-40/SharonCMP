@@ -143,6 +143,7 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
 
         emit(NetworkResult.Loading())
 
+        LogUtils.logDebug(StringResources.RESPONDED,transactions.toString())
         val response=mainRepository.postPutAway(transactions)
 
         if (response.status== HttpStatusCode.OK)
