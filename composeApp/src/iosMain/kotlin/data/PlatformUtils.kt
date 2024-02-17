@@ -7,6 +7,7 @@ import platform.UIKit.UIAlertActionStyleDefault
 import platform.UIKit.UIAlertController
 import platform.UIKit.UIAlertControllerStyleAlert
 import platform.UIKit.UIApplication
+import platform.UIKit.UIDevice
 
 actual class PlatformUtils actual constructor(context: Any?) {
 
@@ -51,6 +52,10 @@ actual class PlatformUtils actual constructor(context: Any?) {
         }
         return queryValue
 
+    }
+
+    actual fun isTablet():Boolean{
+        return UIDevice.currentDevice.model.contains("iPad")
     }
 
 }

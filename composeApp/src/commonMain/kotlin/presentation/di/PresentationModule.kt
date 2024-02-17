@@ -1,5 +1,6 @@
 package presentation.di
 
+import data.PlatformUtils
 import data.preferences.LocalSharedStorage
 import domain.use_cases.MainUseCase
 import org.koin.dsl.module
@@ -19,5 +20,5 @@ val presentationModule = module {
 
     factory { BinToBinViewModel(get<MainUseCase>(),get<LocalSharedStorage>()) }
 
-    factory { PutAwayViewModel(get<MainUseCase>(),get<LocalSharedStorage>())}
+    factory { PutAwayViewModel(get<MainUseCase>(),get<LocalSharedStorage>(),get<PlatformUtils>())}
 }

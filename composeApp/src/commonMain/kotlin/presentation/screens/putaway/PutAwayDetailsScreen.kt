@@ -114,9 +114,19 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                 Spacer(modifier = Modifier.height(8.dp))
 
                 if (selectedTabIndex == 0) {
-                    OpenLines()
+                    if (platformUtils.isTablet())
+                    {
+                        LargeScreenOpenLines()
+                    }else{
+                        SmallScreenOpenLines()
+                    }
                 } else {
-                    ConfirmedLines()
+                    if (platformUtils.isTablet())
+                    {
+                        LargeScreenConfirmedLines()
+                    }else{
+                        SmallScreenConfirmedLines()
+                    }
                 }
 
                 if (isLoading)
@@ -172,14 +182,181 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
     }
 
     @Composable
-    private fun OpenLines() {
+    private fun SmallScreenOpenLines() {
 
         Column {
 
             if (openWareHouseTasks.isNotEmpty()) {
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LazyColumn(modifier = Modifier.fillMaxHeight(0.85f)) {
+                    LazyColumn(modifier = Modifier.fillMaxHeight(0.90f)) {
+
+                        itemsIndexed(openWareHouseTasks) { index, item ->
+
+                            var isChecked by remember { mutableStateOf(item.isSelected) }
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(3.dp).border(
+                                    border = BorderStroke(1.dp, ColorResources.ColorPrimary),
+                                    shape = RoundedCornerShape(8.dp)
+                                ).padding(5.dp)
+                            ) {
+
+                                Checkbox(isChecked, {
+                                    isChecked = it
+                                    item.isSelected = it
+                                    openWareHouseTasks[index].isSelected = it
+                                })
+
+                                Spacer(modifier = Modifier.width(2.dp))
+
+                                Column {
+
+                                    Row {
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.WarehouseTask,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = "${item.woTaskId} - ${item.woline}"
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.WarehouseOrder,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.wo
+                                        )
+                                    }
+
+                                    Row {
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Product,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.product
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.ProductDesc,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.productDesc
+                                        )
+                                    }
+
+                                    Row {
+
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.CreatedOn,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = CommonUtils.getParseTDate(item.createdOn)
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.CreatedBy,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.createdBy
+                                        )
+
+                                    }
+
+                                    Row {
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.SourceStorageType,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.sourceStorageType
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.SourceBin,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.sourceBin
+                                        )
+                                    }
+
+                                    Row {
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.StockType,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.stockType
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Qty,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = "${item.qty} ${item.uom}"
+                                        )
+                                    }
+
+                                    Row {
+
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Batch,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.batch
+                                        )
+
+                                        openWareHouseTasks[index].selectedDestStorageType = item.destStorageType
+                                        QRPickerTextField(
+                                            headerText = StringResources.WareHouseTechTerms.DestinationStorageType,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.selectedDestStorageType?:item.destStorageType,
+                                            onValueChange = {
+                                                openWareHouseTasks[index].selectedDestStorageType = it
+                                            })
+                                    }
+
+                                    Row {
+
+
+                                        openWareHouseTasks[index].selectedDestBin = item.destBin
+                                        QRPickerTextField(
+                                            headerText = StringResources.WareHouseTechTerms.DestinationBin,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.selectedDestBin?:item.destBin,
+                                            onValueChange = {
+                                                openWareHouseTasks[index].selectedDestBin = it
+                                            })
+
+                                        openWareHouseTasks[index].enteredQty = item.qty
+                                        QRPickerTextField(
+                                            headerText = StringResources.WareHouseTechTerms.TransferQty,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.enteredQty?:item.qty,
+                                            onValueChange = {
+                                                openWareHouseTasks[index].enteredQty = it
+                                            })
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Row {
+                        SecondaryButton(StringResources.RePrint) {
+                            if (viewModel.getSelectedData(openWareHouseTasks.toList()).isNotEmpty()) {
+                                rePrint(viewModel.getSelectedData(openWareHouseTasks.toList()))
+                            } else {
+                                platformUtils.makeToast(StringResources.SelectAtLeastOne)
+                            }
+                        }
+
+                        PrimaryButton(StringResources.Submit) {
+                            if (viewModel.getSelectedData(openWareHouseTasks.toList()).isNotEmpty()) {
+                                preparePayload(viewModel.getSelectedData(openWareHouseTasks.toList()))
+                            } else {
+                                platformUtils.makeToast(StringResources.SelectAtLeastOne)
+                            }
+                        }
+                    }
+                }
+            }else{
+                NoDataView()
+            }
+        }
+    }
+
+    @Composable
+    private fun LargeScreenOpenLines() {
+
+        Column {
+
+            if (openWareHouseTasks.isNotEmpty()) {
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    LazyColumn(modifier = Modifier.fillMaxHeight(0.95f)) {
 
                         itemsIndexed(openWareHouseTasks) { index, item ->
 
@@ -327,14 +504,14 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
     }
 
     @Composable
-    private fun ConfirmedLines() {
+    private fun LargeScreenConfirmedLines() {
 
         Column{
 
             if (confirmedWareHouseTasks.isNotEmpty())
             {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LazyColumn(modifier = Modifier.fillMaxHeight(0.85f)) {
+                    LazyColumn(modifier = Modifier.fillMaxHeight(0.95f)) {
 
                         itemsIndexed(confirmedWareHouseTasks) { index, item ->
 
@@ -436,6 +613,152 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
                                         VerticalCustomText(
                                             headerText = StringResources.WareHouseTechTerms.TransferQty,
                                             modifier = Modifier.weight(2f),
+                                            valueText = item.qty
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    SecondaryButton(StringResources.RePrint) {
+                        if (viewModel.getSelectedData(confirmedWareHouseTasks.toList()).isNotEmpty()) {
+                            rePrint(viewModel.getSelectedData(confirmedWareHouseTasks.toList()))
+                        } else {
+                            platformUtils.makeToast(StringResources.SelectAtLeastOne)
+                        }
+                    }
+                }
+            }else{
+                NoDataView()
+            }
+        }
+    }
+
+    @Composable
+    private fun SmallScreenConfirmedLines() {
+
+        Column{
+
+            if (confirmedWareHouseTasks.isNotEmpty())
+            {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    LazyColumn(modifier = Modifier.fillMaxHeight(0.90f)) {
+
+                        itemsIndexed(confirmedWareHouseTasks) { index, item ->
+
+                            var isChecked by remember { mutableStateOf(item.isSelected) }
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(3.dp).border(
+                                    border = BorderStroke(1.dp, ColorResources.ColorPrimary),
+                                    shape = RoundedCornerShape(8.dp)
+                                ).padding(5.dp)
+                            ) {
+
+                                Checkbox(isChecked, {
+                                    isChecked = it
+                                    item.isSelected = it
+                                    confirmedWareHouseTasks[index].isSelected = it
+                                })
+
+                                Spacer(modifier = Modifier.width(2.dp))
+
+                                Column {
+
+                                    Row {
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.WarehouseTask,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = "${item.woTaskId} - ${item.woline}"
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.WarehouseOrder,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.wo
+                                        )
+                                    }
+
+                                    Row {
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Product,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.product
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.ProductDesc,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.productDesc
+                                        )
+                                    }
+
+                                    Row {
+
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.ConfirmedOn,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = CommonUtils.getParseTDate(item.completedDate)
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.ConfirmedBy,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.confirmedByUser?:""
+                                        )
+
+                                    }
+
+                                    Row {
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.SourceStorageType,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.sourceStorageType
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.SourceBin,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.sourceBin
+                                        )
+
+                                    }
+
+                                    Row {
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.StockType,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.stockType
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Qty,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = "${item.qty} ${item.uom}"
+                                        )
+                                    }
+
+                                    Row {
+
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.Batch,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.batch
+                                        )
+
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.DestinationStorageType,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.destStorageType
+                                        )
+                                    }
+
+                                    Row {
+
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.DestinationBin,
+                                            modifier = Modifier.weight(1f),
+                                            valueText = item.destBin
+                                        )
+                                        VerticalCustomText(
+                                            headerText = StringResources.WareHouseTechTerms.TransferQty,
+                                            modifier = Modifier.weight(1f),
                                             valueText = item.qty
                                         )
                                     }

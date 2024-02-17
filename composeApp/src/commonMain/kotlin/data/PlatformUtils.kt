@@ -5,4 +5,6 @@ expect class PlatformUtils(context: Any?) {
 
     fun getQueryParameter(url:String,name: String): String?
 
+    fun isTablet():Boolean
+
 }

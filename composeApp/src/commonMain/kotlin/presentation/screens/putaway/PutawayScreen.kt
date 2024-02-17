@@ -11,12 +11,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
@@ -87,7 +92,7 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                 Row (horizontalArrangement = Arrangement.SpaceBetween , modifier = Modifier.fillMaxWidth()){
 
                     Row( modifier = Modifier.wrapContentWidth(), horizontalArrangement = Arrangement.Start) {
-                        SecondaryButton(StringResources.Open_WHO+" ("+openWarehouseTasks.size+")", modifier =Modifier.width(200.dp).padding(5.dp)) {
+                        SecondaryButton(StringResources.Open_WHO+" ("+openWarehouseTasks.size+")", modifier = viewModel.getOpenWHOButtonWidth() ) {
                             if (openWarehouseTasks.isNotEmpty())
                             {
                                 showDialog=true
@@ -273,19 +278,28 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
 
                                         Spacer(modifier = Modifier.width(2.dp))
 
-                                        Column {
-
-                                            Row {
-                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.WarehouseOrder,modifier = Modifier.weight(1f), valueText = item.wo)
-                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.InboundDelivery,modifier = Modifier.weight(1f), valueText = item.ewmDelivery)
-                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.PurchaseOrder,modifier = Modifier.weight(1f), valueText = item.purchasingDocument)
+                                        LazyVerticalGrid(columns = GridCells.Fixed(viewModel.getOpenWHOColumnCount()), modifier = Modifier.fillMaxWidth().height(200.dp))
+                                        {
+                                            item {
+                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.WarehouseOrder, valueText = item.wo)
                                             }
 
-                                            Row {
-                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.WarehouseTask,modifier = Modifier.weight(1f), valueText = item.woTaskId)
-                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Product,modifier = Modifier.weight(1f), valueText = item.product)
-                                                //VerticalCustomText(headerText = StringResources.WareHouseTechTerms.CreatedOn,modifier = Modifier.weight(1f), valueText = item.createdOn)
-                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.CreatedBy,modifier = Modifier.weight(1f), valueText = item.createdBy)
+                                            item{
+                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.InboundDelivery, valueText = item.ewmDelivery)
+                                            }
+                                            item{
+                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.PurchaseOrder, valueText = item.purchasingDocument)
+                                            }
+                                            item {
+                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.WarehouseTask, valueText = item.woTaskId)
+                                            }
+
+                                            item {
+                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.Product, valueText = item.product)
+                                            }
+
+                                            item {
+                                                VerticalCustomText(headerText = StringResources.WareHouseTechTerms.CreatedBy, valueText = item.createdBy)
                                             }
                                         }
                                     }

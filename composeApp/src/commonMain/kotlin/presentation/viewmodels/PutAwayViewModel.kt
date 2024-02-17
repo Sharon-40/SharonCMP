@@ -1,6 +1,11 @@
 package presentation.viewmodels
 
 import StringResources
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import data.PlatformUtils
 import data.logs.LogUtils
 import data.model.bintobin.BinTransferModel
 import data.model.container.ConfirmTaskResponse
@@ -26,7 +31,7 @@ data class PutAwayTransferStateHolder(
     var errorCount:Int = 0
 )
 
-class PutAwayViewModel(private val mainUseCase: MainUseCase,val localSharedStorage: LocalSharedStorage) : ViewModel() {
+class PutAwayViewModel(private val mainUseCase: MainUseCase,val localSharedStorage: LocalSharedStorage,val platformUtils: PlatformUtils) : ViewModel() {
 
     val _openWhoState = MutableSharedFlow<WarehouseTasksStateHolder>()
 
@@ -192,5 +197,24 @@ class PutAwayViewModel(private val mainUseCase: MainUseCase,val localSharedStora
             }
         }
     }.launchIn(viewModelScope)
+
+    fun getOpenWHOButtonWidth():Modifier
+    {
+        return if (platformUtils.isTablet()) {
+            Modifier.width(200.dp).padding(5.dp)
+        }else{
+            Modifier.width(150.dp).padding(5.dp)
+        }
+
+    }
+
+    fun getOpenWHOColumnCount():Int
+    {
+        return if (platformUtils.isTablet()) {
+            3
+        }else{
+            2
+        }
+    }
 
 }

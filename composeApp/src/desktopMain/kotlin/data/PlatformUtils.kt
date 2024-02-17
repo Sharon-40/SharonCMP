@@ -3,6 +3,7 @@ package data
 import java.net.URI
 import javax.swing.JOptionPane
 
+
 actual class PlatformUtils actual constructor(context: Any?) {
 
     actual fun makeToast(message: String) {
@@ -21,6 +22,10 @@ actual class PlatformUtils actual constructor(context: Any?) {
 
         return queryMap?.get(name)
 
+    }
+
+    actual fun isTablet():Boolean{
+       return true
     }
 }
 

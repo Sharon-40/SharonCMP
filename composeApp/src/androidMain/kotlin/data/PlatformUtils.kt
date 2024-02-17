@@ -20,4 +20,8 @@ actual class PlatformUtils actual constructor(context: Any?) {
         return Uri.parse(url).getQueryParameter(name)
     }
 
+    actual fun isTablet():Boolean{
+        return context.resources.configuration.smallestScreenWidthDp >= 600
+    }
+
 }
