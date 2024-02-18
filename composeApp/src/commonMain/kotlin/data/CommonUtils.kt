@@ -10,7 +10,7 @@ import kotlinx.serialization.json.jsonPrimitive
 import okio.ByteString.Companion.decodeBase64
 
 object CommonUtils {
-    fun decodeBase64(encoded:String): String {
+    private fun decodeBase64(encoded:String): String {
        return encoded.decodeBase64()?.utf8()?:""
     }
 

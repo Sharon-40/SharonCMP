@@ -346,10 +346,5 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
         }
     }
 
-    fun getOpenWhOButton()
-    {
-
-    }
-
 }
 

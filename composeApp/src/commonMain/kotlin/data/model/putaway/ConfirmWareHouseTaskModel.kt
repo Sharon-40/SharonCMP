@@ -2,7 +2,6 @@ package data.model.putaway
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 
 @Serializable
 class ConfirmWareHouseTaskModel  {

@@ -27,8 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.preferences.LocalSharedStorage
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveAlertDialog
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveButton
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
 import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import io.github.alexzhirkevich.cupertino.default
 import moe.tlaster.precompose.navigation.Navigator
