@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import moe.tlaster.precompose.navigation.Navigator
+import presentation.components.CustomCircleProgressbar
 import presentation.components.ToolBarWithBack
 import presentation.viewmodels.ProductListViewModel
 
@@ -44,7 +45,7 @@ fun ProductListScreen(
         when {
             uiState.value.isLoading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
+                    CustomCircleProgressbar()
                 }
             }
 

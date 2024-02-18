@@ -27,6 +27,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,34 +40,31 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.models.AppModel
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import moe.tlaster.precompose.navigation.Navigator
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import presentation.components.ToolBar
 import presentation.navigation.NavigationRoute
 
-@OptIn(ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class, ExperimentalAdaptiveApi::class)
 @Composable
 fun DashBoardScreen(navigator: Navigator) {
 
     val apps= arrayListOf(AppModel(StringResources.Apps.GoodsReceiving.name,ImageResources.goods_recieveing,NavigationRoute.ProductList.route),AppModel(StringResources.Apps.PutAway.name,ImageResources.icon_putaway,NavigationRoute.PutAway.route),AppModel(StringResources.Apps.BinToBin.name,ImageResources.icon_bin_to_bin,NavigationRoute.BinToBin.route))
 
-    Scaffold(topBar = {
-        TopAppBar(
-            contentColor = White,
-            backgroundColor = ColorResources.ColorPrimary
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 12.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = StringResources.AppName, style = StyleUtils.getBoldFontStyle(), color = White)
-                Image(imageVector = Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier.clickable {
-                    navigator.navigate(NavigationRoute.Profile.route)
-                }, colorFilter = ColorFilter.tint(color = White))
+    Scaffold( topBar = {
+        AdaptiveTopAppBar(
+            title = { Text(StringResources.AppName,style = StyleUtils.getBoldFontStyle()) },
+            actions = {
+                Image(imageVector = Icons.Default.AccountCircle, contentDescription = null,
+                    modifier = Modifier.clickable {
+                    navigator.navigate(NavigationRoute.Profile.route) }
+                )
             }
-
-        }
+        )
     }) {
 
         Column (modifier = Modifier.fillMaxHeight().background(ColorResources.Background).padding(10.dp)) {

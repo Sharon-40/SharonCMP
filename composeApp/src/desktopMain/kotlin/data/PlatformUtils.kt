@@ -1,5 +1,6 @@
 package data
 
+import io.github.alexzhirkevich.cupertino.adaptive.Theme
 import java.net.URI
 import javax.swing.JOptionPane
 
@@ -27,5 +28,7 @@ actual class PlatformUtils actual constructor(context: Any?) {
     actual fun isTablet():Boolean{
        return true
     }
+
+    actual fun determineTheme(): Theme = Theme.Material3
 }
 

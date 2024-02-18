@@ -1,5 +1,6 @@
 package data
 
+import io.github.alexzhirkevich.cupertino.adaptive.Theme
 import platform.Foundation.NSURLComponents
 import platform.Foundation.NSURLQueryItem
 import platform.UIKit.UIAlertAction
@@ -57,5 +58,7 @@ actual class PlatformUtils actual constructor(context: Any?) {
     actual fun isTablet():Boolean{
         return UIDevice.currentDevice.model.contains("iPad")
     }
+
+    actual fun determineTheme(): Theme = Theme.Cupertino
 
 }

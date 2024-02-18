@@ -17,6 +17,9 @@ object StringResources {
     const val Open_WHO = "Open WHO"
     const val Select = "Select"
     const val RePrint = "RePrint"
+    const val LogOutDesc= "Do you want to LogOut?"
+    const val OK="OK"
+    const val Cancel="Cancel"
 
     const val BASEURL = "https://clfdev01-dev-suncor-mob-dev.cfapps.us20.hana.ondemand.com/JAVA"
 

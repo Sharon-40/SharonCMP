@@ -1,4 +1,3 @@
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import moe.tlaster.precompose.PreComposeApp
 import org.koin.compose.KoinContext
@@ -8,7 +7,7 @@ import presentation.navigation.AppNavigation
 fun App() {
     KoinContext {
         PreComposeApp {
-            MaterialTheme {
+            AppTheme {
                 AppNavigation()
             }
         }

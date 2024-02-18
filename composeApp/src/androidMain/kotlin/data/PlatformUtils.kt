@@ -3,6 +3,7 @@ package data
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
+import io.github.alexzhirkevich.cupertino.adaptive.Theme
 
 actual class PlatformUtils actual constructor(context: Any?) {
 
@@ -23,5 +24,7 @@ actual class PlatformUtils actual constructor(context: Any?) {
     actual fun isTablet():Boolean{
         return context.resources.configuration.smallestScreenWidthDp >= 600
     }
+
+    actual fun determineTheme(): Theme = Theme.Material3
 
 }

@@ -103,6 +103,9 @@ kotlin {
             //KotlinX Date
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 
+            //Cupertino Widgets
+            implementation("io.github.alexzhirkevich:cupertino-adaptive:0.1.0-alpha03")
+
         }
 
         iosMain.dependencies {

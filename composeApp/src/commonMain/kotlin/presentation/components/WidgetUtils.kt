@@ -35,23 +35,28 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import moe.tlaster.precompose.navigation.Navigator
 
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun CustomCircleProgressbar()
 {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator(color = ColorResources.ColorPrimary)
+        AdaptiveCircularProgressIndicator()
     }
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun DialogCustomCircleProgressbar()
 {
     Dialog(onDismissRequest = {}){
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator(color = Color.White)
+            AdaptiveCircularProgressIndicator()
         }
     }
 }
@@ -75,44 +80,41 @@ fun ProfileListTile(leadingIcon:ImageVector,title:String,desc:String)
     }
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
+@Composable
+fun ToolBar(title: String)
+{
+    AdaptiveTopAppBar(
+        title = { Text(title,style = StyleUtils.getBoldFontStyle()) }
+    )
+}
+
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun ToolBarWithBack(navigator: Navigator,title: String)
 {
-    TopAppBar(
-        contentColor = Color.White,
-        backgroundColor = ColorResources.ColorPrimary
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null, colorFilter = ColorFilter.tint(color = Color.White),modifier = Modifier.clickable {
+    AdaptiveTopAppBar(
+        title = { Text(title,style = StyleUtils.getBoldFontStyle()) },
+        navigationIcon = {
+            Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null, colorFilter = ColorFilter.tint(color = ColorResources.ColorPrimary),modifier = Modifier.clickable {
                 navigator.popBackStack()
             })
-            Spacer(modifier = Modifier.width(10.dp))
-            Text(text = title, style = StyleUtils.getBoldFontStyle(), color = Color.White)
         }
-    }
+    )
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun ToolBarWithBack(onBackPressed:() ->Unit ,title: String)
 {
-    TopAppBar(
-        contentColor = Color.White,
-        backgroundColor = ColorResources.ColorPrimary
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null, colorFilter = ColorFilter.tint(color = Color.White),modifier = Modifier.clickable {
+    AdaptiveTopAppBar(
+        title = { Text(title,style = StyleUtils.getBoldFontStyle()) },
+        navigationIcon = {
+            Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null, colorFilter = ColorFilter.tint(color = ColorResources.ColorAccent),modifier = Modifier.clickable {
                 onBackPressed()
             })
-            Spacer(modifier = Modifier.width(10.dp))
-            Text(text = title, style = StyleUtils.getBoldFontStyle(), color = Color.White)
         }
-    }
+    )
 }
 
 
