@@ -29,6 +29,6 @@ actual class PlatformUtils actual constructor(context: Any?) {
        return true
     }
 
-    actual fun determineTheme(): Theme = Theme.Cupertino
+    actual fun determineTheme(): Theme = Theme.Material3
 }
 

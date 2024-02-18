@@ -24,9 +24,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -57,6 +55,7 @@ import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
 import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import moe.tlaster.precompose.koin.koinViewModel
 import org.koin.compose.koinInject
+import presentation.components.CustomCircleProgressbar
 import presentation.viewmodels.CustomComponentsViewModel
 
 @Composable
@@ -137,7 +136,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
                         }
                         if (isLoading)
                         {
-                            CircularProgressIndicator(color = ColorResources.ColorAccent, modifier = Modifier.height(25.dp).width(25.dp).padding(end = 5.dp))
+                            CustomCircleProgressbar( modifier = Modifier.height(25.dp).width(25.dp).padding(end = 5.dp))
                         }
                     }
 
@@ -295,7 +294,7 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                         }
                         if (isLoading)
                         {
-                            CircularProgressIndicator(color = ColorResources.ColorAccent, modifier = Modifier.height(25.dp).width(25.dp).padding(end = 5.dp))
+                            CustomCircleProgressbar(modifier = Modifier.height(25.dp).width(25.dp).padding(end = 5.dp))
                         }
                     }
 

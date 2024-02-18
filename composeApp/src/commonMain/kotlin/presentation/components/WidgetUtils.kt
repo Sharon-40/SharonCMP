@@ -44,9 +44,9 @@ import moe.tlaster.precompose.navigation.Navigator
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun CustomCircleProgressbar()
+fun CustomCircleProgressbar(modifier: Modifier=Modifier.fillMaxSize())
 {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier , contentAlignment = Alignment.Center) {
         AdaptiveCircularProgressIndicator()
     }
 }
