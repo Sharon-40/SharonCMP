@@ -3,6 +3,7 @@ package presentation.components
 import ColorResources
 import StringResources
 import StyleUtils
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,9 +17,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material3.ButtonDefaults.outlinedButtonColors
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +34,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import io.github.alexzhirkevich.cupertino.CupertinoButtonColors
+import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveButton
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
@@ -90,7 +99,7 @@ fun ToolBar(title: String)
     )
 }
 
-@OptIn(ExperimentalAdaptiveApi::class)
+@OptIn(ExperimentalAdaptiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ToolBarWithBack(navigator: Navigator,title: String)
 {
@@ -100,7 +109,13 @@ fun ToolBarWithBack(navigator: Navigator,title: String)
             Image(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = null, colorFilter = ColorFilter.tint(color = ColorResources.ColorPrimary),modifier = Modifier.clickable {
                 navigator.popBackStack()
             })
-        }
+        },
+        /*adaptation = {
+            material {
+                colors= TopAppBarDefaults.topAppBarColors(
+                    containerColor = ColorResources.ColorPrimary)
+            }
+        }*/
     )
 }
 
@@ -122,8 +137,14 @@ fun ToolBarWithBack(onBackPressed:() ->Unit ,title: String)
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
-    AdaptiveButton(modifier = Modifier.width(150.dp).padding(5.dp),onClick = { onClick() })
-    {
+    AdaptiveButton(
+        modifier = Modifier.width(150.dp).padding(5.dp),
+        onClick = { onClick() },
+        adaptation = {
+            material {
+                colors = outlinedButtonColors(containerColor = ColorResources.ColorPrimary)
+            }
+        }) {
         Text(text = text, style = TextStyle(color = Color.White, fontFamily = StyleUtils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
     }
 }
@@ -131,9 +152,19 @@ fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun SecondaryButton(text: String,modifier: Modifier=Modifier.width(150.dp).padding(5.dp), onClick: () -> Unit = {}) {
-    AdaptiveButton(modifier = modifier ,onClick = { onClick() })
-    {
-        Text(text = text, style = TextStyle(color = Color.White, fontFamily = StyleUtils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
+    AdaptiveButton(
+        modifier = modifier ,
+        onClick = { onClick() },
+        border = BorderStroke(1.dp, ColorResources.ColorPrimary),
+        adaptation = {
+            material {
+                colors = outlinedButtonColors(containerColor = Color.White)
+            }
+            cupertino {
+                colors = CupertinoButtonDefaults.borderedButtonColors(containerColor = Color.White)
+            }
+        }) {
+        Text(text = text, style = TextStyle(color = ColorResources.ColorPrimary, fontFamily = StyleUtils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
     }
 }
 
