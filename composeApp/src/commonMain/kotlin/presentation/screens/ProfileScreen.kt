@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import data.preferences.LocalSharedStorage
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveAlertDialog
 import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
+import io.github.alexzhirkevich.cupertino.cancel
 import io.github.alexzhirkevich.cupertino.default
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.PrimaryButton
@@ -95,11 +96,19 @@ fun ProfileScreen(navigator: Navigator, localSharedStorage: LocalSharedStorage) 
             title = { Text(StringResources.LogOut) },
             message = { Text(StringResources.LogOutDesc) },
             buttons = {
+
+                cancel(onClick = {
+                    showLogoutDialog = false
+                }) { Text(StringResources.Cancel) }
+
                 default(onClick = {
                     showLogoutDialog = false
                     localSharedStorage.clearAll()
                     navigator.navigate(NavigationRoute.OauthWebView.route)
                 }) { Text(StringResources.OK) }
+
+
+
             },
             onDismissRequest = { showLogoutDialog = false }
         )
