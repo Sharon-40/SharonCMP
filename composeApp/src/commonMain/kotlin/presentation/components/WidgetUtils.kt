@@ -35,6 +35,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveButton
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
 import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
@@ -118,27 +119,21 @@ fun ToolBarWithBack(onBackPressed:() ->Unit ,title: String)
 }
 
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun PrimaryButton(text: String, onClick: () -> Unit = {}) {
-    Button(
-        modifier = Modifier.width(150.dp).padding(5.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = ColorResources.ColorPrimary),
-        border = BorderStroke(1.dp, Color.White),
-        shape = RoundedCornerShape(50),
-        onClick = { onClick() }) {
+    AdaptiveButton(modifier = Modifier.width(150.dp).padding(5.dp),onClick = { onClick() })
+    {
         Text(text = text, style = TextStyle(color = Color.White, fontFamily = StyleUtils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
     }
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun SecondaryButton(text: String,modifier: Modifier=Modifier.width(150.dp).padding(5.dp), onClick: () -> Unit = {}) {
-    Button(
-        modifier = modifier,
-        colors = ButtonDefaults.outlinedButtonColors(backgroundColor = Color.White),
-        border = BorderStroke(1.dp, ColorResources.ColorPrimary),
-        shape = RoundedCornerShape(50),
-        onClick = { onClick() }) {
-        Text(text = text, style = TextStyle(color = ColorResources.ColorPrimary, fontFamily = StyleUtils.getSemiBoldFont(),fontWeight = FontWeight.SemiBold))
+    AdaptiveButton(modifier = modifier ,onClick = { onClick() })
+    {
+        Text(text = text, style = TextStyle(color = Color.White, fontFamily = StyleUtils.getSemiBoldFont(), fontWeight = FontWeight.SemiBold))
     }
 }
 
