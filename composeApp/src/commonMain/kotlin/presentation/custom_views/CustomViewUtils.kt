@@ -53,6 +53,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import data.preferences.LocalSharedStorage
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import moe.tlaster.precompose.koin.koinViewModel
 import org.koin.compose.koinInject
 import presentation.viewmodels.CustomComponentsViewModel
@@ -75,6 +77,7 @@ fun HorizontalCustomText(headerText:String="",headerColor:Color=Color.Black,valu
     }
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, valueText:String="",onValueChange:(String)->Unit={}, isMandatory:Boolean=false, enableCharCount:Boolean=false, maxLength:Int=100, validation:Boolean=false, validationType:String?=null,modifier: Modifier=Modifier.fillMaxWidth())
 {
@@ -121,7 +124,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
                 trailingIcon = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if (enteredValue.isNotEmpty()) {
-                            IconButton(onClick = {
+                            AdaptiveIconButton(onClick = {
                                 enteredValue = ""
                                 //validationStatus=StringResources.ValidationStatus.CLEAR
                             }) {
@@ -236,6 +239,7 @@ fun QRPickerTextField(headerText:String="", headerColor:Color=Color.Black, value
 
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, valueText:String="", isMandatory:Boolean=false, validation:Boolean=false, validationType:String?=null, onChipSelected: (List<String>) -> Unit = { _ -> })
 {
@@ -279,14 +283,13 @@ fun ChipQRPickerTextField(headerText:String="", headerColor:Color=Color.Black, v
                 trailingIcon = {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if (enteredValue.isNotEmpty()) {
-                            IconButton(onClick = {
+                            AdaptiveIconButton(onClick = {
                                 enteredValue = ""
                                 validationStatus=StringResources.ValidationStatus.CLEAR
                             }) {
                                 Icon(
                                     imageVector = Icons.Outlined.Delete,
                                     contentDescription = null,
-                                    tint = ColorResources.ColorPrimary
                                 )
                             }
                         }
@@ -430,6 +433,7 @@ fun MaterialChipGroup(
     )
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun MaterialChip(
     text: String,
@@ -468,13 +472,12 @@ fun MaterialChip(
                 style = textStyle
             )
 
-            IconButton(onClick = {
+            AdaptiveIconButton(onClick = {
                 onCloseClick()
             }){
                 Icon(
                     imageVector = Icons.Outlined.Close,
                     contentDescription = null,
-                    tint = ColorResources.ColorPrimary
                 )
             }
         }

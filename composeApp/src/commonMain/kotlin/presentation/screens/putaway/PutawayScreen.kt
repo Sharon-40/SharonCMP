@@ -23,7 +23,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -47,6 +46,8 @@ import data.PlatformUtils
 import data.logs.LogUtils
 import data.model.putaway.WarehouseTaskModel
 import data.preferences.LocalSharedStorage
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
+import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
@@ -239,6 +240,7 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
 
     }
 
+    @OptIn(ExperimentalAdaptiveApi::class)
     @Composable
     fun OpenWhoDialog(setShowDialog: (Boolean) -> Unit, opensTasks:List<WarehouseTaskModel>, platformUtils: PlatformUtils, viewModel: PutAwayViewModel, selectedLines: (List<WarehouseTaskModel>)->Unit) {
 
@@ -260,13 +262,12 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                                 style = StyleUtils.getBoldFontStyle(color = ColorResources.ColorPrimary)
                             )
 
-                            IconButton(onClick = {
+                            AdaptiveIconButton(onClick = {
                                 setShowDialog(false)
                             }){
                                 Icon(
                                     imageVector = Icons.Outlined.Close,
                                     contentDescription = null,
-                                    tint = ColorResources.ColorPrimary
                                 )
                             }
                         }

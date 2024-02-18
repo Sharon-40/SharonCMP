@@ -27,6 +27,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -40,6 +42,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import domain.models.AppModel
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
 import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
@@ -59,10 +62,15 @@ fun DashBoardScreen(navigator: Navigator) {
         AdaptiveTopAppBar(
             title = { Text(StringResources.AppName,style = StyleUtils.getBoldFontStyle()) },
             actions = {
-                Image(imageVector = Icons.Default.AccountCircle, contentDescription = null,
-                    modifier = Modifier.clickable {
-                    navigator.navigate(NavigationRoute.Profile.route) }
-                )
+
+                AdaptiveIconButton(onClick = {
+                    navigator.navigate(NavigationRoute.Profile.route)
+                }){
+                    Icon(
+                        imageVector = Icons.Outlined.AccountCircle,
+                        contentDescription = null,
+                    )
+                }
             }
         )
     }) {
