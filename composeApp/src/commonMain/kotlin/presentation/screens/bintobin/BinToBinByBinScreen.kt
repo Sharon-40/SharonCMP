@@ -28,6 +28,7 @@ import data.PlatformUtils
 import data.model.bintobin.StockModel
 import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
+import presentation.custom_views.CustomDropDown
 import presentation.custom_views.QRPickerTextField
 import presentation.custom_views.VerticalCustomText
 import presentation.viewmodels.BinToBinViewModel
@@ -40,6 +41,9 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
 
     var enteredBin by remember { mutableStateOf("") }
     var stockData:ArrayList<StockModel> by remember { mutableStateOf(ArrayList()) }
+
+
+    val storageTypes= arrayListOf("S050","S040")
 
 
     Column(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
@@ -108,9 +112,14 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
 
 
                                 Row {
-                                    QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationStorageType,modifier = Modifier.weight(1f), onValueChange = {
+
+                                    CustomDropDown(headerText = StringResources.WareHouseTechTerms.DestinationStorageType, hint = StringResources.WareHouseTechTerms.DestinationStorageType, items = storageTypes,modifier = Modifier.weight(1f)){
                                         stockData[index].selectedDestStorageType=it
-                                    })
+                                    }
+
+                                   /* QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationStorageType,modifier = Modifier.weight(1f), onValueChange = {
+                                        stockData[index].selectedDestStorageType=it
+                                    })*/
 
                                     QRPickerTextField (headerText = StringResources.WareHouseTechTerms.DestinationBin,modifier = Modifier.weight(1f), onValueChange = {
                                         stockData[index].selectedDestBin=it

@@ -4,7 +4,9 @@ import ColorResources
 import StringResources
 import StyleUtils
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,14 +26,18 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -480,5 +486,68 @@ fun MaterialChip(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun CustomDropDown(headerText:String="", headerColor:Color=Color.Black, isMandatory:Boolean=false,hint:String, items: List<String>,modifier: Modifier=Modifier.fillMaxWidth(), onItemSelected: (String) -> Unit)
+{
+
+    var expanded by remember { mutableStateOf(false) }
+    var selectedItem by remember { mutableStateOf(hint) }
+
+    Column(modifier = modifier.padding(2.dp)) {
+
+        Row(modifier = Modifier.fillMaxWidth(),verticalAlignment = Alignment.CenterVertically) {
+            Text(headerText, style = StyleUtils.getRegularFontStyle(color = headerColor))
+            if (isMandatory)
+            {
+                Text("*", style = StyleUtils.getRegularFontStyle(color = Color.Red))
+            }
+        }
+
+        Spacer(modifier = Modifier.height(5.dp))
+
+        Row(modifier = Modifier.fillMaxWidth().background(Color.White).border(border =  BorderStroke(1.dp, ColorResources.ColorPrimary), shape = RoundedCornerShape(8.dp))) {
+
+            Column {
+
+                Row(horizontalArrangement = Arrangement.SpaceBetween , verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable { expanded = !expanded }) {
+
+                    val styleSelected= if (selectedItem==hint){
+                        StyleUtils.getRegularFontStyle(size = 16.sp)
+                    }else{
+                        StyleUtils.getBoldFontStyle()
+                    }
+
+                    Text(text = selectedItem, modifier = Modifier.padding(17.dp), style = styleSelected)
+
+                    IconButton(onClick = {
+                        expanded = !expanded
+                    }){
+                        Icon(Icons.Outlined.ArrowDropDown,null)
+                    }
+                }
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    items.forEach { item ->
+                        DropdownMenuItem(
+                            onClick = {
+                                selectedItem = item
+                                expanded = false
+                                onItemSelected(item)
+                            }
+                        ) {
+                            Text(text = item, style = StyleUtils.getSemiBoldFontStyle())
+                        }
+                    }
+                }
+            }
+
+        }
+
     }
 }
