@@ -41,7 +41,10 @@ import moe.tlaster.precompose.navigation.Navigator
 fun CustomCircleProgressbar(modifier: Modifier=Modifier.fillMaxSize())
 {
     Box(modifier = modifier , contentAlignment = Alignment.Center) {
-        AdaptiveCircularProgressIndicator()
+        AdaptiveCircularProgressIndicator(adaptationScope ={
+            material {
+                color=ColorResources.ColorPrimary
+            } } )
     }
 }
 
@@ -51,7 +54,10 @@ fun DialogCustomCircleProgressbar()
 {
     Dialog(onDismissRequest = {}){
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            AdaptiveCircularProgressIndicator()
+            AdaptiveCircularProgressIndicator(adaptationScope ={
+                material {
+                    color=Color.White
+                } } )
         }
     }
 }
