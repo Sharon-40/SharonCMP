@@ -1,5 +1,6 @@
 package data
 
+import data.model.enums.Platform
 import io.github.alexzhirkevich.cupertino.adaptive.Theme
 
 expect class PlatformUtils(context: Any?) {
@@ -10,5 +11,7 @@ expect class PlatformUtils(context: Any?) {
     fun isTablet():Boolean
 
     fun determineTheme(): Theme
+
+    fun getPlatform(): Platform
 
 }

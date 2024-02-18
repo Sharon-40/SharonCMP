@@ -3,6 +3,7 @@ package data
 import android.content.Context
 import android.net.Uri
 import android.widget.Toast
+import data.model.enums.Platform
 import io.github.alexzhirkevich.cupertino.adaptive.Theme
 
 actual class PlatformUtils actual constructor(context: Any?) {
@@ -26,5 +27,9 @@ actual class PlatformUtils actual constructor(context: Any?) {
     }
 
     actual fun determineTheme(): Theme = Theme.Material3
+
+    actual fun getPlatform(): Platform{
+        return Platform.Android
+    }
 
 }

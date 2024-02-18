@@ -1,5 +1,6 @@
 package data
 
+import data.model.enums.Platform
 import io.github.alexzhirkevich.cupertino.adaptive.Theme
 import platform.Foundation.NSURLComponents
 import platform.Foundation.NSURLQueryItem
@@ -60,5 +61,9 @@ actual class PlatformUtils actual constructor(context: Any?) {
     }
 
     actual fun determineTheme(): Theme = Theme.Cupertino
+
+    actual fun getPlatform(): Platform {
+        return Platform.iOS
+    }
 
 }
