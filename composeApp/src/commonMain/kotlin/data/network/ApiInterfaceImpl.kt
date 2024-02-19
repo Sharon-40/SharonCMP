@@ -104,4 +104,13 @@ class ApiInterfaceImpl(private val httpClient: HttpClient,private val localShare
         }
     }
 
+    override suspend fun getStorageTypes(): HttpResponse {
+        return httpClient.get {
+            url("${StringResources.BASEURL}/bin/storageTypeControl")
+            parameter("Plant",localSharedStorage.getPlant())
+            parameter("Warehouse", localSharedStorage.getWareHouse())
+            parameter("Language","EN")
+        }
+    }
+
 }

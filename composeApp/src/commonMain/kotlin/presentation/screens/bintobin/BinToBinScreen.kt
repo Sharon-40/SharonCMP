@@ -14,16 +14,17 @@ import data.PlatformUtils
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.ToolBarWithBack
 import presentation.viewmodels.BinToBinViewModel
+import presentation.viewmodels.GlobalViewModel
 
 @Composable
-fun BinToBinScreen(navigator: Navigator, viewModel: BinToBinViewModel, platformUtils: PlatformUtils) {
+fun BinToBinScreen(navigator: Navigator, viewModel: BinToBinViewModel, platformUtils: PlatformUtils,globalViewModel: GlobalViewModel) {
 
     Scaffold(topBar = {
         ToolBarWithBack(navigator, StringResources.Apps.BinToBin.name)
     }) {
 
         Column (modifier = Modifier.fillMaxHeight().background(ColorResources.Background).padding(10.dp)){
-            BinToBinByBinScreen(viewModel,platformUtils)
+            BinToBinByBinScreen(viewModel,platformUtils,globalViewModel)
         }
     }
 }

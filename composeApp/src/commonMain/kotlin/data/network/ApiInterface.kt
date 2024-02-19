@@ -18,4 +18,5 @@ interface ApiInterface {
     suspend fun getAccessTokenByRefreshToken(refreshToken: String): HttpResponse
     suspend fun postPutAway(transactions: ArrayList<ConfirmWareHouseTaskModel>): HttpResponse
     suspend fun putAwayBatchLocationUrl(transactions: ConfirmWareHouseTaskBatchResponseModel): HttpResponse
+    suspend fun getStorageTypes(): HttpResponse
 }

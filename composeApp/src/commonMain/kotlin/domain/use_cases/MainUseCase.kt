@@ -2,6 +2,7 @@ package domain.use_cases
 
 import StringResources
 import data.logs.LogUtils
+import data.model.StorageTypeModel
 import data.model.bintobin.BinTransferModel
 import data.model.container.ConfirmTaskResponse
 import data.model.container.StandardResponse
@@ -172,6 +173,34 @@ class MainUseCase(private val mainRepository: MainRepository) : KoinComponent {
                 emit(NetworkResult.Error(result.message))
             }
 
+        }else{
+            emit(NetworkResult.Error(response.status.toString()))
+        }
+
+    }.catch {
+        emit(NetworkResult.Error(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+    fun getStorageTypes() = flow {
+
+        emit(NetworkResult.Loading())
+
+        val response=mainRepository.getStorageTypes()
+
+        if (response.status== HttpStatusCode.OK)
+        {
+            LogUtils.logDebug(StringResources.RESPONSE_CODE,response.status.toString())
+
+            val result=response.body<StandardResponse<ArrayList<StorageTypeModel>>>()
+
+            LogUtils.logDebug(StringResources.RESPONSE,result.data.toString())
+
+            if (result.status)
+            {
+                emit(NetworkResult.Success(data = result.data))
+            }else{
+                emit(NetworkResult.Error(result.message))
+            }
         }else{
             emit(NetworkResult.Error(response.status.toString()))
         }

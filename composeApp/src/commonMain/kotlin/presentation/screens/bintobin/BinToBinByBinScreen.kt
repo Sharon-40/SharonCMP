@@ -32,9 +32,10 @@ import presentation.custom_views.CustomDropDown
 import presentation.custom_views.QRPickerTextField
 import presentation.custom_views.VerticalCustomText
 import presentation.viewmodels.BinToBinViewModel
+import presentation.viewmodels.GlobalViewModel
 
 @Composable
-fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUtils)
+fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUtils,globalViewModel: GlobalViewModel)
 {
 
     var isLoading by remember { mutableStateOf(false) }
@@ -43,7 +44,7 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
     var stockData:ArrayList<StockModel> by remember { mutableStateOf(ArrayList()) }
 
 
-    val storageTypes= arrayListOf("S050","S040")
+    val storageTypes:ArrayList<String> by remember { mutableStateOf(ArrayList()) }
 
 
     Column(modifier = Modifier.fillMaxWidth().padding(2.dp)) {
@@ -141,6 +142,33 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
             }
         }
 
+    }
+
+    LaunchedEffect(Unit)
+    {
+
+        globalViewModel.getStorageTypes()
+
+        globalViewModel._uiStorageTypeState.collect{
+            when {
+
+                it.isLoading-> {
+                    isLoading=true
+                }
+
+                it.error.isNotEmpty() -> {
+                    isLoading=false
+                    platformUtils.makeToast(it.error)
+                }
+
+                it.data!=null -> {
+                    isLoading=false
+                    storageTypes.clear()
+                    storageTypes.addAll(globalViewModel.getStorageTypeList(it.data))
+                }
+
+            }
+        }
     }
 
     LaunchedEffect(Unit)

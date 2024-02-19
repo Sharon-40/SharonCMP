@@ -44,6 +44,11 @@ class MainRepository(private val apiInterfaceImpl: ApiInterfaceImpl,private val 
     suspend fun putAwayBatchLocationUrl(transactions: ConfirmWareHouseTaskBatchResponseModel): HttpResponse {
         return apiInterfaceImpl.putAwayBatchLocationUrl(transactions)
     }
+
+    suspend fun getStorageTypes(): HttpResponse {
+        return apiInterfaceImpl.getStorageTypes()
+    }
+
     suspend fun insert(id: Int, title: String, desc: String, image: String) {
         localDbDao.insert(id = id, title = title, desc = desc, image = image)
     }

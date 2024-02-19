@@ -490,11 +490,11 @@ fun MaterialChip(
 }
 
 @Composable
-fun CustomDropDown(headerText:String="", headerColor:Color=Color.Black, isMandatory:Boolean=false,hint:String, items: List<String>,modifier: Modifier=Modifier.fillMaxWidth(), onItemSelected: (String) -> Unit)
+fun CustomDropDown(headerText:String="", headerColor:Color=Color.Black, isMandatory:Boolean=false,hint:String?=null, items: List<String>,modifier: Modifier=Modifier.fillMaxWidth(), onItemSelected: (String) -> Unit)
 {
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedItem by remember { mutableStateOf(hint) }
+    var selectedItem by remember { mutableStateOf(hint?:items.firstOrNull()) }
 
     Column(modifier = modifier.padding(2.dp)) {
 
@@ -520,7 +520,7 @@ fun CustomDropDown(headerText:String="", headerColor:Color=Color.Black, isMandat
                         StyleUtils.getBoldFontStyle()
                     }
 
-                    Text(text = selectedItem, modifier = Modifier.padding(17.dp), style = styleSelected)
+                    Text(text = selectedItem?:"", modifier = Modifier.padding(17.dp), style = styleSelected)
 
                     IconButton(onClick = {
                         expanded = !expanded

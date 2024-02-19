@@ -18,6 +18,7 @@ import presentation.screens.oauth.OAuth2WebView
 import presentation.screens.oauth.RulesScreen
 import presentation.screens.putaway.PutAwayScreen
 import presentation.viewmodels.BinToBinViewModel
+import presentation.viewmodels.GlobalViewModel
 import presentation.viewmodels.LoginViewModel
 import presentation.viewmodels.ProductListViewModel
 import presentation.viewmodels.PutAwayViewModel
@@ -81,7 +82,8 @@ fun AppNavigation() {
 
         scene(route = NavigationRoute.BinToBin.route) {
             val viewModel: BinToBinViewModel = koinViewModel(BinToBinViewModel::class)
-            BinToBinScreen(navigator,viewModel,platformUtils)
+            val globalViewModel: GlobalViewModel = koinViewModel(GlobalViewModel::class)
+            BinToBinScreen(navigator,viewModel,platformUtils,globalViewModel)
         }
 
     }
