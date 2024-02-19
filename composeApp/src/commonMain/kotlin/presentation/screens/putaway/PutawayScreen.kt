@@ -51,10 +51,10 @@ import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import moe.tlaster.precompose.navigation.Navigator
 import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
+import presentation.components.ProfileHeaderView
 import presentation.components.SecondaryButton
 import presentation.components.ToolBarWithBack
 import presentation.custom_views.ChipQRPickerTextField
-import presentation.custom_views.HorizontalCustomText
 import presentation.custom_views.VerticalCustomText
 import presentation.viewmodels.PutAwayViewModel
 
@@ -101,14 +101,14 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                             }
                         }
 
-                        getHeaderContent()
+                        ProfileHeaderView(localSharedStorage)
 
                     }
                 }else{
 
                     Column (horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxWidth()){
 
-                        getHeaderContent()
+                        ProfileHeaderView(localSharedStorage)
 
                         SecondaryButton(StringResources.Open_WHO+" ("+openWarehouseTasks.size+")") {
                             if (openWarehouseTasks.isNotEmpty())
@@ -333,16 +333,6 @@ class PutAwayScreen(private val preComposeNavigator: Navigator, private val view
                     }
                 }
             }
-        }
-    }
-
-    @Composable
-    fun getHeaderContent()
-    {
-        Row( modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            HorizontalCustomText(headerText = StringResources.Plant, valueText = localSharedStorage.getPlant())
-            Spacer(modifier = Modifier.width(2.dp))
-            HorizontalCustomText(headerText = StringResources.Warehouse, valueText = localSharedStorage.getWareHouse())
         }
     }
 

@@ -26,8 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.PlatformUtils
 import data.model.bintobin.StockModel
+import data.preferences.LocalSharedStorage
 import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.PrimaryButton
+import presentation.components.ProfileHeaderView
 import presentation.custom_views.CustomDropDown
 import presentation.custom_views.QRPickerTextField
 import presentation.custom_views.VerticalCustomText
@@ -35,7 +37,7 @@ import presentation.viewmodels.BinToBinViewModel
 import presentation.viewmodels.GlobalViewModel
 
 @Composable
-fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUtils,globalViewModel: GlobalViewModel)
+fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUtils,globalViewModel: GlobalViewModel,localSharedStorage: LocalSharedStorage)
 {
 
     var isLoading by remember { mutableStateOf(false) }
@@ -51,6 +53,8 @@ fun BinToBinByBinScreen(viewModel: BinToBinViewModel, platformUtils: PlatformUti
 
 
         Column(modifier = Modifier.fillMaxWidth().padding(top = 5.dp) , horizontalAlignment = Alignment.CenterHorizontally) {
+
+            ProfileHeaderView(localSharedStorage)
 
             QRPickerTextField (headerText = StringResources.WareHouseTechTerms.Bin, valueText = enteredBin, onValueChange = {
                 enteredBin=it

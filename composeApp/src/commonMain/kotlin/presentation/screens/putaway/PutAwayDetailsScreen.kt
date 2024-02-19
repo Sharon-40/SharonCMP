@@ -5,7 +5,6 @@ import StringResources
 import StyleUtils
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -44,9 +43,9 @@ import data.preferences.LocalSharedStorage
 import presentation.components.DialogCustomCircleProgressbar
 import presentation.components.NoDataView
 import presentation.components.PrimaryButton
+import presentation.components.ProfileHeaderView
 import presentation.components.SecondaryButton
 import presentation.components.ToolBarWithBack
-import presentation.custom_views.HorizontalCustomText
 import presentation.custom_views.QRPickerTextField
 import presentation.custom_views.VerticalCustomText
 import presentation.viewmodels.PutAwayViewModel
@@ -76,18 +75,7 @@ class PutAwayDetailsScreen(private val warehouseTasks: List<WarehouseTaskModel>,
 
             Column(modifier = StyleUtils.getStandardModifier()) {
 
-
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    HorizontalCustomText(
-                        headerText = StringResources.Plant,
-                        valueText = localSharedStorage.getPlant()
-                    )
-                    Spacer(modifier = Modifier.width(2.dp))
-                    HorizontalCustomText(
-                        headerText = StringResources.Warehouse,
-                        valueText = localSharedStorage.getWareHouse()
-                    )
-                }
+                ProfileHeaderView(localSharedStorage)
 
                 Spacer(modifier = Modifier.height(5.dp))
 

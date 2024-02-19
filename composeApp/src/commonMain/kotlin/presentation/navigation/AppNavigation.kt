@@ -83,7 +83,7 @@ fun AppNavigation() {
         scene(route = NavigationRoute.BinToBin.route) {
             val viewModel: BinToBinViewModel = koinViewModel(BinToBinViewModel::class)
             val globalViewModel: GlobalViewModel = koinViewModel(GlobalViewModel::class)
-            BinToBinScreen(navigator,viewModel,platformUtils,globalViewModel)
+            BinToBinScreen(navigator,viewModel,platformUtils,globalViewModel,localSharedStorage)
         }
 
     }

@@ -32,12 +32,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import data.preferences.LocalSharedStorage
 import io.github.alexzhirkevich.cupertino.CupertinoButtonDefaults
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveButton
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveCircularProgressIndicator
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
 import io.github.alexzhirkevich.cupertino.adaptive.ExperimentalAdaptiveApi
 import moe.tlaster.precompose.navigation.Navigator
+import presentation.custom_views.HorizontalCustomText
 
 
 @OptIn(ExperimentalAdaptiveApi::class)
@@ -168,5 +170,21 @@ fun NoDataView()
 {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(text = StringResources.NoDataFound, style = StyleUtils.getBoldFontStyle())
+    }
+}
+
+@Composable
+fun ProfileHeaderView(localSharedStorage:LocalSharedStorage)
+{
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        HorizontalCustomText(
+            headerText = StringResources.Plant,
+            valueText = localSharedStorage.getPlant()
+        )
+        Spacer(modifier = Modifier.width(2.dp))
+        HorizontalCustomText(
+            headerText = StringResources.Warehouse,
+            valueText = localSharedStorage.getWareHouse()
+        )
     }
 }
